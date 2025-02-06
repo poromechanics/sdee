@@ -1,0 +1,67 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Engineering Mathematics"
+  author: "Vikas Sharma"
+  date: "1/24/2025"
+  reader-mode: true
+  search: true
+  repo-url: https://github.com/poromechanics/engineering-math/
+  site-url: https://poromechanics.github.io/engineering-math
+  repo-actions: [edit, issue]
+  downloads: [pdf,epub]
+  sharing: [twitter, linkedin]
+  favicon: ./figures/favicon.png
+  cover-image: ./figures/cover.svg
+  cover-image-alt: Engineering mathematics
+  twitter-card: true
+  page-navigation: true
+  page-footer: 
+    left: "Copyright 2025, Vikas Sharma" 
+    right: 
+      - icon: github
+        href: https://github.com/vickysharma0812
+      - icon: twitter
+        href: https://twitter.com/vickysharma0812
+      - icon: linkedin
+        href: https://linkedin.com/in/vickysharma0812
+  sidebar:
+      style: docked
+      background: light
+  chapters:
+    - index.md
+    - intro.md
+    - part: "Linear Algebra"
+      chapters:
+        - ./la-lower-triangular-matrix.md
+        - ./la-upper-triangular-matrix.md
+        - ./la-lu-decomposition.md
+        - ./la-qr-decomposition.md
+    - part: "Greens functions"
+      chapters:
+        - ./gf_greens-function-introduction.md
+    - summary.md
+    - references.md
+  # appendices:
+  # crossref:
+
+bibliography: references.bib
+
+comments:
+  hypothesis: true
+
+execute:
+  freeze: auto
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+  # pdf:
+  #   documentclass: scrreprt
+
+
+
