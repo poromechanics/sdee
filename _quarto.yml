@@ -3,19 +3,19 @@ project:
   output-dir: _book
 
 book:
-  title: "Engineering Mathematics"
+  title: "Soil Dynamics and Earthquake Engineering"
   author: "Vikas Sharma"
-  date: "1/24/2025"
+  date: "2/06/2025"
   reader-mode: true
   search: true
-  repo-url: https://github.com/poromechanics/engineering-math/
-  site-url: https://poromechanics.github.io/engineering-math
+  repo-url: https://github.com/poromechanics/sdee/
+  site-url: https://poromechanics.github.io/sdee
   repo-actions: [edit, issue]
   downloads: [pdf,epub]
   sharing: [twitter, linkedin]
   favicon: ./figures/favicon.png
   cover-image: ./figures/cover.svg
-  cover-image-alt: Engineering mathematics
+  cover-image-alt: SDEE
   twitter-card: true
   page-navigation: true
   page-footer: 
@@ -33,15 +33,6 @@ book:
   chapters:
     - index.md
     - intro.md
-    - part: "Linear Algebra"
-      chapters:
-        - ./la-lower-triangular-matrix.md
-        - ./la-upper-triangular-matrix.md
-        - ./la-lu-decomposition.md
-        - ./la-qr-decomposition.md
-    - part: "Greens functions"
-      chapters:
-        - ./gf_greens-function-introduction.md
     - summary.md
     - references.md
   # appendices:
