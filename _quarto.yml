@@ -33,6 +33,10 @@ book:
   chapters:
     - index.md
     - intro.md
+    - part: "Single Degree of Freedom System"
+      chapters:
+        - ./sdof/first-order-ode-tdg.md
+        - ./sdof/second-order-ode-tdg.md
     - summary.md
     - references.md
   # appendices:
@@ -48,6 +52,7 @@ execute:
 
 format:
   html:
+    number-depth: 2
     theme:
       - cosmo
       - brand

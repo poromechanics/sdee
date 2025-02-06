@@ -3,3 +3,6 @@ _book
 .DS_Store
 
 /.quarto/
+
+*.pdf
+*.tex
