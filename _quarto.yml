@@ -37,6 +37,11 @@ book:
       chapters:
         - ./sdof/first-order-ode-tdg.md
         - ./sdof/second-order-ode-tdg.md
+    - part: "Elastodynamics"
+      chapters:
+        - ./elastodynamics/elastodynamics-introduction.md
+        - ./elastodynamics/elastodynamics-vstfem.md
+        - ./elastodynamics/elastodynamics-numerical-examples.md
     - summary.md
     - references.md
   # appendices:

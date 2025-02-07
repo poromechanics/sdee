@@ -36,7 +36,7 @@ $$
 $$
 
 ![Discretization of time domain $\left[ 0, T\right]$ by using the
-time-finite elements.](./figures/ch3-fig-1.pdf){#fig-ch3-1}
+time-finite elements.](./figures/ch3-fig-1.svg){#fig-ch3-1}
 
 In the finite element method (FEM), the time interval, $I_n$, denotes
 the interior of the one-dimensional time finite element, and
@@ -75,7 +75,7 @@ are the discontinuous values of $u^h$ at time $t=t_n$. @fig-ch3-2 illustrates th
 
 ![Schematic diagram of time discontinuous approximation: (a) piecewise
 linear interpolation, and (b) piecewise quadratic
-interpolation.](./figures/ch3-fig-2.pdf){#fig-ch3-2}
+interpolation.](./figures/ch3-fig-2.svg){#fig-ch3-2}
 
 Let $C^0(\star)$ denote the space of piecewise continuous functions
 defined on domain $(\star)$. In addition, consider
@@ -223,7 +223,7 @@ for $i=3,\cdots,p+1$ (see @fig-ch3-3).
 
 ![Conceptual diagram of (a) $p$-order time-finite element with $p+1$
 local time nodes, (b) two node linear time-finite
-element.](./figures/ch3-fig-3.pdf){#fig-ch3-3}
+element.](./figures/ch3-fig-3.svg){#fig-ch3-3}
 
 Further, the relationship between $t \in I_n$ and $\theta \in I_\theta$
 is given by a linear mapping,
@@ -479,7 +479,7 @@ $${#eq-ch3-38}
 
 ![Amplification factor for the time-discontinuous Galerkin method for
 the first order ODE with linear interpolation in
-time.](./figures/ch3-fig-4.pdf){#fig-ch3-4}
+time.](./figures/ch3-fig-4.svg){#fig-ch3-4}
 
 ## Convergence analysis of the TDG/FEM
 
