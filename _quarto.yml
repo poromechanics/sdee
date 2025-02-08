@@ -42,6 +42,9 @@ book:
         - ./elastodynamics/elastodynamics-introduction.md
         - ./elastodynamics/elastodynamics-vstfem.md
         - ./elastodynamics/elastodynamics-numerical-examples.md
+    - part: "Elastic waves"
+      chapters:
+        - ./elastic-waves/elastic-waves-introduction.md
     - summary.md
     - references.md
   # appendices:

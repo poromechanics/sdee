@@ -1,4 +1,4 @@
-# Time-discontinuous space-time FEM (TDG/ST/FEM) for Elastodynamics {#sec-vstfem-elastodynamics}
+# TDG/STFEM for Elastodynamics {#sec-vstfem-elastodynamics}
 
 ## Continuum theory of elastodynamics
 
