@@ -1,4 +1,6 @@
-# TDG/FEM for the second order ODE {#sec-ch3-sec3}
+# TDG/FEM for the second order ODE
+
+<!-- {#sec-tdg-fem-second-order-ode} -->
 
 Consider a mass-spring-dashpot system as depicted in @fig-ch3-5 . The governing equation of motion is described by the following second order initial value problem in time.
 
@@ -784,7 +786,7 @@ $$
 \end{array}\right\}
 $${#eq-ch3-104}
 
-In above equation the amplification matrix is given by following expression. 
+In above equation the amplification matrix is given by following expression.
 
 $$
 {\mathbf{A}}\left(\Omega\right)=\left[{\begin{array}{rc}
@@ -797,7 +799,7 @@ $${#eq-ch3-105}
 It is worthwhile to mention that the amplification matrix for the u-TDG/FEM and the v-TDG/FEM are identical (cf. @eq-ch3-102) and @eq-ch3-105. Therefore, the stability and accuracy characteristics of these two methods will be identical, and henceforth only the case of the v-TDG/FEM and uv-TDG/FEM will be discussed.
 :::
 
-The stability of the TDG schemes is determined by the spectral properties of the amplification matrix. Let $\lambda_{1}(\mathbf{A})$ and $\lambda_{2}(\mathbf{A})$ be the eigenvalues of the amplification matrix. Accordingly, it can be shown that 
+The stability of the TDG schemes is determined by the spectral properties of the amplification matrix. Let $\lambda_{1}(\mathbf{A})$ and $\lambda_{2}(\mathbf{A})$ be the eigenvalues of the amplification matrix. Accordingly, it can be shown that
 
 $$
 \lambda_{1,2}(\mathbf{A})=a_{1}\pm\sqrt{a_{1}^{2}-a_{2}}
@@ -842,7 +844,7 @@ Accordingly, for the spectral stability of the TDG/FEM following conditions will
 
 From @eq-ch3-106, @eq-ch3-107, and Table @tbl-ch3-1 it is easy to demonstrate that both uv-TDG/FEM and v-TDG/FEM satisfy the above-mentioned spectral stability conditions. Therefore, TDG/FEM schemes are unconditionally stable time-marching schemes.
 
-Alternatively, for a $2\times2$ amplification matrix, the spectral stability can be examined by using the technique originally developed by the Hilber [@Hughes1983 for derivation]. Hilber technique for the stability of the algorithm is specified in terms of the invariants of amplification matrix; $a_{1}$ and $a_{2}$. The stability region in $a_{1}-a_{2}$ space satisfies (see also @fig-ch3-11) 
+Alternatively, for a $2\times2$ amplification matrix, the spectral stability can be examined by using the technique originally developed by the Hilber [@Hughes1983 for derivation]. Hilber technique for the stability of the algorithm is specified in terms of the invariants of amplification matrix; $a_{1}$ and $a_{2}$. The stability region in $a_{1}-a_{2}$ space satisfies (see also @fig-ch3-11)
 
 $$
 -\frac{{\left({{a_{2}}+1}\right)}}{2}\leqslant{a_{1}}\leqslant\frac{{\left({{a_{2}}+1}\right)}}{2},\qquad-1\leqslant{a_{2}}<1
@@ -886,7 +888,7 @@ $$
 u(t+\Delta t)-2{a_{1}}u(t)+{a_{2}}u(t-\Delta t)=\Delta{t^{2}}\tau\left(t\right)
 $${#eq-ch3-113}
 
-Subsequently, by expanding $u(t+\Delta t)$ and $u(t-\Delta t)$ about $t$ using the Taylor series, and then using 
+Subsequently, by expanding $u(t+\Delta t)$ and $u(t-\Delta t)$ about $t$ using the Taylor series, and then using
 @eq-ch3-93, it can be shown that both uv-TDG/FEM and v-TDG/FEM schemes are consistent, i.e.,
 
 $$
@@ -911,7 +913,7 @@ $$
 \bar{\zeta}=-\frac{1}{{2\bar{\Omega}}}\ln\left({{a_{2}}}\right)
 $${#eq-ch3-117}
 
-here, $\bar{\zeta}$ denotes the algorithmic damping ratio, $\bar{\Omega}$ is the frequency of the discrete solutions, and the coefficients $k_{1}$ and $k_{2}$ are determined by the displacement and velocity initial conditions. The relationship between the discrete frequency $\bar{\Omega}$ and discrete time period $\bar{T}$ is given by 
+here, $\bar{\zeta}$ denotes the algorithmic damping ratio, $\bar{\Omega}$ is the frequency of the discrete solutions, and the coefficients $k_{1}$ and $k_{2}$ are determined by the displacement and velocity initial conditions. The relationship between the discrete frequency $\bar{\Omega}$ and discrete time period $\bar{T}$ is given by
 
 $$
 \frac{{\bar{\Omega}}}{{2\pi}}=\frac{{\Delta t}}{{\bar{T}}}

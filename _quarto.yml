@@ -18,7 +18,7 @@ book:
   cover-image-alt: SDEE
   twitter-card: true
   page-navigation: true
-  page-footer: 
+  page-footer:
     left: "Copyright 2025, Vikas Sharma" 
     right: 
       - icon: github
@@ -33,22 +33,20 @@ book:
   chapters:
     - index.md
     - intro.md
-    - part: "Single Degree of Freedom System"
-      chapters:
-        - ./sdof/first-order-ode-tdg.md
-        - ./sdof/second-order-ode-tdg.md
-    - part: "Elastodynamics"
-      chapters:
-        - ./elastodynamics/elastodynamics-introduction.md
-        - ./elastodynamics/elastodynamics-vstfem.md
-        - ./elastodynamics/elastodynamics-numerical-examples.md
-    - part: "Elastic waves"
-      chapters:
-        - ./elastic-waves/elastic-waves-introduction.md
+    - tdg-first-order-ode.md
+    - tdg-second-order-ode.md
+    - elastic-waves-introduction.md
+    - elastic-waves-body-waves-in-solids.md
+    - elastic-waves-surface-waves-in-solids.md
+    - elastic-waves-radiation-boundary.md
+    - elastodynamics-introduction.md
+    - elastodynamics-vstfem.md
+    - elastodynamics-numerical-examples.md
     - summary.md
     - references.md
   # appendices:
-  # crossref:
+# crossref:
+#   eq-labels: roman
 
 bibliography: references.bib
 
@@ -60,7 +58,6 @@ execute:
 
 format:
   html:
-    number-depth: 2
     theme:
       - cosmo
       - brand

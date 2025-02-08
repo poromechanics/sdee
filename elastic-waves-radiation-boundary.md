@@ -2,178 +2,68 @@
 
 ## Review of artificial boundary conditions
 
-Dynamic soil-structure problems can be viewed as a wave propagation
-problem. Consider a structure (finite dimension) embedded in the
-unbounded domain of semi-infinite soil (see Fig.
-[5](#fig:SSI){reference-type="ref" reference="fig:SSI"}). The soil
-domain can further be divided into two regions; (i) the irregular
-bounded region near to the structure, and (ii) the regular unbounded
-region extending to infinity. Both structure and irregular bounded
-region are allowed to exhibit nonlinear behaviour. However, note that
-the regular unbounded region must remain linear[^5]. Henceforth the term
-*structure* will be used to denote system of irregular bounded region
-and structure and the term *unbounded domain* will be used for denoting
-the regular unbounded region. The dynamic soil-structure interaction
-occurs through the interface between unbounded domain and structure.
+Dynamic soil-structure problems can be viewed as a wave propagation problem. Consider a structure (finite dimension) embedded in the unbounded domain of semi-infinite soil (see @fig-ssi). The soil domain can further be divided into two regions; (i) the irregular bounded region near to the structure, and (ii) the regular unbounded region extending to infinity. Both structure and irregular bounded region are allowed to exhibit nonlinear behaviour. However, note that the regular unbounded region must remain linear[^5]. Henceforth the term *structure* will be used to denote system of irregular bounded region and structure and the term *unbounded domain* will be used for denoting the regular unbounded region. The dynamic soil-structure interaction occurs through the interface between unbounded domain and structure.
 
-![Schematic diagram of dynamic soil-structure interaction
-problem](./figures/Dynamic-SSI){#fig:SSI width="\\textwidth"}
+:::{.column-margin}
 
-For finite element analysis of dynamic SSI problems, a superficial
-surface called *interaction-horizon* that encloses the structure and
-forms the boundary of the computational domain has to be selected
-[@Wolf1996]. The key issue of this approach is to impose the so called
-artificial boundary conditions (ABC) so that the *interaction-horizon*
-can model the radiation damping accurately and spurious reflections from
-the boundaries can be prohibited. In literature these boundary
-conditions have been known as *absorbing*, *non-reflecting*,
-*transparent*, *silent*, and *one-way* boundary conditions. Further, the
-use of ABC's enables one to get rid of the exterior unbounded domain
-from the computations.
+![Schematic diagram of dynamic soil-structure interaction problem](./figures/dynamic-ssi.svg){#fig-ssi}
 
-To appreciate the radiation damping, consider a vertically propagating
-SV-wave in a elastic half-space with two layers of soil (see Fig.
-[6](#fig:Vertical-Shear-Wave-Two-Layer){reference-type="ref"
-reference="fig:Vertical-Shear-Wave-Two-Layer"}). The normal incidence of
-SV-wave at the interface of two layers produces reflected and refracted
-SV-waves. As it was shown earlier the partition of the wave depends upon
-the mechanical impedance of the two media. The wave reflected to lower
-half-space never returns to the interface due to its infinite extension
-in $x_2$-direction. This loss of energy is known as radiation damping
-[@Kramer2014]. Further, refracted wave approaches the free surface
-layered system and subsequently reflected back towards the interface. At
-the interface when this wave reaches again a part of energy is reflected
-back and a part of the energy is transmitted to the lower half-space and
-therefore it will be lost in the semi-infinite domain of bottom layer.
-This loss of energy represents again the radiation damping. One of the
-big challenges of dynamic finite element analysis is to model correctly
-this radiation damping. Further, difficulties arises due to the presence
-of structures (such as dam, tunnel, buildings etc.) in or on the
-half-space that causes multiple reflection and refraction of incoming
+:::
+
+For finite element analysis of dynamic SSI problems, a superficial surface called *interaction-horizon* that encloses the structure and forms the boundary of the computational domain has to be selected [@Wolf1996]. The key issue of this approach is to impose the so called artificial boundary conditions (ABC) so that the *interaction-horizon* can model the radiation damping accurately and spurious reflections from the boundaries can be prohibited. In literature these boundary conditions have been known as *absorbing*, *non-reflecting*, *transparent*, *silent*, and *one-way* boundary conditions. Further, the use of ABC's enables one to get rid of the exterior unbounded domain from the computations.
+
+To appreciate the radiation damping, consider a vertically propagating SV-wave in a elastic half-space with two layers of soil (see Fig. [6](#fig:Vertical-Shear-Wave-Two-Layer){reference-type="ref" reference="fig:Vertical-Shear-Wave-Two-Layer"}). The normal incidence of SV-wave at the interface of two layers produces reflected and refracted SV-waves. As it was shown earlier the partition of the wave depends upon the mechanical impedance of the two media. The wave reflected to lower half-space never returns to the interface due to its infinite extension in $x_2$-direction. This loss of energy is known as radiation damping [@Kramer2014]. Further, refracted wave approaches the free surface layered system and subsequently reflected back towards the interface. At the interface when this wave reaches again a part of energy is reflected back and a part of the energy is transmitted to the lower half-space and therefore it will be lost in the semi-infinite domain of bottom layer. This loss of energy represents again the radiation damping. One of the big challenges of dynamic finite element analysis is to model correctly this radiation damping. Further, difficulties arises due to the presence of structures (such as dam, tunnel, buildings etc.) in or on the half-space that causes multiple reflection and refraction of incoming
 waves.
 
-<figure id="fig:Vertical-Shear-Wave-Two-Layer">
-<img src="./figures/Vertical-Shear-Wave-Two-Layer" />
-<figcaption>Schematic diagram of reflections and refractions of
-vertically propagating <em>SV-wave</em> in two layered elastic
-half-space</figcaption>
-</figure>
+:::{.column-margin}
 
-The minimal requirements of ABC's presented by [@Givoli1991] are; (a)
-the problem in truncated domain with ABC should be mathematically well
-posed, (b) ABC's should allow the waves that come from inside the
-computational domain to go out[^6] and produces little spurious
-reflections at the artificial boundaries, (c) the solutions of truncated
-problem in some sense should be close enough to the original problem in
-unbounded domain, (d) the combination of a numerical scheme and ABC's
-should yield a stable numerical method, (e) ABC should be easy to
-implement and the cost of implementation should not be huge.
+![Schematic diagram of reflections and refractions of vertically propagating SV-wave in two layered elastic half-space](./figures/vertical-shear-wave-two-layer.svg){#fig-vertical-shear-wave-two-layer}
 
-Kausel and Tassoulas in their review paper [@Kausel1981] grouped ABC's
-into following three categories;
+:::
 
-1.  *Elementary boundaries*: This type of boundary conditions are also
-    known as Dirichlet, Neumann and Mixed boundary conditions.
-    Displacements and stresses are prescribed in the case of Dirichlet
-    and Neumann boundary condition, respectively. In case of mixed
-    boundary conditions some components of displacement and stress are
-    prescribed (for example roller boundary condition). Recalling that
-    such boundary conditions act as the perfect reflector waves as no
-    energy is absorbed or transmitted. Therefore, adoption of such
-    boundary conditions to model the unbounded domain will cause
-    spurious reflections and spoil the accuracy of the solutions.
-    Elementary boundaries will be adequate only under certain
-    circumstances: (i) when the problem can be regarded as
-    pseudo-static; frequency of excitation is below the natural
-    frequency of a soil stratum problem, (ii) when the internal damping
-    of the soil is sufficient to suppress the reflected wave before it
-    return to the region of study, (iii) when the time duration of
-    numerical simulation is shorter than the time required for a wave to
-    return to the area of interest.
+The minimal requirements of ABC's presented by [@Givoli1991] are; (a) the problem in truncated domain with ABC should be mathematically well posed, (b) ABC's should allow the waves that come from inside the computational domain to go out[^6] and produces little spurious reflections at the artificial boundaries, (c) the solutions of truncated problem in some sense should be close enough to the original problem in unbounded domain, (d) the combination of a numerical scheme and ABC's should yield a stable numerical method, (e) ABC should be easy to implement and the cost of implementation should not be huge.
 
-2.  *Local boundaries*: The main characteristic of local boundaries is
-    that the boundary conditions involve only spatial and temporal
-    points in the neighbourhood of the boundary point under
-    consideration at the time of evaluation. Further, these boundaries
-    are based upon the physical or mathematical approximations.
+Kausel and Tassoulas in their review paper [@Kausel1981] grouped ABC's into following three categories;
 
-3.  *Consisting (nonlocal) transmitting boundaries*: These boundaries
-    are perfect absorbers of any kind of waves impinging with arbitrary
-    incidence. The conditions imposed by such boundaries are essentially
-    nonlocal in nature. Most of these boundaries are frequency-dependent
-    and thus in time domain analysis they are restricted to steady state
-    problems.
+:::{.callout-note title="Elementary boundaries"}
 
-## Local artificial boundary conditions {#sec:ch4_sec3-1}
+This type of boundary conditions are also known as Dirichlet, Neumann and Mixed boundary conditions. Displacements and stresses are prescribed in the case of Dirichlet and Neumann boundary condition, respectively. In case of mixed boundary conditions some components of displacement and stress are prescribed (for example roller boundary condition). Recalling that such boundary conditions act as the perfect reflector waves as no energy is absorbed or transmitted. Therefore, adoption of such boundary conditions to model the unbounded domain will cause spurious reflections and spoil the accuracy of the solutions. Elementary boundaries will be adequate only under certain circumstances: (i) when the problem can be regarded as pseudo-static; frequency of excitation is below the natural frequency of a soil stratum problem, (ii) when the internal damping of the soil is sufficient to suppress the reflected wave before it return to the region of study, (iii) when the time duration of numerical simulation is shorter than the time required for a wave to return to the area of interest.
 
-The first attempt to simulate radiation with simple local boundaries was
-presented by [@Lysmer1969]. These authors developed viscous boundary
-conditions based on physical consideration. In essence, these conditions
-can be interpreted as dashpots connected to the boundary points. The
-damping coefficient was given by the mechanical impedance of the soil to
-which dashpots were attached to. The derivation of this type of boundary
-condition is considered in the next section.
+:::
 
-[@Smith1974] used the principle of superposition to filter out the
-contribution of spurious reflections from the solutions. Two solutions
-were obtained corresponding to the two types of boundary conditions; one
-in which tangential displacement and normal stresses vanishes, another
-in which normal displacement and tangential stresses vanishes. The
-reflected P-wave and S-wave corresponding to these boundary conditions
-have the same amplitude but they have phase difference of
-$180 \,^{\circ}$. However, this approach is computationally not
-efficient, moreover this approach is limited to the linear problem only.
+:::{.callout-tip title="Local boundaries"}
 
-[@Engquist1977] and [@Clayton1977a], developed a set of time-dependent
-*local-ABC* of increasing order based on paraxial approximations of the
-scalar and elastic wave equation. In their technique they approximated
-the irrational dispersion relation by a rational function to obtain the
-local differential operator from the nonlocal pseudodifferential
-operators. In this way by using rational approximations of increasing
-order, they obtain local boundary conditions of increasing accuracy.
-Further, they mentioned that a higher order paraxial approximation based
-on Taylor series expansions induces numerical instability. Although this
-difficulty can be overcome by use of Pade approximations instead of
-Taylor series expansions, the presence of higher order derivatives in
-boundary conditions greatly complicates its implementation. Another set
-of local boundary conditions with adjustable free parameters was
-proposed by [@Clayton1980]. Later, [@Cohen1980] showed that the paraxial
-boundary becomes unstable when Poisson's ratio exceeds $0.33$. A
-modified version of paraxial boundary called extended-paraxial boundary
-and its finite element implementation was provided by
-[@Cohen1983; @Cohen1981]. It was also shown that the performance of
-extended-paraxial boundary is only slightly superior to the
-standard-viscous boundary. [@Stacey1988] presented three new paraxial
-approximations superior to those presented by Clayton and Engquist while
-avoiding the higher order derivatives. Better finite-difference
-equations for internal boundaries and corners were also presented in
-this research.
+The main characteristic of local boundaries is that the boundary conditions involve only spatial and temporal points in the neighbourhood of the boundary point under consideration at the time of evaluation. Further, these boundaries are based upon the physical or mathematical approximations.
 
-[@Bayliss1980] presented the sequence of local absorbing boundary
-conditions in spherical coordinates by employing the asymptotic
-expansion of the solution of scalar wave equation at large distances.
-The radiation conditions are given by hierarchy of differential
-operators $B_{m}$ which annihilate the first $m$ terms in the asymptotic
-expansion of the solution. The boundary conditions are given by
+:::
 
-$$\label{eq:Bayliss1980}
-{B_m}u = \left[ {\prod\limits_{k = 1}^m {\left( {\frac{1}{c}\frac{\partial }{{\partial t}} + \frac{\partial }{{\partial r}} + \frac{{2j - 1}}{R}} \right)} } \right]u = 0$$
-where $R$ is the radius of the artificial boundary. This higher order
-local boundary condition, like previous schemes given by other
-researchers, contains the higher order derivatives which makes their
-practical implementation near to impossible.
+:::{.callout-note title="Consisting (nonlocal) transmitting boundaries"}
 
-[@Higdon1986] considered the two-dimensional wave equation in a
-rectangular truncated domain $\Omega$. In his work scalar wave equation
-was first discretized in space and time domain using finite difference
-scheme. Subsequently, some discrete boundary conditions were derived for
-the artificial boundary. He then presented the analytical boundary
-condition corresponding to the discrete one. The $p$-order boundary
-condition, for a boundary vertical boundary located at some $x>0$, is
-described by the product type differential operators $H_{p}$
+These boundaries are perfect absorbers of any kind of waves impinging with arbitrary incidence. The conditions imposed by such boundaries are essentially nonlocal in nature. Most of these boundaries are frequency-dependent and thus in time domain analysis they are restricted to steady state problems.
 
-$$\label{eq:Higdon-BC-1}
-{H_p}u = \left[ {\prod\limits_{j = 1}^p {\left( {\cos {\theta _j}\frac{\partial }{{\partial t}} + c\frac{\partial }{{\partial x}}} \right)} } \right]u = 0$$
+:::
+
+## Local artificial boundary conditions
+
+The first attempt to simulate radiation with simple local boundaries was presented by [@Lysmer1969]. These authors developed viscous boundary conditions based on physical consideration. In essence, these conditions can be interpreted as dashpots connected to the boundary points. The damping coefficient was given by the mechanical impedance of the soil to which dashpots were attached to. The derivation of this type of boundary condition is considered in the next section.
+
+[@Smith1974] used the principle of superposition to filter out the contribution of spurious reflections from the solutions. Two solutions were obtained corresponding to the two types of boundary conditions; one in which tangential displacement and normal stresses vanishes, another in which normal displacement and tangential stresses vanishes. The reflected P-wave and S-wave corresponding to these boundary conditions have the same amplitude but they have phase difference of $180 \,^{\circ}$. However, this approach is computationally not efficient, moreover this approach is limited to the linear problem only.
+
+[@Engquist1977] and [@Clayton1977a], developed a set of time-dependent *local-ABC* of increasing order based on paraxial approximations of the scalar and elastic wave equation. In their technique they approximated the irrational dispersion relation by a rational function to obtain the local differential operator from the nonlocal pseudodifferential operators. In this way by using rational approximations of increasing order, they obtain local boundary conditions of increasing accuracy. Further, they mentioned that a higher order paraxial approximation based on Taylor series expansions induces numerical instability. Although this difficulty can be overcome by use of Pade approximations instead of Taylor series expansions, the presence of higher order derivatives in boundary conditions greatly complicates its implementation. Another set of local boundary conditions with adjustable free parameters was proposed by [@Clayton1980]. Later, [@Cohen1980] showed that the paraxial boundary becomes unstable when Poisson's ratio exceeds $0.33$. A modified version of paraxial boundary called extended-paraxial boundary and its finite element implementation was provided by [@Cohen1983; @Cohen1981]. It was also shown that the performance of extended-paraxial boundary is only slightly superior to the standard-viscous boundary. [@Stacey1988] presented three new paraxial approximations superior to those presented by Clayton and Engquist while avoiding the higher order derivatives. Better finite-difference equations for internal boundaries and corners were also presented in this research.
+
+[@Bayliss1980] presented the sequence of local absorbing boundary conditions in spherical coordinates by employing the asymptotic expansion of the solution of scalar wave equation at large distances. The radiation conditions are given by hierarchy of differential operators $B_{m}$ which annihilate the first $m$ terms in the asymptotic expansion of the solution. The boundary conditions are given by
+
+$$
+{B_m}u = \left[ {\prod\limits_{k = 1}^m {\left( {\frac{1}{c}\frac{\partial }{{\partial t}} + \frac{\partial }{{\partial r}} + \frac{{2j - 1}}{R}} \right)} } \right]u = 0
+$$ {#eq-bayliss1980}
+
+where $R$ is the radius of the artificial boundary. This higher order local boundary condition, like previous schemes given by other researchers, contains the higher order derivatives which makes their practical implementation near to impossible.
+
+[@Higdon1986] considered the two-dimensional wave equation in a rectangular truncated domain $\Omega$. In his work scalar wave equation was first discretized in space and time domain using finite difference scheme. Subsequently, some discrete boundary conditions were derived for the artificial boundary. He then presented the analytical boundary condition corresponding to the discrete one. The $p$-order boundary condition, for a boundary vertical boundary located at some $x>0$, is described by the product type differential operators $H_{p}$
+
+$$
+{H_p}u = \left[ {\prod\limits_{j = 1}^p {\left( {\cos {\theta _j}\frac{\partial }{{\partial t}} + c\frac{\partial }{{\partial x}}} \right)} } \right]u = 0
+$$ {#eq-higdon-bc-1}
 
 where $c$ is some reference wave-speed and $\theta_{j}$ is the angle of
 incident and
@@ -654,7 +544,6 @@ reference="subsec:Longi-Trans-Plane-Wave"}.
   Incident P-wave     0   $c_{L}$    $\left( \sin\theta_{0}, \cos\theta_{0} \right)^{T}$    $\left( \sin\theta_{0}, \cos\theta_{0} \right)^{T}$
   Reflected P-wave    1   $c_{L}$    $\left( \sin\theta_{1}, -\cos\theta_{1} \right)^{T}$   $\left( \sin\theta_{1}, -\cos\theta_{1} \right)^{T}$
   Reflected SV-wave   2   $c_{T}$    $\left( \sin\theta_{2}, -\cos\theta_{2} \right)^{T}$   $\left( \cos\theta_{2}, \sin\theta_{2} \right)^{T}$
-                                                                                           
 
   : Parameters for the impinging P-wave, reflected P-wave and reflected
   SV-wave
@@ -677,7 +566,6 @@ $$\eta_{n}=k_{n}\left( x_{1}p^{n}_{1} - c_{n}t \right)$$
   \(0\)    $i{k_0}{A_0}\left( {\lambda  + 2\mu {{\cos }^2}{\theta _0}} \right)\exp \left( {i{{\overline \eta  }_0}} \right)$                     $i{k_0}{A_0}\mu \sin 2{\theta _0}\exp \left( {i{{\bar \eta }_0}} \right)$
   \(1\)       $i{k_1}{A_1}\left( {\lambda  + 2\mu {{\cos }^2}{\theta _1}} \right)\exp \left( {i{{\bar \eta }_1}} \right)$                       $- i{k_1}{A_1}\mu \sin 2{\theta _1}\exp \left( {i{{\bar \eta }_1}} \right)$
   \(2\)                       $- i{k_2}{A_2}\mu \sin 2{\theta _2}\exp \left( {i{{\bar \eta }_2}} \right)$                      $\sigma _{12}^{\left( 2 \right)} =  - i{k_2}{A_2}\mu \cos 2{\theta _2}\exp \left( {i{{\bar \eta }_2}} \right)$
-                                                                                                                              
 
   : Expression for normal and tangential stress at $x_{2}=0$ due to
   impinging P-wave (n=0), reflected P-wave (n=1) and reflected SV-wave
@@ -1258,7 +1146,6 @@ reference="eq:LK-ABC-effective-6"} and Eq.
 [\[eq:LK-ABC-effective-7\]](#eq:LK-ABC-effective-7){reference-type="eqref"
 reference="eq:LK-ABC-effective-7"} it is evident that the incident
 velocity $v^{I}$ is half of the total velocity at the free surface[^8].
-
 
 ## Summary
 

@@ -179,4 +179,3 @@ in the reservoir by solving the linear equation for the reservoir
 domain. In each iteration of the proposed scheme, therefore, linear
 equations for the solid and fluid domain are solved, separately, which
 significantly decreases the computation cost.
-

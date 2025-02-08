@@ -1,4 +1,4 @@
-# TDG/FEM for the first order ODE {#sec-tdg-first-order-ode}
+# TDG/FEM for the first order ODE
 
 To understand the working principle of the time-discontinuous Galerkin
 finite element method (TDG/FEM) consider the following initial value
