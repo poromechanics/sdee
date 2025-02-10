@@ -42,6 +42,7 @@ book:
     - elastodynamics-introduction.md
     - elastodynamics-vstfem.md
     - elastodynamics-numerical-examples.md
+    - gravity-dam-introduction.md
     - summary.md
     - references.md
   # appendices:
