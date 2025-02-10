@@ -42,7 +42,10 @@ book:
     - elastodynamics-introduction.md
     - elastodynamics-vstfem.md
     - elastodynamics-numerical-examples.md
-    - gravity-dam-introduction.md
+    - dynamic-ssi-vstfem.md
+    - dynamic-ssi-drs-introduction.md
+    - dynamic-ssi-drs-equations.md
+    - dynamic-ssi-drs-vstfem.md
     - summary.md
     - references.md
   # appendices:

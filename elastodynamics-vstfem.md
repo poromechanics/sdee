@@ -1,4 +1,4 @@
-# TDG/STFEM for Elastodynamics {#sec-vstfem-elastodynamics}
+# TDG/STFEM for Elastodynamics {#sec-elastodynamics-vstfem}
 
 ## Continuum theory of elastodynamics
 
