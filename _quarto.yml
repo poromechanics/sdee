@@ -47,6 +47,7 @@ book:
     - dynamic-ssi-drs-equations.md
     - dynamic-ssi-drs-vstfem.md
     - dynamic-ssi-drs-nonlinear-problem.md
+    - dynamic-ssi-drs-nonlinear-vstfem.md
     - summary.md
     - references.md
   # appendices:

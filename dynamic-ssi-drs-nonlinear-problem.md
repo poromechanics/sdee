@@ -17,7 +17,7 @@ In this chapter, v-ST/FEM is employed for the problems involving dynamic respons
 @fig-ch6-fig2 depicts the dam-reservoir system situated on a relatively rigid ground which is subjected to the spatially uniform transient ground motion. The horizontal and vertical component of ground motion are denoted by $a_{1}^{g}(t)$ and $a_{2}^{g}(t)$, respectively. Henceforth, the superscript ${(\cdot)}^{s}$ and ${(\cdot)}^{f}$ will be used for denoting the quantities related to the solid (dam) and fluid domain, respectively. Let $\Omega^{f}$ be the computation domain of reservoir which is enclosed by a free surface $\Gamma_{f}^{f}$, an upstream artificial boundary $\Gamma_{\infty}^{f}$, a fluid-soil interface $\Gamma^{f}_{fs}$, and a fluid-dam interface $\Gamma_{fd}^{f}$. Accordingly, the boundary of the fluid domain can be described by 
 
 $$
-\Gamma _{}^f = \Gamma _f^f \cup \Gamma _\infty ^f \cup \Gamma _{fs}^f \cup \Gamma _{fd}^f
+\Gamma_{}^f = \Gamma_f^f \cup \Gamma_\infty^f \cup \Gamma _{fs}^f \cup \Gamma_{fd}^f
 $$ {#eq-ch7-1} 
 
 Let $\Omega^{s}$ be the computation domain of dam, $\Gamma_{fd}^{s}$ be the fluid-dam interface of dam, and $\Gamma_{ds}^{s}$ be the base of the dam. The outward unit normal vectors to the fluid and solid boundary are denoted by $\mathbf{n}^{s}$ and $\mathbf{n}^{f}$, respectively, and 
@@ -93,11 +93,11 @@ p\left( {{\mathbf{x}},0} \right) = 0 \quad \forall \mathbf{x} \in \Omega^{f}
 $$ {#eq-ch7-12}
 
 $$
-\frac{{\partial p\left( {{\mathbf{x}},0} \right)}}{{\partial t}} = 0 \quad \forall \mathbf{x} \in \Omega^{f}
+\frac{\partial p\left( {{\mathbf{x}},0} \right)}{\partial t} = 0 \quad \forall \mathbf{x} \in \Omega^{f}
 $$ {#eq-ch7-13}
 
 $$
-p(x,t) &= 0 \quad \forall (\mathbf{x},t) \in \Gamma^{f}_{f} \times (0,T)
+p(x,t) = 0 \quad \forall (\mathbf{x},t) \in \Gamma^{f}_{f} \times (0,T)
 $$ {#eq-ch7-14}
 
 $$
@@ -126,9 +126,13 @@ Note that the governing equation for the fluid domain, which is given by @eq-ch7
 
 Materials such as concrete, mortar, and rocks have very less tensile strength (about 10 percent) than compressive strength and exhibit a quasi-brittle behavior. Tensile fracture in concrete like materials involves progressive micro-cracking, tortuous debonding and other processes of internal damage which eventually coalesce into a macro-cracks. Accordingly, a mass concrete when subjected to the tensile loading undergo strain softening before leading to a complete loss of strength. @fig-ch7-1 shows a typical stress-strain relationship for mass concrete from uniaxial tension test obtained by [@Bruhwiler1990]. At the beginning, a linear relationship between stress and strain exists until the elastic limit is reached. Once the elastic limit is crossed, micro-cracks develop within the mass concrete, which results in nonlinearity in the curve up to the ultimate tensile strength $\sigma_{t}$. The post-peak behavior starts with the strain-softening due to growth of micro-cracks in the weakest cross-section of the specimen which then coalescence into a crack: a geometrical discontinuity that separates the material. Therefore, the stress-strain relationship for the concrete like materials can be divided into two regime: (i) pre-softening regime and (ii) softening regime.
 
+:::{.column-margin}
 ![Typical stress-strain curve for mass concrete from simple tension test after [@Bruhwiler1990]](./figures/ch7-fig-1.svg){#fig-ch7-1}
+:::
 
 In what follows the co-axially rotating crack model (CRCM)[^3] which is defined by (i) the pre-softening material behavior, (ii) the criterion for crack initiation, (iii) the fracture energy conservation, and (iv) the growth, closing and reopening of cracks, and v-ST/FEM implementation of this constitutive model are presented.
+
+[^3]: The CRCM model was first proposed by [@Bhattacharjee1993] and recently modified by [@Calayir2005]
 
 ### Pre-softening behavior
 
@@ -138,15 +142,7 @@ $$
 \left\{ \sigma  \right\} = \left[ {\mathbf{C}} \right] \cdot \left\{ \varepsilon  \right\}
 $$ {#eq-ch7-71}
 
-where $\left[ {\mathbf{C}} \right]$,
-
-$\left\{ \sigma  \right\} = \left[ {{\sigma_{11}},{\sigma_{22}},{\sigma_{12}}} \right]$
-
-and
-
-$\left\{ \varepsilon  \right\} = \left[ {{\varepsilon_{11}},{\varepsilon_{22}},2{\varepsilon_{12}}} \right]$
-
-denotes Voigt-form of the constitutive matrix, stress tensor and strain tensor, respectively. In pre-softening case since there are no cracks
+where $\left[ {\mathbf{C}} \right]$, $\left\{ \sigma  \right\} = \left[ {{\sigma_{11}},{\sigma_{22}},{\sigma_{12}}} \right]$ and $\left\{ \varepsilon  \right\} = \left[ {{\varepsilon_{11}},{\varepsilon_{22}},2{\varepsilon_{12}}} \right]$ denotes Voigt-form of the constitutive matrix, stress tensor and strain tensor, respectively. In pre-softening case since there are no cracks
 developed in concrete, the standard elastic plane stress-strain matrix for an isotropic material is used. Then, the matrix
 
 $\left[ {\mathbf{C}} \right]$ is given by
@@ -189,9 +185,7 @@ This equation represents a biaxial failure envelope which is illustrated in @fig
 
 ### Strain softening model for concrete and fracture energy conservation
 
-[@Bhattacharjee1993] used a linear strain softening relationship; the tensile resistance of concrete is assumed to decrease linearly from the
-pre-softening undamaged state to the fully damaged state of zero tensile resistance. Recently, numerous researchers have shown that it is more
-realistic to assume a strain softening curve with a steep initial decline followed by an extended tail [@Kurumatani2016; @Geers2000; @Jirasek2008; @Giry2011; @Peerlings1998; @Calayir2005]. According to [@Calayir2005], the post-peak strain softening behavior of concrete can be modeled by using following exponential strain softening relationship (see also @fig-ch7-2 a) 
+[@Bhattacharjee1993] used a linear strain softening relationship; the tensile resistance of concrete is assumed to decrease linearly from the pre-softening undamaged state to the fully damaged state of zero tensile resistance. Recently, numerous researchers have shown that it is more realistic to assume a strain softening curve with a steep initial decline followed by an extended tail [@Kurumatani2016; @Geers2000; @Jirasek2008; @Giry2011; @Peerlings1998; @Calayir2005]. According to [@Calayir2005], the post-peak strain softening behavior of concrete can be modeled by using following exponential strain softening relationship (see also @fig-ch7-2 a) 
 
 $$
 \sigma \left( \varepsilon  \right) = \left\{ \begin{gathered}
@@ -201,7 +195,7 @@ $$
 \end{gathered}  \right.
 $$ {#eq-ch7-76}
 
-where $\varepsilon_{cr}$ denotes the maximum strain that may not be exceeded during strain softening, and is consistent with the study carried out by [@Bazant1987]. The value of $\varepsilon_{cr}$ can be calculated when its corresponding stress given is equal to $\delta_{cr} \sigma_{t}$. Thus, $\sigma = \delta_{cr} \sigma_{t}$ in @eq-ch76 b one can expressed $\varepsilon$ as
+where $\varepsilon_{cr}$ denotes the maximum strain that may not be exceeded during strain softening, and is consistent with the study carried out by [@Bazant1987]. The value of $\varepsilon_{cr}$ can be calculated when its corresponding stress given is equal to $\delta_{cr} \sigma_{t}$. Thus, $\sigma = \delta_{cr} \sigma_{t}$ in @eq-ch7-76 b one can expressed $\varepsilon$ as
 
 $$
 {\varepsilon _{cr}} = {\varepsilon _0} + \frac{1}{a}\ln \left( {\frac{{1 + \sqrt {1 - {\delta _{cr}}} }}{{{\delta _{cr}}}}} \right)
@@ -215,11 +209,13 @@ $$ {#eq-ch7-78}
 
 In @eq-ch7-76, @eq-ch7-77, @eq-ch7-78 $a$ is a dimensionless parameter which is related to the slope of the softening curve. The parameter $a$ should be adjusted such that the energy dissipation for a unit area of crack plane propagation is conserved. Let the fracture energy[^4] be denoted by $G_{f}$. In the energy balance approach it is assumed that the fracture energy $G_{f}$ will be absorbed due to formation of a unit area of crack surface. When the crack propagates a certain amount of stored energy is released, and the crack can only propagates when the released energy is equal to or greater than the absorbed energy [@Hillerborg1976]. The limiting value of $a$ can be obtained b, 
 
+[^4]: The fracture energy is defined as the energy per unit area required to form a fracture surface
+
 $$
 \int_0^\infty  {\sigma d\varepsilon } : = \int_0^{{\varepsilon _0}} {\sigma d\varepsilon }  + \int_{{\varepsilon _0}}^\infty  {\sigma d\varepsilon }  = \frac{{{G_f}}}{{{l_{ch}}}}
 $$ {#eq-ch7-79}
 
-Now, use of the stress-strain relationship as given by @eq-ch7-76 in above equation will yield following expression for $a$. 
+Now, use of the stress-strain relationship as given by @eq-ch7-76 in above equation will yield following expression for $a$.
 
 $$
 a = \frac{3}{{{\varepsilon _o}\left( {\frac{{2{G_f}}}{{{l_{ch}}{\sigma _t}{\varepsilon _o}}} - 1} \right)}} \geqslant 0
@@ -280,8 +276,7 @@ in which $\theta$ is the angle between the $n$-axis and $x$-axis as shown in @fi
 
 ### Closing and reopening of cracks
 
-During the unloading/reloading, when the strain, $\varepsilon_{n}$, is less than the previously attained maximum value, $\varepsilon_{max}$
-(see @fig-ch7-2 d), the secant modulus, $E_{n}$ and therefore $\eta$, do not change; however, the parameter $\mu$ changes during this process. During unloading the shear reduction factor, $\mu$, gradually increases with the reduction of $\varepsilon_{n}$. The damaged state elastic modulus in the normal direction, $E_{n}$ (which may have reached a zero value), is replaced by the undamaged initial value, $E_{0}$, if the parameter $\mu$ is greater than a threshold value $\mu_{c}$. In this study $\mu_{c}=0.95$ is considered. In subsequent loading steps, when $\varepsilon_{n}>0$, the value $\mu$ is determined by using the damaged value $\eta$ to determine the reopening of cracks. If $\mu$ becomes less than $\mu_{c}$, the element behavior is determined by either reloading or the reopening path depending on the final state attained in previous tensile cycles. The appropriate value of the damage modulus, $E_{n}$, is reused in @eq-ch7-82 at that state.
+During the unloading/reloading, when the strain, $\varepsilon_{n}$, is less than the previously attained maximum value, $\varepsilon_{max}$ (see @fig-ch7-2 d), the secant modulus, $E_{n}$ and therefore $\eta$, do not change; however, the parameter $\mu$ changes during this process. During unloading the shear reduction factor, $\mu$, gradually increases with the reduction of $\varepsilon_{n}$. The damaged state elastic modulus in the normal direction, $E_{n}$ (which may have reached a zero value), is replaced by the undamaged initial value, $E_{0}$, if the parameter $\mu$ is greater than a threshold value $\mu_{c}$. In this study $\mu_{c}=0.95$ is considered. In subsequent loading steps, when $\varepsilon_{n}>0$, the value $\mu$ is determined by using the damaged value $\eta$ to determine the reopening of cracks. If $\mu$ becomes less than $\mu_{c}$, the element behavior is determined by either reloading or the reopening path depending on the final state attained in previous tensile cycles. The appropriate value of the damage modulus, $E_{n}$, is reused in @eq-ch7-82 at that state.
 
 In what follows an informal explanation regarding the the physical significance of CRCM during the unloading/reloading process is presented. Imagine the smeared band of micro-cracks developed inside the test-specimen subjected to dynamic loading. In addition, assume that the material is partially damaged (this state is described by point-A in @fig-ch7-2 d). At this stage, strength of the material has degraded in both normal and tangential directions to the plane. In CRCM this corresponds to the $\eta<1.0$ and $\mu<1.0$, where the former and later are related to the strength reduction in normal and tangential directions, respectively. At this stage, if loading continues then $\eta$ and $\mu$ will keep decreasing denoting the strength reduction in smeared band due to growth of cracks. In case of unloading, the normal strain $\varepsilon_{n}$ decreases and cracks start closing, accordingly the shear resistance factor, $\mu$, starts to increase compare to its value at point-A in @fig-ch7-2 d. This signifies the gain of strength in tangential direction to the damaged plane due to the partial closing of cracks. During unloading, as long as the cracks are still opened (i.e. $\mu<\mu_{c}$), the strength in the normal direction remains same as that of point-A. In CRCM, this behavior is simulated by keeping 
 

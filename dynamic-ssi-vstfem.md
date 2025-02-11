@@ -586,11 +586,11 @@ In this section linear seismic analysis of concrete dam is performed by employin
 :::
 
 :::{.column-margin}
-![Physical dimension and finite element mesh detail of concrete gravity dam used for the numerical simulation](./figures/ch5_fig4.svg){#fig-ch5-fig4}
+![Physical dimension and finite element mesh detail of concrete gravity dam used for the numerical simulation](./figures/ch5_fig4.png){#fig-ch5-fig4}
 :::
 
 :::{.column-margin}
-![Horizontal component of acceleration recorded at the free-surface: (A) time history, and (B) Fourier spectrum](./figures/ch5_fig7.svg){#fig-ch5-fig7}
+![Horizontal component of acceleration recorded at the free-surface: (A) time history, and (B) Fourier spectrum](./figures/ch5_fig7.png){#fig-ch5-fig7}
 :::
 
 @fig-ch5-fig5 illustrates the physical dimension and finite element mesh of the truncated computational domain ($\Omega$). The length of soil domain in $x_{1}$-direction is nine times the length of base of the dam, and the length in $x_{2}$-direction is three times the height of the dam. The computational domain is descritised using $19,176$ number of four node quadrilateral (Quad4) elements and $453$ number of three-node linear triangle (Tria3) elements (see @fig-ch5-fig5). There are total $19,559$ number of nodes in the mesh, hence the total number of primary unknowns to be determined are $78,236$ (four times the total number of nodes).

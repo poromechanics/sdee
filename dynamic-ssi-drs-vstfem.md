@@ -476,14 +476,14 @@ In this section, three types of dam-reservoir interaction problems are solved to
 
 The finite element model of the present problem uses four-node quadrilateral elements (Quad4) to discretize both fluid and solid domain. All simulations are performed with a uniform time step size $\Delta t = 0.01$ sec for total time duration of $5$ seconds. In block iterative algorithm, tolerance for $q$ and $\mathbf{v}$ is set to $0.01\%$. The resultant unsymmetrical system of linear equation is solved using the GpBiCG algorithm with tolerance value $1.0\times 10^{-6}$. Further, in order to evaluated the effectiveness of the viscous (or Sommerfeld) boundary condition (cf. @eq-ch6-6) at the upstream truncated boundary of reservoir, numerical simulations are performed for four cases corresponding to the different length of reservoir; $L = 3H$, $L= 4H$, $L=5H$, and $L=7H$ (where $H=180$m is the height of water in reservoir). @fig-ch6-9 shows the finite element mesh of dam and reservoir used in the numerical simulations. Note that the finite element mesh for vertical faced dam remains identical in all cases corresponding to different $L/H$ values.
 
-![Finite element meshes for vertical faced dam and reservoir system: (A) mesh for vertical faced dam of height $H=180$ m, (B) mesh for reservoir of length $L=3H$, (C) mesh for reservoir of length $L=4H$, (D) mesh for reservoir of length $L=5H$, and (E) mesh for reservoir of length $L=7H$](./figures/ch6_fig-p1-3.svg){#fig-ch6-9}
+![Finite element meshes for vertical faced dam and reservoir system: (A) mesh for vertical faced dam of height $H=180$ m, (B) mesh for reservoir of length $L=3H$, (C) mesh for reservoir of length $L=4H$, (D) mesh for reservoir of length $L=5H$, and (E) mesh for reservoir of length $L=7H$](./figures/ch6_fig-p1-3.png){#fig-ch6-9}
 
 :::{.column-margin}
-![Hydrodynamic pressure obtained by v-STFEM approach at the base of rigid dam due to ramp acceleration for different values of reservoir length](./figures/ch6_fig-p1-4.svg){#fig-ch6-10}
+![Hydrodynamic pressure obtained by v-STFEM approach at the base of rigid dam due to ramp acceleration for different values of reservoir length](./figures/ch6_fig-p1-4.png){#fig-ch6-10}
 :::
 
 :::{.column-margin}
-![Distribution of the maximum value of hydrodynamic pressure computed by v-ST/FEM approach on the upstream vertical face of the rigid dam due to ramp acceleration](./figures/ch6_fig-p1-5.svg){#fig-ch6-11}
+![Distribution of the maximum value of hydrodynamic pressure computed by v-ST/FEM approach on the upstream vertical face of the rigid dam due to ramp acceleration](./figures/ch6_fig-p1-5.png){#fig-ch6-11}
 :::
 
 The analytical solution for hydrodynamic pressures on a rigid dam with a vertical upstream face due to rectangular reservoir under general horizontal ground acceleration is given by [@Tsai1990], 
@@ -503,18 +503,18 @@ The hydrodynamic pressure at the base of the rigid dam obtained by employing v-S
 @fig-ch6-11 compares the distribution of the maximum hydrodynamic pressure on the upstream face of the rigid-dam for all $L/H$ values with the analytical solution. Interestingly, in all cases the distribution of maximum hydrodynamic pressure on the vertical face of rigid-dam is in good agreement with the analytical result. This is because the maximum pressure at any point on the face of the dam occurs during the first half cycle of pressure wave, and from @fig-ch6-10 it can be seen that, for all values of $L/H$ ratio, the computed peak hydrodynamic pressure is nearly same as the analytical result.
 
 :::{.column-margin}
-![Comparison of hydrodynamic pressure at the base of rigid dam due to ramp acceleration for $L/H=3$ with the analytical solution of @Tsai1990 and the finite element solution of @Pelecanos2013](./figures/ch6_fig-p1-6.svg){#fig-ch6-12}
+![Comparison of hydrodynamic pressure at the base of rigid dam due to ramp acceleration for $L/H=3$ with the analytical solution of @Tsai1990 and the finite element solution of @Pelecanos2013](./figures/ch6_fig-p1-6.png){#fig-ch6-12}
 :::
 
 :::{.column-margin}
-![Comparison of hydrodynamic pressure at the base of rigid dam due to ramp acceleration for $L/H=7$ with the analytical solution of @Tsai1990 and the finite element solution of @Pelecanos2013](./figures/ch6_fig-p1-7.svg){#fig-ch6-13}
+![Comparison of hydrodynamic pressure at the base of rigid dam due to ramp acceleration for $L/H=7$ with the analytical solution of @Tsai1990 and the finite element solution of @Pelecanos2013](./figures/ch6_fig-p1-7.png){#fig-ch6-13}
 :::
 
 @fig-ch6-12 and @fig-ch6-13 compare the hydrodynamic pressures computed by v-ST/FEM approach at the base of the rigid dam for $L/H=3$ and $L/H=7$ with both the analytical solution given by @eq-ch6-73 and the finite element solution obtained by [@Pelecanos2013]. It can be observed that results obtained from present approach are nearly identical to the finite element results of [@Pelecanos2013], which implies that the discrepancy between the analytical solutions and the computed results is mainly due to the viscous boundary condition given by @eq-ch6-6.
 
-[Hydrodynamic pressure field in the reservoir of length $L=3H$, $L=5H$, and $L=7H$, computed by using v-ST/FEM at time $t=0.19$ seconds due to ramp acceleration](./figures/ch6_fig-p1-8.svg){#fig-ch6-14}
+[Hydrodynamic pressure field in the reservoir of length $L=3H$, $L=5H$, and $L=7H$, computed by using v-ST/FEM at time $t=0.19$ seconds due to ramp acceleration](./figures/ch6_fig-p1-8.png){#fig-ch6-14}
 
-![Hydrodynamic pressure field in the reservoir of length $L=3H$, $L=5H$, and $L=7H$, computed by using v-ST/FEM at time $t=1.60$ seconds due to ramp acceleration](./figures/ch6_fig-p1-9.svg){#fig-ch6-15}
+![Hydrodynamic pressure field in the reservoir of length $L=3H$, $L=5H$, and $L=7H$, computed by using v-ST/FEM at time $t=1.60$ seconds due to ramp acceleration](./figures/ch6_fig-p1-9.png){#fig-ch6-15}
 
 Lastly, the hydrodynamic pressure fields in the reservoir of length, $L=3H$, $L=5H$, and $L=7H$, computed by using v-ST/FEM approach at time $t=0.19$s and $t=1.6$s are given in @fig-ch6-14 and @fig-ch6-15, respectively. At time $t=0.19$s, the spatial variation of pressure field in the reservoir of different lengths is almost identical. At time $t=1.6$s, however, the hydrodynamic pressure in the reservoir of smaller length is more than the hydrodynamic pressure in reservoir of the larger length. This is because, the viscous boundary condition (cf. @eq-ch6-6), especially in case of small-length reservoir, is inadequate for perfectly absorbing the impinging pressure waves. Consequently, some fraction of incident energy will be reflected back into the truncated reservoir domain, which in turn will amplify the hydrodynamic pressure waves in the truncated reservoir domain.
 
@@ -523,21 +523,21 @@ Lastly, the hydrodynamic pressure fields in the reservoir of length, $L=3H$, $L=
 A vertical faced flexible dam and a reservoir (see @fig-ch6-7) of constant height extending to infinity in upstream direction is analyzed under horizontal component of earthquake motion . The height of the dam and reservoir, $H$, is $180$ m, and the width of the dam is $15$ m. The reservoir domain is truncated by placing an absorbing boundary at a distance $L=900$ m from the dam in the upstream direction. The horizontal component of earthquake motion is selected as north-south component of El Centro (1940) ground motion and is depicted in @fig-ch6-16, where $g$ denotes the acceleration due to gravity. The speed of acoustic wave in water is $c=1439$ $m/s$, and the water is assumed to be inviscid and compressible with a mass density of $1000$ kg/m${}^{3}$. The wave reflection coefficient $\alpha_{b}$ for reservoir bottom is taken as unity (i.e. reservoir bottom acts as a perfect reflector for the pressure waves). The foundation underlying the dam and reservoir is assumed to be rigid. The elastic modulus, Poisson's ratio, and mass density of dam is given by $E=3.43\times 10^{11}$ $N/m^{2}$, $\nu=0.0$, and $\rho^{s}=2400$ $kg/m^{3}$, respectively.
 
 :::{.column-margin}
-![Time history of north-south component of El Centro (1940) ground motion](./figures/ch6_fig-p2-1.svg){#fig-ch6-16 .lightbox}
+![Time history of north-south component of El Centro (1940) ground motion](./figures/ch6_fig-p2-1.png){#fig-ch6-16 .lightbox}
 :::
 
 The spatial domain of dam and reservoir are discretized by using four-node quadrilateral elements (see @fig-ch6-9). A uniform time step size $\Delta t = 0.02$ s is used to discretized the time domain. The simulation is performed for total time duration of $5$ seconds. In block iterative algorithm, tolerance for $q$ and $\mathbf{v}$ are set to $0.01 \%$. The resultant unsymmetrical system of linear equation is solved by using the GpBiCG algorithm with tolerance value of $1.0 \times 10^{-6}$. 
 
 :::{#fig-ch6-17-18 layout-ncol=2}
-![Hydrodynamic pressure at the base of vertical faced flexible dam](./figures/ch6_fig-p2-2.svg){#fig-ch6-17}
+![Hydrodynamic pressure at the base of vertical faced flexible dam](./figures/ch6_fig-p2-2.png){#fig-ch6-17}
 
-![Relative horizontal-displacement at top of vertical faced flexible dam](./figures/ch6_fig-p2-3.svg){#fig-ch6-18}
+![Relative horizontal-displacement at top of vertical faced flexible dam](./figures/ch6_fig-p2-3.png){#fig-ch6-18}
 
 Comparison of results of a vertical faced flexible dam subjected to 1940 El Centro ground motion (horizontal component only) with the analytical solution of @Lee1991 and the finite element solution of @Kuccukarslan2005
 :::
 
 :::{.column-margin}
-![Hydrodynamic pressure field in the reservoir computed by using v-ST/FEM approach at different times (from top to bottom), $t = 1.52$ s, $t = 1.82$ s, $t = 2.32$ s, and $t = 4.82$ s, due to 1940 El Centro ground motion](./figures/ch6_fig-p2-4.svg){#fig-ch6-19}
+![Hydrodynamic pressure field in the reservoir computed by using v-ST/FEM approach at different times (from top to bottom), $t = 1.52$ s, $t = 1.82$ s, $t = 2.32$ s, and $t = 4.82$ s, due to 1940 El Centro ground motion](./figures/ch6_fig-p2-4.png){#fig-ch6-19}
 :::
 
 The analytical solutions of the present problem are given by [@Lee1991], and [@Kuccukarslan2005] analyze the same problem by using a finite element procedure. @fig-ch6-17 successfully compares the *normalized hydrodynamic pressure*[^3] computed by using the v-ST/FEM at the base of the vertical faced flexible dam with both the analytical solutions of [@Lee1991] and the finite element solutions of [@Kuccukarslan2005]. 
@@ -550,9 +550,9 @@ The analytical solutions of the present problem are given by [@Lee1991], and [@K
 
 ::: {#fig-convg-of-vstfem layout-ncol=2}
 
-![Convergence history of velocity field $\mathbf{v}$ at various time steps](./figures/ch6_fig-p2-5.svg){#fig-ch6-20}
+![Convergence history of velocity field $\mathbf{v}$ at various time steps](./figures/ch6_fig-p2-5.png){#fig-ch6-20}
 
-![Convergence history of auxiliary field variable $q$ at various time steps](./figures/ch6_fig-p2-6.svg){#fig-ch6-21}
+![Convergence history of auxiliary field variable $q$ at various time steps](./figures/ch6_fig-p2-6.png){#fig-ch6-21}
 
 Convergence of v-STFEM method using the block-iterative scheme for vertical faced flexible dam problem.
 :::
@@ -571,32 +571,32 @@ In this section the dynamic response of a concrete gravity dam subjected to the 
 
 The physical dimensions of the dam and reservoir are given in @fig-ch6-22. The height of the vertical upstream face of the dam is $50$ m, and the width of the base is $40$ m. The spatial domain of dam is discretized by using $658$ number of three-node triangular (Tria3) finite elements (see @fig-ch6-23). Further, it is assumed that the depth of water in the reservoir, $H^f$, remains constant at value $44$ m. The computation domain for the semi-infinite reservoir is obtained by placing a viscous boundary at a distance of $200$ m from the dam in the upstream direction. Finite element mesh of the reservoir consists of $1144$ number of four-node rectangular (Quad4) finite elements (see @fig-ch6-23). Similarly, the unbounded soil domain is truncated by using the horizontal and vertical viscous boundaries; the length of the soil domain in $x_1$ and $x_2$ direction is $440$ m and $150$ m, respectively. Finite element mesh of the soil domain which contains $6448$ number of four-node rectangular finite elements is depicted in @fig-ch6-23. In finite element modeling of unbounded soil domain, the free field responses of the soil domain are obtained by using the soil-columns (with constrained vertical motion) placed next to the vertical artificial boundaries, and the effective seismic input is described in terms of traction boundary condition at the bottom truncated boundary.
 
-![Physical dimensions of the concrete gravity dam and reservoir](./figures/ch6_fig-p3-1.svg){#fig-ch6-22}
+![Physical dimensions of the concrete gravity dam and reservoir](./figures/ch6_fig-p3-1.png){#fig-ch6-22}
 
-![Finite element mesh of reservoir-domain (top-left), dam-domain (top-right), and soil-domain (bottom)](./figures/ch6_fig-p3-2.svg){#fig-ch6-23}
+![Finite element mesh of reservoir-domain (top-left), dam-domain (top-right), and soil-domain (bottom)](./figures/ch6_fig-p3-2.png){#fig-ch6-23}
 
 It is assumed that the material behavior of dam as well as the soil is given by an isotropic, homogenous, linear elastic stress-strain relationship. For the concrete-dam, the elastic modulus $E=28.0$GPa, mass-density $\rho=2347.0$ kg/m ${}^3$, and the Poisson's ratio $\nu=0.20$. For the soil, $E=40.0$GPa, $\rho=2551.0$ kg/m${}^3$, and $\nu=0.20$. Further, material damping is modeled by Rayleigh damping with $\xi=5\%$ viscous damping specified for the soil and dam separately. The resultant values of damping coefficients $(\alpha, \beta)$ for the dam and soil are given by $(4.1314, 4.8\times10^{-4})$ and $(1.612, 1.47\times10^{-3})$, respectively. The speed of acoustic wave in water is $c = 1439$ m/s, and the water is assumed to be inviscid and compressible with a mass density of $1000$ kg/m${}^3$. The wave reflection coefficient $\alpha_b$ for reservoir bottom is taken as unity (i.e., reservoir bottom acts as a perfect reflector for the pressure waves).
 
-![Horizontal component of ground motion recorded at the free-surface: (A) time history, and (B) Fourier spectrum](./figures/ch6_fig-p3-3.svg){#fig-ch6-24}
+![Horizontal component of ground motion recorded at the free-surface: (A) time history, and (B) Fourier spectrum](./figures/ch6_fig-p3-3.png){#fig-ch6-24}
 
 The simulations are carried out for the horizontal component of the earthquake motion recorded at some control point on the free surface (see @fig-ch6-22). Total time duration of ground motion is $45$ seconds in which acceleration is set to zero after $40$ seconds. @fig-ch6-24 a depicts the time history of the earthquake motion; the maximum and minimum values of acceleration are $396.7$cm/s${}^{2}$ and $-449.6$cm/s${}^{2}$, respectively. The Fourier spectrum of acceleration is plotted in @fig-ch6-24 b; the dominating dominating amplitudes $21.9$ cm/s${}^{2}$ and $19.4$cm/s${}^{2}$ occur at frequencies $1.24$ Hz and $2.0$Hz, respectively. It is worthwhile to mention that in the case of dam-reservoir system (DR), the earthquake motion plotted in @fig-ch6-22 is directly used as a boundary condition at the base of concrete-dam. On the other hand, for numerical simulation of DS and DRS the input seismic acceleration is taken as half that of acceleration at the free surface. All numerical simulations are performed with a uniform time step size $\Delta t = 0.01$ s for total time duration of $40$ seconds. The initial value of displacement and stress field is obtained by solving corresponding static problem. The convergence tolerance for $q$ and $\mathbf{v}$ in block iterative algorithm are set to $0.01\%$. The resultant unsymmetrical system of linear equation is solved by using the GpBiCG algorithm with tolerance value of $1.0 \times 10^{-6}$.
 
-![Acceleration response at the crest of the concrete-dam (Node-2) to horizontal component of earthquake motion for the case of dam-reservoir (DR) and dam-reservoir-soil (DRS) system: (A) time history of horizontal component of acceleration, (B) time history of vertical component of acceleration, (C) Fourier spectrum of horizontal component of acceleration, (D) Fourier spectrum of vertical component of acceleration](./figures/ch6_fig-p3-4.svg){#fig-ch6-25}
+![Acceleration response at the crest of the concrete-dam (Node-2) to horizontal component of earthquake motion for the case of dam-reservoir (DR) and dam-reservoir-soil (DRS) system: (A) time history of horizontal component of acceleration, (B) time history of vertical component of acceleration, (C) Fourier spectrum of horizontal component of acceleration, (D) Fourier spectrum of vertical component of acceleration](./figures/ch6_fig-p3-4.png){#fig-ch6-25}
 
 Let us now focus on the effect of interaction between dam-reservoir system (with impounded water) and the underlying soil-domain on the response of dam to horizontal component of the earthquake motion. For this purpose the results obtained in the case of DR (where the underlying soil is modeled as rigid foundation) and DRS (in which underlying soil is modeled as flexible foundation) are compared.
 
 The acceleration response at the crest of the concrete-dam (Node-2) obtained in the case of DR and DRS is plotted in @fig-ch6-25. The acceleration response obtained in case of DRS is significantly lower than the one obtained in case of DR. In case of DRS the absolute maximum value of horizontal and vertical component of acceleration is $1489.89$ Gal and $597.47$ Gal, respectively, whereas for DR these values correspond to $3897.10$ Gal and $1274.65$ Gal, respectively. Fourier spectrum of the acceleration response at the crest of the dam reveals that for DRS there is significant decay in the amplitudes, and the entire spectrum shifts towards the lower frequencies indicating the elongation of time period in acceleration time history (see @fig-ch6-25).
 
-![Time history of hydrodynamic pressure at the base of the dam subjected to horizontal component of earthquake motion for the case of dam-reservoir (DR) and dam-reservoir-soil (DRS) system](./figures/ch6_fig-p3-5.svg){#fig-ch6-26}
+![Time history of hydrodynamic pressure at the base of the dam subjected to horizontal component of earthquake motion for the case of dam-reservoir (DR) and dam-reservoir-soil (DRS) system](./figures/ch6_fig-p3-5.png){#fig-ch6-26}
 
 The effect of neglecting the interaction between dam-reservoir system and the underlying soil on the hydrodynamic pressure at the base of the concrete-dam is illustrated in @fig-ch6-26. It can be observed that the assumption of rigid foundation leads to an amplification of hydrodynamic pressure at upstream face of the concrete dam. The reservoir-soil interaction also alter the hydrodynamic pressure distribution in the reservoir domain as shown in @fig-ch6-27.
 
-![Hydrodynamic pressure distribution in the reservoir at different times due to horizontal component of earthquake motion for the case of dam-reservoir (DR) and dam-reservoir-soil (DRS) system](./figures/ch6_fig-p3-6.svg){#fig-ch6-27}
+![Hydrodynamic pressure distribution in the reservoir at different times due to horizontal component of earthquake motion for the case of dam-reservoir (DR) and dam-reservoir-soil (DRS) system](./figures/ch6_fig-p3-6.png){#fig-ch6-27}
 
 The temporal variation of the maximum and minimum principal stress, $\sigma_1$ and $\sigma_2$ respectively, at the base of the dam (which corresponds to the Gauss point of triangular Element-A), which is given in see @fig-ch6-28, indicates that the incomprehension of the dynamic interaction between underlying soil and structure may cause large compressive and tensile stresses in the dam. In @fig-ch6-28, the peak value of $\sigma_1$ and $\sigma_2$ for DRS is given by $2.24$ MPa and $-3.09$ MPa, respectively, whereas for DR these values are given by $6.08$ MPa and $-5.97$ MPa, respectively. In both cases, tensile stress at the base of the dam may exceed the ultimate tensile strength of the concrete, which may cause cracking in the concrete-dam. Further, the stress distribution inside the dam obtained in the case of DR and DRS differs significantly from each other as shown in @fig-ch6-29. In both cases, however, large tensile stresses develop near the heel of the dam and at the downstream inclined face of the dam.
 
-![Time history of maximum (A) and minimum (B) principal stress at the base of the dam (Element-A) subjected to horizontal component of earthquake motion for the case of dam-reservoir (DR) and dam-reservoir-soil (DRS) system](./figures/ch6_fig-p3-7.svg){#fig-ch6-28}
+![Time history of maximum (A) and minimum (B) principal stress at the base of the dam (Element-A) subjected to horizontal component of earthquake motion for the case of dam-reservoir (DR) and dam-reservoir-soil (DRS) system](./figures/ch6_fig-p3-7.png){#fig-ch6-28}
 
-![Spatial distribution of maximum principal stress $\sigma_1$ in the concrete dam subjected to horizontal component of earthquake motion for the case of dam-reservoir (DR) and dam-reservoir-soil (DRS) system. In DR underlying foundation is rigid, and in DRS the foundation is flexible](./figures/ch6_fig-p3-8.svg){#fig-ch6-29}
+![Spatial distribution of maximum principal stress $\sigma_1$ in the concrete dam subjected to horizontal component of earthquake motion for the case of dam-reservoir (DR) and dam-reservoir-soil (DRS) system. In DR underlying foundation is rigid, and in DRS the foundation is flexible](./figures/ch6_fig-p3-8.png){#fig-ch6-29}
 
 Based on the results obtained in this section, it may be concluded that interactions between the dam-reservoir and the underlying soil significantly decay the response of concrete-dam reservoir system to the horizontal component of the ground motion. This is because for DR radiation of energy can occur only through the upstream artificial truncated boundary of the reservoir domain, and the pressure and displacement waves impinging the rigid-foundation are completely reflected back into the dam-reservoir domain, which is responsible for the amplification of the response. On the other hand, in case of DRS the flexible foundation provides additional mechanisms for the radiation of energy through the soil strata, which in turn reduces the overall response of the dam-reservoir system.
