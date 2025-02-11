@@ -570,18 +570,18 @@ In this section linear seismic analysis of concrete dam is performed by employin
 
   @fig-ch5-fig3 depicts a concrete gravity dam on an unbounded soil domain. The physical dimension of the dam is given in @fig-ch5-fig4. It is assumed that the material behavior of the dam as well as the soil is given by an isotropic, homogeneous, linear elastic stress-strain relationship. For the concrete-dam, the elastic modulus $E=28.0$ GPa, mass-density $\rho=$ 2347.0 kg/m${}^{3}$, and the Poisson's ratio $\nu=0.20$. For the soil, $E=40$ GPa, $\rho=2551.0$ kg/m${}^{3}$, and $\nu=0.20$. Further, material damping is modeled by Rayleigh damping with $\xi = 5$% viscous damping specified for the soil and dam separately; the resultant values of damping coefficients $\alpha$ and $\beta$ for the dam and soil are given in @tbl-ch5-3.
 
-:::{.column-margin}
+::: {.column-margin}
 ![Numerical example for the dynamic soil structure interaction problem; concrete gravity dam on an elastic half-space](./figures/ch5_fig3.svg){#fig-ch5-fig3}
 :::
 
 ::: {#tbl-ch5-3}
 
-  | Name | Elastic modulus, $E$, (GPa) |  Poisson's ratio $\nu$ | Mass density $\rho$ (kg/m3) | $\alpha$ | $\beta$ |
-  | --- | --- | --- | --- | --- | --- | --- |
-  | Dam |  $28.0$ |       $0.2$ |        $2347.0$ |           $4.1314$ |        $4.8\times 10^{-4}$ |
-  | Soil | $40.0$ |       $0.2$ |         $2551.0$ |          $1.612$ |        $1.47\times 10^{-3}$ |
+| Name | Elastic modulus, $E$, (GPa) |  Poisson's ratio $\nu$ | Mass density $\rho$ (kg/m3) | $\alpha$ | $\beta$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| Dam |  $28.0$ |       $0.2$ |        $2347.0$ |           $4.1314$ |        $4.8\times 10^{-4}$ |
+| Soil | $40.0$ |       $0.2$ |         $2551.0$ |          $1.612$ |        $1.47\times 10^{-3}$ |
 
-  :Material parameters of the dam and soil domain ($\alpha$ and $\beta$ are Rayleigh damping coefficients)
+:Material parameters of the dam and soil domain ($\alpha$ and $\beta$ are Rayleigh damping coefficients)
 
 :::
 
