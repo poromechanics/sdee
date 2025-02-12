@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; TDG/FEM for the first order ODE – Soil Dynamics and Earthquake Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./tdg-second-order-ode.html" rel="next">
+<link href="./intro.html" rel="prev">
+<link href="././figures/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-93074729595c0d1bb0917954c6b21507.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta name="twitter:title" content="2&nbsp; TDG/FEM for the first order ODE – Soil Dynamics and Earthquake Engineering">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://poromechanics.github.io/sdee/figures/ch3-fig-1.svg">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tdg-first-order-ode.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">TDG/FEM for the first order ODE</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Soil Dynamics and Earthquake Engineering</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/poromechanics/sdee/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Soil-Dynamics-and-Earthquake-Engineering.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Soil-Dynamics-and-Earthquake-Engineering.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tdg-first-order-ode.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">TDG/FEM for the first order ODE</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tdg-second-order-ode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">TDG/FEM for the second order ODE</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Elastic waves</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-body-waves-in-solids.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Body waves in elastic solids</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-surface-waves-in-solids.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Surface waves in elastic solids</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-radiation-boundary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Radiation boundary conditions for elastic waves</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastodynamics-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Elastodynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastodynamics-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">V-STFEM for Elastodynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">v-STFEM for Dynamic-soil-structure interaction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Dynamic SSI of Dam-Reservoir System</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-equations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Governing equation for Dam-Reservoir System</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">VSTFEM for dynamic SSI in dam-reservoir system</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-nonlinear-problem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Nonlinear dynamic behavior of concrete gravity dams</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-nonlinear-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">V-STFEM for nonlinear dynamic analysis of concrete gravity dams</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#weak-forms-for-the-tdgfem" id="toc-weak-forms-for-the-tdgfem" class="nav-link active" data-scroll-target="#weak-forms-for-the-tdgfem"><span class="header-section-number">2.1</span> Weak forms for the TDG/FEM</a></li>
+  <li><a href="#implementation-of-the-tdgfem" id="toc-implementation-of-the-tdgfem" class="nav-link" data-scroll-target="#implementation-of-the-tdgfem"><span class="header-section-number">2.2</span> Implementation of the TDG/FEM</a></li>
+  <li><a href="#stability-analysis-of-the-tdgfem" id="toc-stability-analysis-of-the-tdgfem" class="nav-link" data-scroll-target="#stability-analysis-of-the-tdgfem"><span class="header-section-number">2.3</span> Stability analysis of the TDG/FEM</a></li>
+  <li><a href="#convergence-analysis-of-the-tdgfem" id="toc-convergence-analysis-of-the-tdgfem" class="nav-link" data-scroll-target="#convergence-analysis-of-the-tdgfem"><span class="header-section-number">2.4</span> Convergence analysis of the TDG/FEM</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/poromechanics/sdee/edit/main/tdg-first-order-ode.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/poromechanics/sdee/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">TDG/FEM for the first order ODE</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>To understand the working principle of the time-discontinuous Galerkin finite element method (TDG/FEM) consider the following initial value problem [^1] described by a first order ordinary differential equation equation (ODE).</p>
+<p><span id="eq-ch3-1"><span class="math display">\[
+\begin{split}
+    \frac{{du}}{{dt}} + \lambda u - f\left( t \right)&amp;=0 \quad t \in \left[ {0,T} \right],\\
+    u(0)&amp;=u_0
+\end{split}
+\tag{2.1}\]</span></span></p>
+<p>where <span class="math inline">\(T\)</span> is the total time, <span class="math inline">\(u:=u(t)\)</span> is the primary unknown, <span class="math inline">\(f(t)\)</span> represents the excitation function, and <span class="math inline">\(u_0\)</span> is the initial condition. The analytical solution to this problems takes the form of</p>
+<p><span class="math display">\[
+u\left( t \right) = {u_0}{e^{-\lambda t}} + \int_0^t {{e^{-\lambda \left( {t - \tau } \right)}}f\left( \tau  \right)d\tau }
+\]</span></p>
+<p>Let us now consider a non-uniform subdivision for the time domain <span class="math inline">\(\left[ {0,T} \right]\)</span>,</p>
+<p><span class="math display">\[0 = {t_0} &lt; {t_1} &lt;  \cdots  &lt; {t_N} = T,\]</span></p>
+<p>with</p>
+<p><span class="math display">\[
+\begin{aligned}
+  I_n &amp;= (t_n,t_n+1), &amp; \Delta t_n &amp;= t_{n+1}-t_{n}, &amp;
+  \Delta t = \mathop {\max }\limits_{\left( {0 \leqslant n \leqslant N - 1} \right)} \left( {\Delta {t_n}} \right).
+\end{aligned}
+\]</span></p>
+<div id="fig-ch3-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-1.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: Discretization of time domain <span class="math inline">\(\left[ 0, T\right]\)</span> by using the time-finite elements.
+</figcaption>
+</figure>
+</div>
+<p>In the finite element method (FEM), the time interval, <span class="math inline">\(I_n\)</span>, denotes the interior of the one-dimensional time finite element, and <span class="math inline">\(\partial {I_n} = \left\{ {{t_n},{t_{n + 1}}} \right\}\)</span> denotes the boundary of <span class="math inline">\(I_n\)</span> [^2]. Accordingly, the finite element discretization of the continuous time domain can be written as (see also <a href="#fig-ch3-1" class="quarto-xref">Figure&nbsp;<span>2.1</span></a>),</p>
+<p><span class="math display">\[
+{I_h}: = \bigcup\limits_{n = 0}^{N - 1} {\left( {{I_n} \cup \partial {I_n}} \right)}
+\]</span></p>
+<p>In TDG/FEM, the solutions to the problem, <span class="math inline">\(u^h(t)\)</span>, are considered to be discontinuous at the boundary of the time-domain. The solutions, however, remain continuous inside the time-finite element <span class="math inline">\(I_n\)</span>, and approximated by piecewise polynomials (e.g., Lagrange polynomials).</p>
+<p>Therefore, the discontinuity in <span class="math inline">\(u^h(t)\)</span> occurs at times that belong to the finite set <span class="math inline">\(\left\{ {{t_0},{t_1}, \cdots ,{t_N}} \right\}\)</span>. The jump discontinuity in time for <span class="math inline">\(u^h\)</span> is given by</p>
+<p><span id="eq-ch3-3"><span class="math display">\[
+{\left[\kern-0.15em\left[ {{u^h}}
+\right]\kern-0.15em\right]_n} = u_n^ +  - u_{n}^{-}
+\tag{2.2}\]</span></span></p>
+<p>where</p>
+<p><span id="eq-ch3-4"><span class="math display">\[
+\begin{aligned}
+        u_n^ +  &amp;= \mathop {\lim }\limits_{\varepsilon  \to 0} {u^h}\left( {t + \varepsilon } \right), &amp;
+        u_n^ -  &amp;= \mathop {\lim }\limits_{\varepsilon  \to 0} {u^h}\left( {t - \varepsilon } \right)
+\end{aligned}
+\tag{2.3}\]</span></span></p>
+<p>are the discontinuous values of <span class="math inline">\(u^h\)</span> at time <span class="math inline">\(t=t_n\)</span>. <a href="#fig-ch3-2" class="quarto-xref">Figure&nbsp;<span>2.2</span></a> illustrates the concept of time discontinuity.</p>
+<div id="fig-ch3-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-2.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.2: Schematic diagram of time discontinuous approximation: (a) piecewise linear interpolation, and (b) piecewise quadratic interpolation.
+</figcaption>
+</figure>
+</div>
+<p>Let <span class="math inline">\(C^0(\star)\)</span> denote the space of piecewise continuous functions defined on domain <span class="math inline">\((\star)\)</span>. In addition, consider <span class="math inline">\({\wp_{l}}\left( {{I_n}} \right)\)</span>, the collection of all polynomials defined on <span class="math inline">\(I_n\)</span> with a total degree of no more than <span class="math inline">\(l\)</span>. Accordingly, the functional space required for the TDG/FEM is given by,</p>
+<p><span id="eq-ch3-5"><span class="math display">\[
+\Im_{l}^{h}: = \left\{ {\left. {{u^h}} \right|{u^h} \in {C^0}\left( {\bigcup\limits_{n = 0}^{N - 1} {{I_n}} } \right),{{\left. {{u^h}} \right|}_{{I_n}}} \in {\wp_l}\left( {{I_n}} \right)} \right\}
+\tag{2.4}\]</span></span></p>
+<p>where, <span class="math inline">\({{u^h}}\)</span>, denotes the global solutions which can be discontinuous at time steps given by the end points of the interval <span class="math inline">\(I_n\)</span>, and <span class="math inline">\({{{\left. {{u^h}} \right|}_{{I_n}}}}\)</span> denotes the restriction of <span class="math inline">\(u_h\)</span> to <span class="math inline">\(I_n\)</span>.</p>
+<section id="weak-forms-for-the-tdgfem" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="weak-forms-for-the-tdgfem"><span class="header-section-number">2.1</span> Weak forms for the TDG/FEM</h2>
+<p>For any <span class="math inline">\(\delta u^h, u^h \in \Im _l^h\)</span> consider the following variational form corresponding to <a href="#eq-ch3-1" class="quarto-xref">Equation&nbsp;<span>2.1</span></a>,</p>
+<p><span id="eq-ch3-6"><span class="math display">\[
+\delta \Pi_n := \int_{{I_n}}^{} {\delta u^h\left( {\frac{{du^h}}{{dt}} + \lambda u^h - f\left( t \right)} \right)dt}
+\tag{2.5}\]</span></span></p>
+<p>or</p>
+<p><span id="eq-ch3-7"><span class="math display">\[
+\delta \Pi_n = \int_{{I_n}}^{} {\delta u^h\frac{{du^h}}{{dt}}dt}  + \int_{{I_n}}^{} {\delta u^h\left[ {\lambda u^h - f\left( t \right)} \right]dt}
+\tag{2.6}\]</span></span></p>
+<p>Here, once again note that the domain of integration is <span class="math inline">\(I_n\)</span>, and <span class="math inline">\(u^h\)</span> is discontinuous at times <span class="math inline">\(t_n\)</span> and <span class="math inline">\(t_{n+1}\)</span>.</p>
+<p>Use of the integration by parts for the first term in <a href="#eq-ch3-7" class="quarto-xref">Equation&nbsp;<span>2.6</span></a> will will result in the following variation form for the TDG/FEM,</p>
+<p><span id="eq-ch3-8"><span class="math display">\[
+\delta \Pi_n =- \int_{{I_n}}^{} {u^h\frac{{d\delta u^h}}{{dt}}dt}  + \left[ {\delta u^h \cdot {u^*}} \right]_{{t_n}}^{{t_{n + 1}}} + \int_{{I_n}}^{} {\delta u^h\left[ {\lambda u^h - f\left( t \right)} \right]dt}
+\tag{2.7}\]</span></span></p>
+<p>where, <span class="math inline">\(u^*\)</span> denotes the unique value of <span class="math inline">\(u^h\)</span> to be used at the end-points of the interval <span class="math inline">\(I_n\)</span> and obtained by computing the information from the neighboring time intervals. A detailed definition concerning its concrete value will be soon introduced in the following text.</p>
+<p>Subsequent use of the integration by parts for the first term in <a href="#eq-ch3-8" class="quarto-xref">Equation&nbsp;<span>2.7</span></a> will yield another variation form for the TDG/FEM. This variation form is described below.</p>
+<p><span id="eq-ch3-9"><span class="math display">\[
+\delta \Pi_n = \int_{{I_n}}^{} {\delta u^h\frac{{du^h}}{{dt}}dt}  + \left[ {\delta u^h\left( {{u^*} - u^h} \right)} \right]_{{t_n}}^{{t_{n + 1}}} + \int_{{I_n}}^{} {\delta u^h\left[ {\lambda u^h - f\left( t \right)} \right]dt}
+\tag{2.8}\]</span></span></p>
+<p>Mathematically, the formulations given in <a href="#eq-ch3-8" class="quarto-xref">Equation&nbsp;<span>2.7</span></a> and <a href="#eq-ch3-9" class="quarto-xref">Equation&nbsp;<span>2.8</span></a> are the TDG/FEM schemes for Eq. <a href="#eq-ch3-1" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> in weak and strong form, respectively. In <a href="#eq-ch3-8" class="quarto-xref">Equation&nbsp;<span>2.7</span></a> due to the presence of first order time derivative of the test function <span class="math inline">\(\delta u^h\)</span>, the test function should be continuous in time. In <a href="#eq-ch3-9" class="quarto-xref">Equation&nbsp;<span>2.8</span></a>, however, the continuity of the test functions is not required since this form does not include the time derivative of <span class="math inline">\(\delta u^h\)</span>.</p>
+<p>In <a href="#eq-ch3-8" class="quarto-xref">Equation&nbsp;<span>2.7</span></a>, recall that the solution <span class="math inline">\((u^h)\)</span> is not well defined at the <span class="math inline">\(\partial I_n =\left\{ {{t_n},{t_{n + 1}}} \right \}\)</span> as it takes two values at each end-points of <span class="math inline">\(I_n\)</span>. Hence, a unique representative value <span class="math inline">\(u^*\)</span> has been adopted in the TDG formulation which should be specified only at time <span class="math inline">\(\partial I_n\)</span>. The value of <span class="math inline">\(u^*\)</span> at time <span class="math inline">\(t_n\)</span> can be computed by using <span class="math inline">\(u_n^+\)</span> and <span class="math inline">\(u_n^-\)</span> (see the footnote). [^3] The most widely used definition for <span class="math inline">\(u^*\)</span> is based on the upwind flux treatment in time <span class="citation" data-cites="Eriksson1985 Chen2006 Cockburn2003 Hesthaven2007">(<a href="references.html#ref-Eriksson1985" role="doc-biblioref">Eriksson, Johnson, and Thomée 1985</a>; <a href="references.html#ref-Chen2006" role="doc-biblioref">Chen, Steeb, and Diebels 2006</a>; <a href="references.html#ref-Cockburn2003" role="doc-biblioref">Cockburn 2003</a>; <a href="references.html#ref-Hesthaven2007" role="doc-biblioref">Hesthaven and Warburton 2007</a>)</span> and given by,</p>
+<p><span id="eq-ch3-10"><span class="math display">\[
+u^{*}:=\left\{ \begin{array}{cc}
+u_{0} &amp; \text{if}\quad n=0\\
+u_{n}^{-} &amp; otherwise
+\end{array}\right.
+\tag{2.9}\]</span></span></p>
+<p>The choice of such a definition is inspired by the fact that in a transient problem the solutions at time <span class="math inline">\(t_n\)</span> should be equal to the value of its immediate past <span class="math inline">\(t_n-\varepsilon\)</span>. Therefore, it is natural to start the numerical procedure at <span class="math inline">\(t=t_0\)</span> with the prescribed initial condition <span class="math inline">\(u^*=u_0\)</span>, and transport this idea to the subsequent time-slabs.</p>
+<p>Incorporating the definition of <span class="math inline">\(u^*\)</span> in <a href="#eq-ch3-9" class="quarto-xref">Equation&nbsp;<span>2.8</span></a>, the TDG/FEM weak,</p>
+<p><span id="eq-ch3-11"><span class="math display">\[
+\delta {\Pi _n} = \int_{{I_n}}^{} {\delta {u^h}\frac{{d{u^h}}}{{dt}}dt}  + \delta {u^h}\left( {{t_n}} \right){\left[\kern-0.15em\left[ {{u^h}}
+\right]\kern-0.15em\right]_n} + \int_{{I_n}}^{} {\delta {u^h}\left[ {\lambda {u^h} - f\left( t \right)} \right]dt}
+\tag{2.10}\]</span></span></p>
+<p>Let us now focus on the TDG/FEM weak form for the initial value problem (see Eq. <a href="#eq-ch3-1" class="quarto-xref">Equation&nbsp;<span>2.1</span></a>). By multiplying the residual of Eq. <a href="#eq-ch3-1" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> with the test function <span class="math inline">\(\delta u^h\)</span> and then integrating in the time domain <span class="math inline">\(\left[ {0,T} \right]\)</span> following weak form can be obtained.</p>
+<p><span id="eq-ch3-12"><span class="math display">\[
+\delta \Pi : = \int_I^{} {\delta u\left[ {\frac{{du}}{{dt}} + \lambda u - f\left( t \right)} \right]dt}  = \sum\limits_{n = 0}^{N - 1} {\delta {\Pi _n}}  = 0
+\tag{2.11}\]</span></span></p>
+<p>Due to the weakly prescribed initial condition, the weak form given above transforms into a local weak form defined on each time slab <span class="math inline">\(I_n\)</span>.</p>
+<p><span id="eq-ch3-13"><span class="math display">\[
+\delta {\Pi _n} = \int_{{I_n}}^{} {\delta {u^h}\frac{{d{u^h}}}{{dt}}dt}  + \delta  {u^h}\left( {{t_n}} \right){\left[\kern-0.15em\left[ {{u^h}}
+\right]\kern-0.15em\right]_n} + \int_{{I_n}}^{} {\delta {u^h}\lambda {u^h}dt}  - \int_{{I_n}}^{} {\delta {u^h}f\left( t \right)dt}  = 0
+\tag{2.12}\]</span></span></p>
+<p>Rearranging the terms in <a href="#eq-ch3-13" class="quarto-xref">Equation&nbsp;<span>2.12</span></a> and using the expression for the jump discontinuity in time (see Eq. <a href="#eq-ch3-3" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>),</p>
+<p><span id="eq-ch3-14"><span class="math display">\[
+\int_{{I_n}}^{} {\delta {u^h}\frac{{d{u^h}}}{{dt}}dt}  + \delta {u_n}u_n^ +  + \int_{{I_n}}^{} {\delta {u^h}\lambda {u^h}dt}  = \delta {u_n}u_n^ -  + \int_{{I_n}}^{} {\delta {u^h}f\left( t \right)dt}
+\tag{2.13}\]</span></span></p>
+<p>in which the first term on right hand side depicts the initial condition for each time-slabs <span class="math inline">\(I_n\)</span>. Here note that the information about <span class="math inline">\(u_n^-\)</span> is already obtained from the computation in the previous time slab <span class="math inline">\(I_{n-1}\)</span>. Further, in the beginning of the process (i.e., <span class="math inline">\(n=0\)</span>) the initial condition is incorporated in the computation according to the definition in <a href="#eq-ch3-10" class="quarto-xref">Equation&nbsp;<span>2.9</span></a>. In this way, initial boundary condition becomes the part of the solution and need not to be specified in explicit terms.</p>
+</section>
+<section id="implementation-of-the-tdgfem" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="implementation-of-the-tdgfem"><span class="header-section-number">2.2</span> Implementation of the TDG/FEM</h2>
+<p>One dimensional time-finite elements can be employed to discretize the TDG/FEM weak form presented in Eq. <a href="#eq:ch3-eq-11" data-reference-type="eqref" data-reference="eq:ch3-eq-11">[eq:ch3-eq-11]</a>. In this process, the solutions are locally approximated by using the shape functions. These shape functions are generally given by the Lagrange polynomials, and determine the degree of accuracy. To construct a <span class="math inline">\(p\)</span>-order Lagrange polynomial in time-domain, <span class="math inline">\(p+1\)</span> nodes should be selected inside the time slab <span class="math inline">\(I_n\)</span>; two nodes are always located at the end-points <span class="math inline">\(t_n\)</span> and <span class="math inline">\(t_{n+1}\)</span>, and remaining <span class="math inline">\(p-1\)</span> nodes are distributed inside <span class="math inline">\(I_n\)</span> (see Fig. <a href="#fig:ch3-fig-3" data-reference-type="ref" data-reference="fig:ch3-fig-3">3</a>). The internal nodes are generally located at equidistant points in <span class="math inline">\(I_n\)</span>. [^4]</p>
+<p>Consider the parent time-domain <span class="math inline">\(I_\theta:=\left[-1,1\right]\)</span> on which the Lagrange polynomials <span class="math inline">\(T^{(p)}_i(\theta)\)</span> are defined. Here, <span class="math inline">\(p\)</span> denotes the degree of polynomial, and <span class="math inline">\(i=1,\cdots,p+1\)</span> corresponds to the <span class="math inline">\(p+1\)</span> locations</p>
+<p><span class="math display">\[
+\left\{ {{\theta _1},{\theta_2}, \cdots ,{\theta _{p + 1}}} \right\}
+\]</span></p>
+<p>in <span class="math inline">\(I_\theta\)</span> with <span class="math inline">\(\theta_1=-1\)</span> and <span class="math inline">\(\theta_2=+1\)</span>. Let</p>
+<p><span class="math display">\[\left\{ {t_1^{(n)},t_2^{(n)}, \cdots ,t_{p}^{(n)},t_{p + 1}^{(n)}} \right\}\]</span></p>
+<p>be the set of <span class="math inline">\(p+1\)</span> time-nodes in <span class="math inline">\(I_n\)</span> with <span class="math inline">\(t_1^{(n)}=t_n\)</span>, <span class="math inline">\(t_2^{(n)}=t_n+1\)</span>. The internal nodes are represented by <span class="math inline">\(t_i^{(n)}=t_n\)</span> for <span class="math inline">\(i=3,\cdots,p+1\)</span> (see <a href="#fig-ch3-3" class="quarto-xref">Figure&nbsp;<span>2.3</span></a>).</p>
+<div id="fig-ch3-3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-3.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.3: Conceptual diagram of (a) <span class="math inline">\(p\)</span>-order time-finite element with <span class="math inline">\(p+1\)</span> local time nodes, (b) two node linear time-finite element.
+</figcaption>
+</figure>
+</div>
+<p>Further, the relationship between <span class="math inline">\(t \in I_n\)</span> and <span class="math inline">\(\theta \in I_\theta\)</span> is given by a linear mapping,</p>
+<p><span id="eq-ch3-15"><span class="math display">\[t(\theta) = \frac{{\left( {1 - \theta } \right)}}{2}{t_n} + \frac{{\left( {1 + \theta } \right)}}{2}{t_{n + 1}} \tag{2.14}\]</span></span></p>
+<p>The expression for the Lagrange polynomial of degree <span class="math inline">\(p\)</span> is described as follows:</p>
+<p><span id="eq-ch3-16"><span class="math display">\[
+T_i^{(p)} = \prod\limits_{\begin{subarray}{l}
+                                j = 1 \\
+                                j \ne i
+                                \end{subarray}}^{p + 1}
+{\frac{{\theta  - {\theta _j}}}{{{\theta_i} - {\theta _j}}}}
+\tag{2.15}\]</span></span></p>
+<p>Here, note that</p>
+<p><span class="math display">\[
+T_{i}^{\left(p\right)}\left(\theta_{j}\right)=\left\{ \begin{array}{cc}
+        1 &amp; \text{if}\quad i=j\\
+        0 &amp; \text{if}\quad i\ne j
+        \end{array}\right.
+\]</span></p>
+<p>Accordingly, the <span class="math inline">\(p\)</span>-order local approximation for the trial function <span class="math inline">\(u^h\)</span> reads,</p>
+<p><span id="eq-ch3-17"><span class="math display">\[
+{u^h} = T_1^{(p)}u_n^ +  + T_2^{(p)}u_{n + 1}^ -  + \sum\limits_{a = 3}^{p + 1} {T_a^{(p)}u_a^{(n)}}
+\tag{2.16}\]</span></span></p>
+<p>In <a href="#eq-ch3-17" class="quarto-xref">Equation&nbsp;<span>2.16</span></a>, <span class="math inline">\(u_n^+\)</span> and <span class="math inline">\(u_{n+1}^-\)</span> represent the discontinuous nodal values at times <span class="math inline">\(t=(t_n+\varepsilon) \in I_n\)</span> and <span class="math inline">\(t=(t_{n+1}-\varepsilon) \in I_n\)</span> (see also #eq-ch3-4). Further, the values of <span class="math inline">\(u^h\)</span> at the internal nodes of <span class="math inline">\(I_n\)</span> are given by <span class="math inline">\(u_a^{(n)}\)</span>, for <span class="math inline">\(a=3,\cdots,p+1\)</span>, which are well defined in the time-slab <span class="math inline">\(I_n\)</span>. For the sake of clarity, let us denote, <span class="math display">\[
+u^{(n)}_1=u_n^+,
+\]</span></p>
+<p><span class="math display">\[
+u^{(n)}_2=u_{n+1}^-.
+\]</span></p>
+<p>With such convention the Eq. <a href="#eq-ch3-17" class="quarto-xref">Equation&nbsp;<span>2.16</span></a> becomes</p>
+<p><span id="eq-ch3-18"><span class="math display">\[{u^h} = \sum\limits_{a = 1}^{p + 1} {T_a^{(p)}u_a^{(n)}} \tag{2.17}\]</span></span></p>
+<p>Similarly, the <span class="math inline">\(p\)</span>-order local approximation for the test function <span class="math inline">\(\delta u^h\)</span> can be given by,</p>
+<p><span id="eq-ch3-19"><span class="math display">\[
+\delta {u^h} = \sum\limits_{a = 1}^{p + 1} {T_a^{(p)}\delta u_a^{(n)}}
+\tag{2.18}\]</span></span></p>
+<p>Subsequently, using the above interpolations for <span class="math inline">\(u^h\)</span> and <span class="math inline">\(\delta u^h\)</span> in the weak-form given by <a href="#eq-ch3-14" class="quarto-xref">Equation&nbsp;<span>2.13</span></a>, one can get the following discretized form. Henceforth, the use of summation symbol is avoided and Einstein summation convention is implied.</p>
+<p><span id="eq-ch3-20"><span class="math display">\[
+\begin{split}
+    &amp;
+    \delta u_a^{(n)}\left\{ {\left[ {\int_{{I_n}}^{} {T_a^{(p)}\frac{{dT_b^{(p)}}}{{dt}}dt} } \right]u_b^{(n)} + \left[ {\int_{{I_n}}^{} {T_a^{(p)}\lambda T_b^{(p)}dt} } \right]u_b^{(n)} - \int_{{I_n}}^{} {T_a^{(p)}f\left( t \right)dt} } \right\}
+    \\
+    &amp;
+    +
+    \delta u_1^{(n)}\left( {u_1^{(n)} - u_n^ - } \right) = 0
+\end{split}
+\tag{2.19}\]</span></span></p>
+<p>Further, using the Kronecker delta function <span class="math inline">\(\delta_{ab}\)</span> in the last term of the above equation,</p>
+<p><span class="math display">\[\delta u_1^{(n)}\left( {u_1^{(n)} - u_n^ - } \right) = \delta u_a^{(n)}{\delta _{a1}}{\delta _{b1}}\left( {u_b^{(n)} - u_n^ - } \right),\]</span></p>
+<p>Accordingly, <a href="#eq-ch3-20" class="quarto-xref">Equation&nbsp;<span>2.19</span></a> becomes,</p>
+<p><span id="eq-ch3-21"><span class="math display">\[
+\delta u_a^{(n)}\left\{ {\left[ {\int_{{I_n}}^{} {T_a^{(p)}\frac{{dT_b^{(p)}}}{{dt}}dt}  + {\delta_{a1}}{\delta _{b1}} + \int_{{I_n}}^{} {T_a^{(p)}\lambda T_b^{(p)}dt} } \right]u_b^{(n)} - {\delta _{a1}}u_n^ -  - \int_{{I_n}}^{} {T_a^{(p)}f\left( t \right)dt} } \right\} = 0
+\tag{2.20}\]</span></span></p>
+<p>Since <a href="#eq-ch3-21" class="quarto-xref">Equation&nbsp;<span>2.20</span></a> is true for all <span class="math inline">\(\delta_a^{(n)}\)</span>, one can get the following system of <span class="math inline">\(p+1\)</span> algebraic equations.</p>
+<p><span id="eq-ch3-22"><span class="math display">\[
+\left[ m \right]_{}^{ab}u_b^{(n)} + \lambda {\left[ c \right]^{ab}}u_b^{(n)} = {\delta _{a1}}u_n^ -  + {\left\{ J_{ext} \right\}^a}
+\tag{2.21}\]</span></span></p>
+<p>where <span class="math inline">\(\left[ m \right]_{}^{ab}\)</span> and <span class="math inline">\(\left[ c \right]_{}^{ab}\)</span> are the <span class="math inline">\((p+1)\times (p+1)\)</span> finite element matrices, and <span class="math inline">\({\left\{ f \right\}^a}\)</span> is a vector of length <span class="math inline">\(p+1\)</span>. The matrix-vector form of above equation is depicted by</p>
+<p><span id="eq-ch3-23"><span class="math display">\[
+            \left[ {\mathbf{m}} \right]\left\{ {{\mathbf{\tilde u}}} \right\}
+            + \lambda \left[ {\mathbf{c}} \right]\left\{ {{\mathbf{\tilde u}}} \right\} = \left\{ {{\mathbf{e}}_1^p} \right\}u_n^ -  + \left\{ {\mathbf{J_{ext}}} \right\}
+\tag{2.22}\]</span></span></p>
+<p>The details about the terms present in <a href="#eq-ch3-21" class="quarto-xref">Equation&nbsp;<span>2.20</span></a> and <a href="#eq-ch3-22" class="quarto-xref">Equation&nbsp;<span>2.21</span></a> are given below.</p>
+<p><span id="eq-ch3-24"><span class="math display">\[
+\left[ {\mathbf{m}} \right]: = \left[ m \right]_{}^{ab} = \int_{{I_n}}^{} {T_a^{(p)}\frac{{dT_b^{(p)}}}{{dt}}dt}  + {\delta_{a1}}{\delta _{b1}}
+\tag{2.23}\]</span></span></p>
+<p><span id="eq-ch3-25"><span class="math display">\[
+\left[ {\mathbf{c}} \right]: = {\left[ c \right]^{ab}} = \int_{{I_n}}^{} {T_a^{(p)}T_b^{(p)}dt}
+\tag{2.24}\]</span></span></p>
+<p><span id="eq-ch3-26"><span class="math display">\[\left\{ {{\mathbf{e}}_1^p} \right\} := {\delta _{a1}} = \left\{ {1,0, \cdots ,0} \right\} \tag{2.25}\]</span></span></p>
+<p><span id="eq-ch3-27"><span class="math display">\[\left\{ {\mathbf{J_{ext}}} \right\}: = {\left\{ J_{ext} \right\}^a} = \int_{{I_n}}^{} {T_a^{(p)}f\left( t \right)dt} \tag{2.26}\]</span></span></p>
+<p>In this way, at the beginning of the computation (i.e., n=0) the initial condition <span class="math inline">\(u_0\)</span> is used to compute the right hand side of <a href="#eq-ch3-23" class="quarto-xref">Equation&nbsp;<span>2.22</span></a>, and the system of linear equations is solved to obtain <span class="math inline">\(u_1^-\)</span>. This information is then used for constructing the right hand side for the next time slab.</p>
+<p>In the subsequent sections, the numerical analysis of the TDG/FEM for the first order ODE is discussed. Henceforth, for the sake of simplicity, only the case of linear interpolation in time (i.e., <span class="math inline">\(p=1\)</span>) is discussed.</p>
+<p>In case of the linear interpolation in time the shape functions are given by</p>
+<p><span id="eq-ch3-28"><span class="math display">\[
+\begin{aligned}
+T_1(\theta):=T_1^{(1)}&amp;=\frac{1-\theta}{2} &amp; T_2(\theta):=T_2^{(1)}&amp;=\frac{1+\theta}{2}.
+\end{aligned}
+\tag{2.27}\]</span></span></p>
+<p>In this case, two linear equations in two unknowns <span class="math inline">\(u_n^+\)</span> and <span class="math inline">\(u_{n+1}^-\)</span> can be obtained. These equations are described below in the matrix-vector form.</p>
+<p><span id="eq-ch3-29"><span class="math display">\[
+  \frac{1}{2}\left[\begin{array}{cc}
+  1 &amp; 1\\
+  -1 &amp; 1
+  \end{array}\right]\left\{ \begin{array}{c}
+  u_{n}^{+}\\
+  u_{n+1}^{-}
+  \end{array}\right\} +\lambda\frac{\Delta t_{n}}{6}\left[\begin{array}{cc}
+  2 &amp; 1\\
+  1 &amp; 2
+  \end{array}\right]\left\{ \begin{array}{c}
+  u_{n}^{+}\\
+  u_{n+1}^{-}
+  \end{array}\right\} =\left\{ \begin{array}{c}
+  u_{n}^{-}\\
+  0
+  \end{array}\right\} +\left\{ \begin{array}{c}
+  J_{ext}^{1}\\
+  J_{ext}^{2}
+  \end{array}\right\}
+\tag{2.28}\]</span></span></p>
+<p>where <span class="math inline">\(J_{ext}^1\)</span> and <span class="math inline">\(J_{ext}^2\)</span> are given by</p>
+<p><span class="math display">\[
+\begin{aligned}
+{J_{ext}^1} &amp;= \int_{{I_n}}^{} {{T_1}f\left( t \right)dt}
+\\
+{J_{ext}^2} &amp;= \int_{{I_n}}^{} {{T_2}f\left( t \right)dt}
+\end{aligned}
+\]</span></p>
+</section>
+<section id="stability-analysis-of-the-tdgfem" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="stability-analysis-of-the-tdgfem"><span class="header-section-number">2.3</span> Stability analysis of the TDG/FEM</h2>
+<p>Let us denote the exact value of the solution at any instant <span class="math inline">\(t_n\)</span> by <span class="math inline">\(u(t_n)\)</span> and the corresponding numerical value obtained by TDG/FEM by <span class="math inline">\(u_n^-\)</span>. Let the error in <span class="math inline">\(u_n^-\)</span> be denoted by:</p>
+<p><span id="eq-ch3-30"><span class="math display">\[
+e(t_n):=u_n^- - u(t_n)
+\tag{2.29}\]</span></span></p>
+<p>To motivate the appropriate notion of stability for the ease under consideration, let us investigate the behavior of the homogeneous form of <a href="#eq-ch3-1" class="quarto-xref">Equation&nbsp;<span>2.1</span></a>. The exact solutions of the homogeneous ODE is given by <span class="citation" data-cites="Hughes2012">(<a href="references.html#ref-Hughes2012" role="doc-biblioref">Hughes 2012, chap. 8</a>)</span></p>
+<p><span id="eq-ch3-31"><span class="math display">\[
+u\left( {{t_n}} \right) = {u_0}{\operatorname{e} ^{ - \lambda {t_n}}}
+\tag{2.30}\]</span></span></p>
+<p>At time <span class="math inline">\(t=t_{n+1}\)</span> the exact solutions can be described as,</p>
+<p><span id="eq-ch3-32"><span class="math display">\[
+            u\left( {{t_{n + 1}}} \right) = u\left( {{t_n}} \right){\operatorname{e} ^{ - \lambda \Delta {t_n}}}
+\tag{2.31}\]</span></span></p>
+<p>In <a href="#eq-ch3-32" class="quarto-xref">Equation&nbsp;<span>2.31</span></a> one should note that the exact solutions decay in time for <span class="math inline">\(\lambda&gt;0\)</span>, and mathematically the solutions can be characterized by:</p>
+<p><span id="eq-ch3-33"><span class="math display">\[
+\left.\begin{array}{cc}
+\left|{u\left({{t_{n+1}}}\right)}\right|&lt;\left|{u\left({{t_{n}}}\right)}\right|, &amp; {\lambda&gt;0}\\
+{u\left({{t_{n+1}}}\right)=u\left({{t_{n}}}\right),} &amp; {\lambda=0}
+\end{array}\right\}
+\tag{2.32}\]</span></span></p>
+<p>In homogeneous case <a href="#eq-ch3-29" class="quarto-xref">Equation&nbsp;<span>2.28</span></a> becomes</p>
+<p>becomes</p>
+<p><span id="eq-ch3-34"><span class="math display">\[
+\frac{1}{2}\left[\begin{array}{cc}
+1 &amp; 1\\
+{-1} &amp; 1
+\end{array}\right]\left\{ \begin{array}{c}
+{u_{n}^{+}}\\
+{u_{n+1}^{-}}
+\end{array}\right\} +\lambda\frac{{\Delta{t_{n}}}}{6}\left[\begin{array}{c}
+{u_{n}^{+}}\\
+{u_{n+1}^{-}}
+\end{array}\right]\left\{ \begin{array}{c}
+{u_{n}^{+}}\\
+{u_{n+1}^{-}}
+\end{array}\right\} =\left\{ \begin{array}{c}
+{u_{n}^{-}}\\
+0
+\end{array}\right\}
+\tag{2.33}\]</span></span></p>
+<p>By eliminating <span class="math inline">\(u_{n}^{+}\)</span> from above equations we can get</p>
+<p><span id="eq-ch3-35"><span class="math display">\[
+u_{n + 1}^ -  = Au_n^{-}
+\tag{2.34}\]</span></span></p>
+<p>where,</p>
+<p><span id="eq-ch3-36"><span class="math display">\[
+A = \frac{{6- 2\Omega }}{{{\Omega ^2} + 4\Omega  + 6}}
+\tag{2.35}\]</span></span></p>
+<p>is called the and <span class="math inline">\(\Omega = \lambda \Delta t_n\)</span>.</p>
+<p>For the stability of the TDG/FEM it is necessary that</p>
+<p><span id="eq-ch3-37"><span class="math display">\[
+\left. {\begin{array}{cc}
+{\left| {u_{n + 1}^ - } \right| &lt; \left| {u_n^ - } \right|,}&amp;{\lambda  &gt; 0} \\
+{u_{n + 1}^ -  = u_n^ - ,}&amp;{\lambda  = 0}
+\end{array}} \right\}
+\tag{2.36}\]</span></span></p>
+<p>From the definition of <span class="math inline">\(A\)</span> (see <a href="#eq-ch3-36" class="quarto-xref">Equation&nbsp;<span>2.35</span></a>), second condition of <a href="#eq-ch3-37" class="quarto-xref">Equation&nbsp;<span>2.36</span></a> is satisfied. The first condition is always satisfied if amplification factor satisfies the following,</p>
+<p><span id="eq-ch3-38"><span class="math display">\[
+\left| A \right| &lt; 1
+\tag{2.37}\]</span></span></p>
+<p><a href="#fig-ch3-4" class="quarto-xref">Figure&nbsp;<span>2.4</span></a> plots the variation of amplification factor with the dimensionless time <span class="math inline">\(\Omega=\lambda \Delta t_n\)</span>, where it is evident that the TDG/FEM algorithm always satisfies the above-mentioned condition (cf. <a href="#eq-ch3-38" class="quarto-xref">Equation&nbsp;<span>2.37</span></a>). Thus, it is proved that the TDG Thus, it is proved that the TDG/FEM is an <em>unconditionally stable</em> algorithm.</p>
+<div id="fig-ch3-4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-4.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.4: Amplification factor for the time-discontinuous Galerkin method for the first order ODE with linear interpolation in time.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="convergence-analysis-of-the-tdgfem" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="convergence-analysis-of-the-tdgfem"><span class="header-section-number">2.4</span> Convergence analysis of the TDG/FEM</h2>
+<p>TDG/FEM algorithm will be called convergent if for <span class="math inline">\(t_n\)</span> fixed, <span class="math inline">\(u_n^- \rightarrow u(t_n)\)</span> as <span class="math inline">\(\Delta t \rightarrow 0\)</span>. To establish the convergence of an algorithm, two additional notion must be considered: <em>stability</em> and <em>consistency</em>. In the previous section it has been shown that the TDG/FEM algorithm is unconditionally stable. Therefore, in this section, the consistency of the algorithm will be proven.</p>
+<p>Rewriting the temporally discrete model problem described by <a href="#eq-ch3-35" class="quarto-xref">Equation&nbsp;<span>2.34</span></a> in the form,</p>
+<p><span id="eq-ch3-39"><span class="math display">\[
+u_{n + 1}^{-}  - Au_{n}^{-}  = 0
+\tag{2.38}\]</span></span></p>
+<p>Replacing <span class="math inline">\(u_n^-\)</span> and <span class="math inline">\(u_{n+1}^-\)</span> with the exact values <span class="math inline">\(u(t_n)\)</span> and <span class="math inline">\(u(t_{n+1})\)</span>, respectively, following expression is obtained</p>
+<p><span id="eq-ch3-40"><span class="math display">\[
+u(t_{n+1}) - Au(t_n)=\Delta t_n  \cdot \tau(t_n)
+\tag{2.39}\]</span></span></p>
+<p>where, <span class="math inline">\(\tau(t_n)\)</span> is called the <em>local truncation error</em>.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Definition 1</strong>. The algorithm defined by <a href="#eq-ch3-39" class="quarto-xref">Equation&nbsp;<span>2.38</span></a> is called <em>consistent</em> if <span class="math inline">\(\left| {\tau (t)} \right| \leqslant c\Delta {t^k}\)</span>, for all <span class="math inline">\(t \in \left[ 0, T\right]\)</span>, where <span class="math inline">\(c\)</span> is a constant independent of <span class="math inline">\(\Delta t\)</span>, and <span class="math inline">\(k&gt;0\)</span>. Moreover, <span class="math inline">\(k\)</span> is called the <em>order of accuracy</em> or <em>rate of convergence</em>.</p>
+</div>
+</div>
+</div>
+<p>To show that TDG/FEM algorithm is consistent use Taylor expansion for <span class="math inline">\(u(t_{n+1})\)</span> about <span class="math inline">\(t_n\)</span>,</p>
+<p><span class="math display">\[
+u\left( {{t_{n + 1}}} \right) = u\left( {{t_n}} \right) + \Delta {t_n}\frac{{d{u_n}}}{{dt}} + \frac{{\Delta t_n^2}}{2}\frac{{{d^2}{u_n}}}{{d{t^2}}} + \frac{{\Delta t_n^3}}{6}\frac{{{d^3}{u_n}}}{{d{t^3}}} + O\left( {\Delta {t^2}} \right)
+\]</span>{eq-ch3-41}</p>
+<p>using the homogeneous form of model equation to eliminate the time derivatives in above equation one can get,</p>
+<p><span id="eq-ch3-42"><span class="math display">\[
+u\left( {{t_{n + 1}}} \right) = \left( {1 - \Omega  + \frac{{{\Omega ^2}}}{2} - \frac{{{\Omega ^3}}}{6}} \right)u\left( {{t_n}} \right) + O\left( {\Delta {t^2}} \right)
+\tag{2.40}\]</span></span></p>
+<p>From <a href="#eq-ch3-36" class="quarto-xref">Equation&nbsp;<span>2.35</span></a>, <a href="#eq-ch3-40" class="quarto-xref">Equation&nbsp;<span>2.39</span></a> and <a href="#eq-ch3-42" class="quarto-xref">Equation&nbsp;<span>2.40</span></a>, it follows that,</p>
+<p><span id="eq-ch3-43"><span class="math display">\[
+\left| {\tau (t)} \right| \leqslant \frac{1}{{36}}\Delta t_n^3\qquad \forall t \in \left[ {0,T} \right]
+\tag{2.41}\]</span></span></p>
+<p>This completes the proof that TDG/FEM algorithm is consistent.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Remark">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Remark
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>Remark 1</em>. Therefore, the TDG/FEM algorithm is consistent and unconditionally stable which also proves the convergence of the algorithm according to the Lax equivalence theorem. [^6]</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Remark">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Remark
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>Remark 2</em>. The TDG/FEM is a third order accurate algorithm for the linear interpolation in time. Moreover, the scheme can be classified as a single-step algorithm.</p>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Chen2006" class="csl-entry" role="listitem">
+Chen, Zhiyun, Holger Steeb, and Stefan Diebels. 2006. <span>“A Time-Discontinuous Galerkin Method for the Dynamical Analysis of Porous Media.”</span> <em>International Journal for Numerical and Analytical Methods in Geomechanics</em> 30 (11): 1113–34.
+</div>
+<div id="ref-Cockburn2003" class="csl-entry" role="listitem">
+Cockburn, Bernardo. 2003. <span>“Discontinuous Galerkin Methods.”</span> <em>ZAMM-Journal of Applied Mathematics and Mechanics/Zeitschrift f<span>ü</span>r Angewandte Mathematik Und Mechanik</em> 83 (11): 731–54.
+</div>
+<div id="ref-Eriksson1985" class="csl-entry" role="listitem">
+Eriksson, Kenneth, Claes Johnson, and Vidar Thomée. 1985. <span>“Time Discretization of Parabolic Problems by the Discontinuous Galerkin Method.”</span> <em>ESAIM: Mathematical Modelling and Numerical Analysis</em> 19 (4): 611–43.
+</div>
+<div id="ref-Hesthaven2007" class="csl-entry" role="listitem">
+Hesthaven, Jan S, and Tim Warburton. 2007. <em>Nodal Discontinuous Galerkin Methods: Algorithms, Analysis, and Applications</em>. Springer Science &amp; Business Media.
+</div>
+<div id="ref-Hughes2012" class="csl-entry" role="listitem">
+Hughes, Thomas JR. 2012. <em>The Finite Element Method: Linear Static and Dynamic Finite Element Analysis</em>. Courier Corporation.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/poromechanics\.github\.io\/sdee");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./tdg-second-order-ode.html" class="pagination-link" aria-label="TDG/FEM for the second order ODE">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">TDG/FEM for the second order ODE</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2025, Vikas Sharma</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/poromechanics/sdee/edit/main/tdg-first-order-ode.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/poromechanics/sdee/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vickysharma0812">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/vickysharma0812">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/vickysharma0812">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

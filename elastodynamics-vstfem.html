@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; V-STFEM for Elastodynamics – Soil Dynamics and Earthquake Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./dynamic-ssi-vstfem.html" rel="next">
+<link href="./elastodynamics-introduction.html" rel="prev">
+<link href="././figures/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-93074729595c0d1bb0917954c6b21507.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta name="twitter:title" content="9&nbsp; V-STFEM for Elastodynamics – Soil Dynamics and Earthquake Engineering">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://poromechanics.github.io/sdee/figures/ch3-fig-17.svg">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./elastodynamics-vstfem.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">V-STFEM for Elastodynamics</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Soil Dynamics and Earthquake Engineering</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/poromechanics/sdee/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Soil-Dynamics-and-Earthquake-Engineering.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Soil-Dynamics-and-Earthquake-Engineering.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tdg-first-order-ode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">TDG/FEM for the first order ODE</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tdg-second-order-ode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">TDG/FEM for the second order ODE</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Elastic waves</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-body-waves-in-solids.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Body waves in elastic solids</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-surface-waves-in-solids.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Surface waves in elastic solids</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-radiation-boundary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Radiation boundary conditions for elastic waves</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastodynamics-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Elastodynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastodynamics-vstfem.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">V-STFEM for Elastodynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">v-STFEM for Dynamic-soil-structure interaction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Dynamic SSI of Dam-Reservoir System</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-equations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Governing equation for Dam-Reservoir System</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">VSTFEM for dynamic SSI in dam-reservoir system</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-nonlinear-problem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Nonlinear dynamic behavior of concrete gravity dams</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-nonlinear-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">V-STFEM for nonlinear dynamic analysis of concrete gravity dams</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#continuum-theory-of-elastodynamics" id="toc-continuum-theory-of-elastodynamics" class="nav-link active" data-scroll-target="#continuum-theory-of-elastodynamics"><span class="header-section-number">9.1</span> Continuum theory of elastodynamics</a></li>
+  <li><a href="#space-time-notations" id="toc-space-time-notations" class="nav-link" data-scroll-target="#space-time-notations"><span class="header-section-number">9.2</span> Space-time notations</a></li>
+  <li><a href="#two-field-tdgstfem" id="toc-two-field-tdgstfem" class="nav-link" data-scroll-target="#two-field-tdgstfem"><span class="header-section-number">9.3</span> Two-field TDG/ST/FEM</a></li>
+  <li><a href="#velocity-based-tdgstfem-v-stfem" id="toc-velocity-based-tdgstfem-v-stfem" class="nav-link" data-scroll-target="#velocity-based-tdgstfem-v-stfem"><span class="header-section-number">9.4</span> Velocity based TDG/ST/FEM: v-ST/FEM</a></li>
+  <li><a href="#implementation-of-v-stfem" id="toc-implementation-of-v-stfem" class="nav-link" data-scroll-target="#implementation-of-v-stfem"><span class="header-section-number">9.5</span> Implementation of v-ST/FEM</a></li>
+  <li><a href="#primary-wave-propagation-in-homogeneous-linear-elastic-medium" id="toc-primary-wave-propagation-in-homogeneous-linear-elastic-medium" class="nav-link" data-scroll-target="#primary-wave-propagation-in-homogeneous-linear-elastic-medium"><span class="header-section-number">9.6</span> Primary wave propagation in homogeneous linear elastic medium</a></li>
+  <li><a href="#impulsive-response-of-a-fixed-free-pile" id="toc-impulsive-response-of-a-fixed-free-pile" class="nav-link" data-scroll-target="#impulsive-response-of-a-fixed-free-pile"><span class="header-section-number">9.7</span> Impulsive response of a fixed-free pile</a></li>
+  <li><a href="#dynamic-plate-load-test-dplt" id="toc-dynamic-plate-load-test-dplt" class="nav-link" data-scroll-target="#dynamic-plate-load-test-dplt"><span class="header-section-number">9.8</span> Dynamic plate load test (DPLT)</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/poromechanics/sdee/edit/main/elastodynamics-vstfem.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/poromechanics/sdee/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-elastodynamics-vstfem" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">V-STFEM for Elastodynamics</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="continuum-theory-of-elastodynamics" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="continuum-theory-of-elastodynamics"><span class="header-section-number">9.1</span> Continuum theory of elastodynamics</h2>
+<p>Let <span class="math inline">\(\Omega\subset\mathbb{R}^{n_{sd}}\)</span> be an open and bounded region occupied by an elastic body at time <span class="math inline">\(t\)</span>, where <span class="math inline">\(n_{sd}\)</span> is the number of spatial dimensions. The boundary of <span class="math inline">\(\Omega\)</span> is denoted by <span class="math inline">\(\Gamma\)</span>. Let <span class="math inline">\(\bar{\Omega}=\Omega\cup\Gamma\)</span> denote the closure of <span class="math inline">\(\Omega\)</span>. Further, let indices <span class="math inline">\(i,j,k\)</span> and <span class="math inline">\(l\)</span> take values from <span class="math inline">\(1,\cdots,n_{sd}\)</span>, and the Einstein summation convention applies to the repeated indices <span class="math inline">\(i,j,k,\)</span> and <span class="math inline">\(l\)</span> only. Furthermore, consider the nonoverlapping partitions, <span class="math inline">\(\Gamma_{i}^{g}\)</span> and <span class="math inline">\(\Gamma_{i}^{h}\)</span>, of the boundary <span class="math inline">\(\Gamma\)</span> such that</p>
+<p><span class="math display">\[\begin{aligned}
+\Gamma &amp; =\Gamma_{i}^{g}\cup\Gamma_{i}^{h}, &amp; \Gamma_{i}^{g}\cap\Gamma_{i}^{h} &amp; =\phi, &amp; i &amp; =1,\cdots,n_{sd}
+\end{aligned}
+\]</span></p>
+<p>The displacement, velocity, and stress field are denoted by <span class="math inline">\(\mathbf{u}\)</span>, <span class="math inline">\(mathbf{v}\)</span>, and <span class="math inline">\(\sigma\)</span>, respectively. The infinitesimal strain tensor, <span class="math inline">\(\varepsilon\)</span>, and stretching tensor, <span class="math inline">\(\mathbf{d}\)</span>, are given by</p>
+<p><span id="eq-ch3-119"><span class="math display">\[
+\begin{aligned}
+\varepsilon:={\mathbf{e}}\left({\mathbf{u}}\right) &amp; =\frac{1}{2}\left({{\mathbf{u}}\otimes{\nabla_{x}}}\right)+\frac{1}{2}\left({{\nabla_{x}}\otimes{\mathbf{u}}}\right), &amp; {\varepsilon_{ij}} &amp; ={e_{ij}}\left({\mathbf{u}}\right)=\frac{1}{2}\left({\frac{{\partial{u_{i}}}}{{\partial{x_{j}}}}+\frac{{\partial{u_{j}}}}{{\partial{x_{i}}}}}\right)
+\end{aligned}
+\tag{9.1}\]</span></span></p>
+<p><span id="eq-ch3-120"><span class="math display">\[
+\begin{aligned}
+{\mathbf{d}}:={\mathbf{e}}\left({\mathbf{v}}\right) &amp; =\frac{1}{2}\left({{\mathbf{v}}\otimes{\nabla_{x}}}\right)+\frac{1}{2}\left({{\nabla_{x}}\otimes{\mathbf{v}}}\right), &amp; {d_{ij}} &amp; ={e_{ij}}\left({\mathbf{v}}\right)=\frac{1}{2}\left({\frac{{\partial{v_{i}}}}{{\partial{x_{j}}}}+\frac{{\partial{v_{j}}}}{{\partial{x_{i}}}}}\right)
+\end{aligned}
+\tag{9.2}\]</span></span></p>
+<p>in which <span class="math inline">\(\varepsilon_{ij}\)</span>, <span class="math inline">\(d_{ij}\)</span>, <span class="math inline">\(u_{i}\)</span> and <span class="math inline">\(v_{i}\)</span> denote the Cartesian components of <span class="math inline">\(\varepsilon\)</span>, <span class="math inline">\(\mathbf{d}\)</span>, <span class="math inline">\(\mathbf{u}\)</span>, and <span class="math inline">\(\mathbf{v}\)</span>, respectively.</p>
+<p>In the small strain framework, the linear elastic constitutive relationship is described as,</p>
+<p><span id="eq-ch3-121"><span class="math display">\[
+\begin{aligned} \dot{\sigma}_{ij} &amp; =C_{ijkl}d_{kl}, &amp; \sigma_{ij} &amp; =C_{ijkl}\varepsilon_{kl}
+\end{aligned}
+\tag{9.3}\]</span></span></p>
+<p>where <span class="math inline">\(\dot{\sigma}_{ij}\)</span> denotes the first-order time derivative of the stress field, and <span class="math inline">\(C_{ijkl}\)</span> is the fourth-order elasticity tensor. In the case of an isotropic material, the elasticity tensor is expressed using the Lame parameters, <span class="math inline">\(\lambda,\mu\)</span>:</p>
+<p><span id="eq-ch3-122"><span class="math display">\[
+C_{ijkl}:=\lambda\delta_{ij}\delta_{kl}+2\mu\left(\frac{\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk}}{2}\right)
+\tag{9.4}\]</span></span></p>
+<p>in which <span class="math inline">\(\delta_{ij}\)</span> represents the Kronecker-delta function. If <span class="math inline">\(i=j\)</span> then <span class="math inline">\(\delta_{ij}=1\)</span>, otherwise <span class="math inline">\(\delta_{ij}=0\)</span>.</p>
+<p>The strong form of the initial-boundary value problem of elastodynamics can be stated as: given the functions</p>
+<p><span class="math display">\[b_{i}:\Omega\times\left[0,T\right]\rightarrow\mathbb{R},\]</span></p>
+<p><span class="math display">\[g_{i}:\Gamma_{i}^{g}\times\left[0,T\right]\rightarrow\mathbb{R},\]</span></p>
+<p><span class="math display">\[f_{i}^{s}:\Gamma_{i}^{h}\times\left[0,T\right]\rightarrow\mathbb{R},\]</span></p>
+<p><span class="math display">\[{u_{0}}_{i}:\Omega\rightarrow\mathbb{R},\]</span></p>
+<p><span class="math display">\[{v_{0}}_{i}:\Omega\rightarrow\mathbb{R},\]</span></p>
+<p><span class="math display">\[\rho:\Omega\rightarrow\mathbb{R},\]</span></p>
+<p>find <span class="math inline">\(u_{i}:\bar{\Omega}\times\left[0,T\right]\rightarrow\mathbb{R}\)</span>, such that</p>
+<p><span id="eq-ch3-123"><span class="math display">\[
+\begin{aligned}
+\rho\frac{{{\partial^{2}}{u_{i}}}}{{\partial{t^{2}}}}-\frac{{\partial{\sigma_{ij}}}}{{\partial{x_{j}}}}-\rho{b_{i}} &amp; =0, &amp; \forall(\mathbf{x},t)\in\Omega\times(0,T)
+\end{aligned}
+\tag{9.5}\]</span></span></p>
+<p><span id="eq-ch3-124"><span class="math display">\[
+\begin{aligned}
+{u_{i}} &amp; ={g_{i}}, &amp; \forall(\mathbf{x},t)\in\Gamma_{i}^{g}\times(0,T)
+\end{aligned}
+\tag{9.6}\]</span></span></p>
+<p><span id="eq-ch3-125"><span class="math display">\[
+\begin{aligned}
+{\sigma_{ij}}{n_{j}} &amp; =f_{i}^{s}, &amp; \forall(\mathbf{x},t)\in\Gamma_{i}^{h}\times(0,T)
+\end{aligned}
+\tag{9.7}\]</span></span></p>
+<p><span id="eq-ch3-126"><span class="math display">\[
+\begin{aligned}
+{u_{i}}\left({{\mathbf{x}},0}\right) &amp; ={u_{0i}}, &amp; \forall\mathbf{x}\in\Omega
+\end{aligned}
+\tag{9.8}\]</span></span></p>
+<p><span id="eq-ch3-127"><span class="math display">\[\begin{aligned}
+\frac{{\partial{u_{i}}\left({{\mathbf{x}},0}\right)}}{{\partial t}} &amp; ={v_{0i}}, &amp; \forall\mathbf{x}\in\Omega
+\end{aligned}
+\tag{9.9}\]</span></span></p>
+<p>where <span class="math inline">\(\rho\)</span> is the mass density of the elastic body, <span class="math inline">\(b_{i}\)</span> is the body force density, <span class="math inline">\(g_{i}\)</span> is the prescribed displacement on the Dirichlet-boundary <span class="math inline">\(\Gamma_{i}^{g}\)</span>, <span class="math inline">\(f_{i}^{s}\)</span> is the prescribed traction on the Neumann-boundary <span class="math inline">\(\Gamma_{i}^{h}\)</span>, <span class="math inline">\(u_{0i}\)</span> is the initial value of the displacement field, and <span class="math inline">\(v_{0i}\)</span> is the initial value of the velocity field.</p>
+</section>
+<section id="space-time-notations" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="space-time-notations"><span class="header-section-number">9.2</span> Space-time notations</h2>
+<p>Let <span class="math inline">\(\Omega_{h}\)</span>, the set of finite spatial elements <span class="math inline">\(\Omega_{e},e=1,\cdots,n_{el}\)</span>, be the discretization of spatial domain <span class="math inline">\(\Omega\)</span>, where <span class="math inline">\(n_{el}\)</span> is the total number of spatial elements in <span class="math inline">\(\Omega_{h}\)</span>. Furthermore, consider a non-uniform subdivision for the time domain <span class="math inline">\(\left[0,T\right]\)</span>,</p>
+<p><span class="math display">\[
+0=t_{0}&lt;t_{1}&lt;\cdots&lt;t_{N}=T
+\]</span></p>
+<p>with</p>
+<p><span class="math display">\[
+I_{n}=(t_{n},t_{n}+1),\quad\Delta t_{n}=t_{n+1}-t_{n},\quad\Delta t=\mathop{\max}\limits_{0\leqslant n\leqslant N-1}\Delta{t_{n}}.
+\]</span></p>
+<p>The space-time slab <span class="math inline">\(Q_{n}\)</span> and the space-time finite element <span class="math inline">\(Q_{n,e}\)</span> are given by following expressions,</p>
+<p><span class="math display">\[
+\begin{aligned} Q_{n} &amp; :=\Omega_{h}\times I_{n}, &amp; Q_{n,e} &amp; :=\Omega_{e},\quad e=1,\cdots,n_{el}
+\end{aligned}
+\]</span></p>
+<p>Accordingly,</p>
+<p><span class="math display">\[
+{\mathbb{Q}_{h}}:=\bigcup\limits_{n=0}^{N-1}{{Q_{n}}}
+\]</span></p>
+<p>denotes the discretization of the entire space-time domain.</p>
+<p>In TDG/ST/FEM, the unknown fields remains continuous in the spatial domain <span class="math inline">\(\Omega_{h}\)</span>, and discontinuity in time occurs at times that belong to the finite set,</p>
+<p><span class="math display">\[
+{D_{t}}:=\left\{ {{t_{0}},{t_{1}},\ldots,{t_{N}}}\right\}.
+\]</span></p>
+<p>Therefore, at the discrete times <span class="math inline">\(t\in D_{t}\)</span> the solution have two values, and the jump discontinuity in time for some unknown scalar field <span class="math inline">\(q(\mathbf{x},t)\)</span> at time <span class="math inline">\(t_{n}\in D_{t}\)</span> is given by <a href="#eq-ch3-128" class="quarto-xref">Equation&nbsp;<span>9.10</span></a></p>
+<p><span id="eq-ch3-128"><span class="math display">\[
+{\left[\kern-0.15em \left[{q\left({\mathbf{x}}\right)}\right]\kern-0.15em \right]_{n}}=q_{n}^{+}\left({\mathbf{x}}\right)-q_{n}^{-}\left({\mathbf{x}}\right)
+\tag{9.10}\]</span></span></p>
+<p>where</p>
+<p><span id="eq-ch3-129"><span class="math display">\[
+\begin{aligned}
+q_{n}^{+}\left({\mathbf{x}}\right) &amp; =\mathop{\lim}\limits_{\varepsilon\to0}q\left({{\mathbf{x}},{t_{n}}+\varepsilon}\right), &amp; q_{n}^{-}\left({\mathbf{x}}\right) &amp; =\mathop{\lim}\limits_{\varepsilon\to0}q\left({{\mathbf{x}},{t_{n}}-\varepsilon}\right)
+\end{aligned}
+\tag{9.11}\]</span></span></p>
+<p>denote the right and left limits of the unknown field <span class="math inline">\(q(\mathbf{x},t)\)</span> at time <span class="math inline">\(t=t_{n}\)</span>, respectively.</p>
+<p>Let us now consider <span class="math inline">\({\wp_{l}}\left({Q_{n,e}^ {}}\right)\)</span>, the collection of all polynomials defined on <span class="math inline">\(Q_{n,e}\)</span> with a total degree of no more than <span class="math inline">\(l\)</span>, and <span class="math inline">\(C^{0}(\star)\)</span>, the space of piecewise continuous functions defined on domain <span class="math inline">\((\star)\)</span>. Consider also the following collection of functions:</p>
+<p><span id="eq-ch3-130"><span class="math display">\[
+\Im_{l}^{h}:=\left\{ {\left.{{{\mathbf{u}}^{h}}}\right|{{\mathbf{u}}^{h}}\in{C^{0}}{{\left({\bigcup\limits_{n=0}^{N-1}{{Q_{n}}}}\right)}^{{n_{sd}}}},\left.{{{\mathbf{u}}^{h}}}\right|{Q_{n,e}}\in{{\left({{\wp_{l}}\left({{Q_{n,e}}}\right)}\right)}^{{n_{sd}}}}}\right\}
+\tag{9.12}\]</span></span></p>
+<p>where <span class="math inline">\({\left.{{{\mathbf{u}}^{h}}}\right|{Q_{n,e}}}\)</span> is the restriction of <span class="math inline">\(\mathbf{u}^{h}\)</span> to <span class="math inline">\(Q_{n,e}\)</span>. Lastly, the space of the test functions for the TDG/ST/FEM is given as</p>
+<p><span id="eq-ch3-131"><span class="math display">\[
+{V^{h}}:=\left\{ {\left.{{{\mathbf{u}}^{h}}}\right|{{\mathbf{u}}^{h}}\in\Im_{l}^{h},u_{i}^{h}=0,\forall\left({{\mathbf{x}},t}\right)\in\Gamma_{i}^{g}\times{I_{n}},{\text{for }}i=1,\cdots,{n_{sd}}}\right\}
+\tag{9.13}\]</span></span></p>
+<p>In what follows, a general introduction to the two-field TDG/ST/FEM is provided, then the weak-form for the v-ST/FEM is derived by using the two-field formulation.</p>
+</section>
+<section id="two-field-tdgstfem" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="two-field-tdgstfem"><span class="header-section-number">9.3</span> Two-field TDG/ST/FEM</h2>
+<p>In the two-field formulation, both the displacement field and velocity field are taken as primary unknowns. Accordingly, the weak form should satisfy the following conditions in the weak sense:</p>
+<ol type="1">
+<li>Balance of the linear momentum, <a href="#eq-ch3-123" class="quarto-xref">Equation&nbsp;<span>9.5</span></a></li>
+<li>Essential and natural boundary conditions, <a href="#eq-ch3-123" class="quarto-xref">Equation&nbsp;<span>9.5</span></a> and <a href="#eq-ch3-125" class="quarto-xref">Equation&nbsp;<span>9.7</span></a></li>
+<li>Traction continuity in space;</li>
+<li>Continuity of the velocity field in time;</li>
+</ol>
+<p><span class="math display">\[
+{\left[\kern-0.15em \left[{{{\mathbf{v}}^{h}}\left({\mathbf{x}}\right)}\right]\kern-0.15em \right]_{n}}=0
+\]</span></p>
+<ol start="5" type="1">
+<li>Continuity of the displacement field in time;</li>
+</ol>
+<p><span class="math display">\[
+{\left[\kern-0.15em \left[{{{\mathbf{u}}^{h}}\left({\mathbf{x}}\right)}\right]\kern-0.15em \right]_{n}}=0
+\]</span></p>
+<ol start="6" type="1">
+<li>Displacement-velocity compatibility condition;</li>
+</ol>
+<p><span class="math display">\[
+\frac{{\partial{{\mathbf{u}}^{h}}}}{{\partial t}}-{{\mathbf{v}}^{h}}=0
+\]</span></p>
+<p>Here, Conditions (i)–(iii) are always satisfied as the weak form is derived by employing the Galerkin method <span class="citation" data-cites="Hughes2012">(<a href="references.html#ref-Hughes2012" role="doc-biblioref">Hughes 2012</a>)</span>. Conditions (iv) and (v) necessary due to the time-discontinuous approximation of the displacement and velocity field, respectively. Condition (vi) is due to the independent approximation of the displacement field and velocity field.</p>
+<p>The displacement-velocity two-field weak-form for TDG/ST/FEM in its original form as presented by <span class="citation" data-cites="Hughes1988">Hughes and Hulbert (<a href="references.html#ref-Hughes1988" role="doc-biblioref">1988</a>)</span> is described as follows.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Weak form">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Weak form
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Find <span class="math inline">\(\mathbf{u}\in S_{u}^{h}\)</span> and <span class="math inline">\(\mathbf{v}\in S_{v}^{h}\)</span> such that for all <span class="math inline">\(\delta\mathbf{u}\in V^{h}\)</span> and <span class="math inline">\(\delta\mathbf{v}\in V^{h}\)</span>, and for all <span class="math inline">\(n=1,\cdots,N-1\)</span> <a href="#eq-ch3-132" class="quarto-xref">Equation&nbsp;<span>9.14</span></a> holds.</p>
+<p><span id="eq-ch3-132"><span class="math display">\[
+\begin{split} &amp; \int_{{I_{n}}}^ {}{\int_{{\Omega_{h}}}^ {}{\delta{v_{i}}\rho\frac{{\partial{v_{i}}}}{{\partial t}}d\Omega}dt}+\int_{{\Omega_{n}}}^ {}{\delta{v_{i}}\left({{\mathbf{x}},t_{n}^{+}}\right)\rho{{\left[\kern-0.15em \left[{{v_{i}}\left({\mathbf{x}}\right)}\right]\kern-0.15em \right]}_{n}}d\Omega}\\
+&amp; +\int_{{I_{n}}}^ {}{\int_{{\Omega_{h}}}^ {}{\frac{{\partial\delta v_{i}^ {}}}{{\partial{x_{j}}}}{\sigma_{ij}}\left({{\mathbf{x}},t}\right)d\Omega}dt}-\int_{{I_{n}}}^ {}{\int_{\Gamma_{i}^{h}}^ {}{\delta{v_{i}}f_{i}^{s}ds}dt}\\
+&amp; -\int_{{I_{n}}}^ {}{\int_{{\Omega_{h}}}^ {}{\delta{v_{i}}\rho{b_{i}}d\Omega}dt}+\int_{{I_{n}}}^ {}{\int_{{\Omega_{h}}}^ {}{\frac{{\partial\delta{u_{i}}}}{{\partial{x_{j}}}}{C_{ijkl}}\frac{\partial}{{\partial{x_{l}}}}\left({\frac{{\partial{u_{k}}}}{{\partial t}}-{v_{k}}}\right)d\Omega}dt}\\
+&amp; +\int_{{\Omega_{h}}}^ {}{\frac{{\partial\delta{u_{i}}\left({{\mathbf{x}},{t_{n}}}\right)}}{{\partial{x_{j}}}}{C_{ijkl}}\frac{{\partial{{\left[\kern-0.15em \left[{{u_{k}}\left({\mathbf{x}}\right)}\right]\kern-0.15em \right]}_{n}}}}{{\partial{x_{l}}}}d\Omega}=0
+\end{split}
+\tag{9.14}\]</span></span></p>
+<p>where <span class="math inline">\(S_{u}^{h}\)</span> and <span class="math inline">\(S_{v}^{h}\)</span> denote the collections of trial functions for the displacement field and velocity field, respectively, and given by</p>
+<p><span id="eq-ch3-133"><span class="math display">\[
+S_{u}^{h}:=\left\{ {\left.{\mathbf{u}}\right|{\mathbf{u}}\in\Im_{l}^{h},{u_{i}}={g_{i}},\forall\left({{\mathbf{x}},t}\right)\in\Gamma_{i}^{g}\times{I_{n}},i=1,\cdots,{n_{sd}}}\right\}
+\tag{9.15}\]</span></span></p>
+<p><span id="eq-ch3-134"><span class="math display">\[
+S_{v}^{h}:=\left\{ {\left.{\mathbf{v}}\right|{\mathbf{v}}\in\Im_{l}^{h},{v_{i}}=\frac{{\partial{g_{i}}}}{{\partial t}},\forall\left({{\mathbf{x}},t}\right)\in\Gamma_{i}^{g}\times{I_{n}},i=1,\cdots,{n_{sd}}}\right\}
+\tag{9.16}\]</span></span></p>
+</div>
+</div>
+<p>It is noteworthy that in the above-mentioned weak-form, Conditions (v) and (vi) are satisfied by using a strain-energy norm and Condition (iv) is satisfied by using a kinetic energy norm.</p>
+</section>
+<section id="velocity-based-tdgstfem-v-stfem" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="velocity-based-tdgstfem-v-stfem"><span class="header-section-number">9.4</span> Velocity based TDG/ST/FEM: v-ST/FEM</h2>
+<p>In the velocity based time-discontinuous space-time finite element method (v-ST/FEM) displacement-velocity compatibility condition is strongly enforced by computing the displacement field from the consistent time-integration of the velocity field. Accordingly, displacement field remains continuous in time while velocity field still remains discontinuous at the discrete times.</p>
+<p>The weak-form for the v-ST/FEM can be stated as:</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Weak form">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Weak form
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Find <span class="math inline">\(\mathbf{v}\in S_{v}^{h}\)</span> such that for all <span class="math inline">\(\delta\mathbf{v}\in V^{h}\)</span>, and for all <span class="math inline">\(n=1,\cdots,N-1\)</span>, <a href="#eq-ch3-135" class="quarto-xref">Equation&nbsp;<span>9.17</span></a> holds.</p>
+<p><span id="eq-ch3-135"><span class="math display">\[
+\begin{split} &amp; \int_{{I_{n}}}^ {}{\int_{{\Omega_{h}}}^ {}{\delta{v_{i}}\rho\frac{{\partial{v_{i}}}}{{\partial t}}d\Omega}dt}+\int_{{\Omega_{n}}}^ {}{\delta{v_{i}}\left({{\mathbf{x}},t_{n}^{+}}\right)\rho{v_{i}}\left({{\mathbf{x}},t_{n}^{+}}\right)d\Omega}\\
+&amp; +\int_{{I_{n}}}^ {}{\int_{{\Omega_{h}}}^ {}{\frac{{\partial\delta v_{i}^ {}}}{{\partial{x_{j}}}}{\sigma_{ij}}\left({{\mathbf{x}},t}\right)d\Omega}dt}-\int_{{I_{n}}}^ {}{\int_{\Gamma_{i}^{h}}^ {}{\delta{v_{i}}f_{i}^{s}ds}dt}\\
+&amp; -\int_{{I_{n}}}^ {}{\int_{{\Omega_{h}}}^ {}{\delta{v_{i}}\rho{b_{i}}d\Omega}dt}-\int_{{\Omega_{n}}}^ {}{\delta{v_{i}}\left({{\mathbf{x}},t_{n}^{+}}\right)\rho{v_{i}}\left({{\mathbf{x}},t_{n}^{-}}\right)d\Omega}=0
+\end{split}
+\tag{9.17}\]</span></span></p>
+</div>
+</div>
+<p>The displacement field is computed by</p>
+<p><span id="eq-ch3-136"><span class="math display">\[
+{\mathbf{u}}\left({{\mathbf{x}},t}\right)={\mathbf{u}}\left({{\mathbf{x}},{t_{n}}}\right)+\int_{{t_{n}}}^{t}{{\mathbf{v}\left({{\mathbf{x}},{\tau}}\right)}d\tau},\qquad\forall\left({{\mathbf{x}},t}\right)\in{Q_{n}},\quad\forall{\mathbf{v}}\in S_{v}^{h}
+\tag{9.18}\]</span></span></p>
+<p>In the case of hyperelastic material law, the stress is computed by first computing the displacement field (see <a href="#eq-ch3-119" class="quarto-xref">Equation&nbsp;<span>9.1</span></a> and <a href="#eq-ch3-121" class="quarto-xref">Equation&nbsp;<span>9.3</span></a>). Alternatively, if the constitutive relationship is given in the rate form (e.g., hypoelastic form) then stress field can be obtained by time integration of the rate form. In latter case, computation of displacement field can be avoided. In the realm of small strain theory, however, these two techniques of stress recovery are equivalent, and the stress field in a space-time slab takes the form</p>
+<p><span id="eq-ch3-137"><span class="math display">\[
+{\sigma_{ij}}\left({{\mathbf{x}},t}\right)={\sigma_{ij}}\left({{\mathbf{x}},{t_{n}}}\right)+{C_{ijkl}}{\psi_{kl}}\left({{\mathbf{v}},t}\right),\qquad\forall\left({{\mathbf{x}},t}\right)\in{Q_{n}},\forall v\in S_{v}^{h}
+\tag{9.19}\]</span></span></p>
+<p>where</p>
+<p><span id="eq-ch3-138"><span class="math display">\[
+{\psi_{ij}}\left({{\mathbf{v}},t}\right)=\int_{{t_{n}}}^{t}{\frac{{\partial{v_{i}}}}{{\partial{x_{j}}}}d\tau,}\qquad\forall t\in{I_{n}},\forall{\mathbf{v}}\in S_{v}^{h}
+\tag{9.20}\]</span></span></p>
+<p>Subsequently, by substituting the expression for the stress given in <a href="#eq-ch3-137" class="quarto-xref">Equation&nbsp;<span>9.19</span></a> into the weak-form, Eq. <a href="#eq-ch3-135" class="quarto-xref">Equation&nbsp;<span>9.17</span></a>, the following weak-form for v-ST/FEM is obtained;</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Weak form">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Weak form
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Find <span class="math inline">\(\mathbf{v}\in S_{v}^{h}\)</span> such that for all <span class="math inline">\(\delta\mathbf{v}\in V^{h}\)</span>, and for all <span class="math inline">\(n=1,\cdots,N-1\)</span>, Eq. <a href="#eq-ch3-139" data-reference-type="eqref" data-reference="eq-ch3-139">[eq-ch3-139]</a> holds. <span id="eq-ch3-139"><span class="math display">\[\begin{split} &amp; \int_{{I_{n}}}^ {}{\int_{{\Omega_{h}}}^ {}{\delta{v_{i}}\rho\frac{{\partial{v_{i}}}}{{\partial t}}d\Omega}dt}+\int_{{\Omega_{n}}}^ {}{\delta{v_{i}}\left({{\mathbf{x}},t_{n}^{+}}\right)\rho{v_{i}}\left({{\mathbf{x}},t_{n}^{+}}\right)d\Omega}\\
+&amp; +\int_{{I_{n}}}^ {}{\int_{{\Omega_{h}}}^ {}{\frac{{\partial\delta v_{i}^ {}}}{{\partial{x_{j}}}}{\sigma_{ij}}\left({{\mathbf{x}},{t_{n}}}\right)d\Omega}dt}+\int_{{I_{n}}}^ {}{\int_{{\Omega_{h}}}^ {}{\frac{{\partial\delta v_{i}^ {}}}{{\partial{x_{j}}}}{C_{ijkl}}{\psi_{kl}}d\Omega}dt}\\
+&amp; -\int_{{I_{n}}}^ {}{\int_{\Gamma_{i}^{h}}^ {}{\delta{v_{i}}f_{i}^{s}ds}dt}-\int_{{I_{n}}}^ {}{\int_{{\Omega_{h}}}^ {}{\delta{v_{i}}\rho{b_{i}}d\Omega}dt}\\
+&amp; -\int_{{\Omega_{n}}}^ {}{\delta{v_{i}}\left({{\mathbf{x}},t_{n}^{+}}\right)\rho{v_{i}}\left({{\mathbf{x}},t_{n}^{-}}\right)d\Omega}=0
+\end{split}
+\tag{9.21}\]</span></span></p>
+</div>
+</div>
+<div id="rmk-12">
+<p>In the two-field TDG/ST/FEM, both displacement and velocity are the primary unknown. This approach usually yields a large system of linear equations which in turn increases the computation cost. In this case, special procedures are required to reduce the size of the problem. Such procedures are mainly based on the predictor-multicorrector schemes <span class="citation" data-cites="Bonelli2002 Bonelli2003 Mancuso2003 Kunthong2005">(<a href="references.html#ref-Bonelli2002" role="doc-biblioref">Bonelli, Bursi, and Mancuso 2002</a>; <a href="references.html#ref-Bonelli2003" role="doc-biblioref">Bonelli and Bursi 2003</a>; <a href="references.html#ref-Mancuso2003" role="doc-biblioref">Mancuso and Ubertini 2003</a>; <a href="references.html#ref-Kunthong2005" role="doc-biblioref">Kunthong and Thompson 2005</a>)</span>.</p>
+</div>
+<div id="rmk-13">
+<p>In v-ST/FEM, velocity field is the primary unknown, therefore, the resultant system of linear equations will be significantly smaller than the one in case of two-field TDG/ST/FEM. Accordingly, the computation cost of v-ST/FEM is lower than the two-field TDG/ST/FEM, however, the cost is still higher than the classical semi-discrete schemes.</p>
+</div>
+</section>
+<section id="implementation-of-v-stfem" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="implementation-of-v-stfem"><span class="header-section-number">9.5</span> Implementation of v-ST/FEM</h2>
+<p>Consider <span class="math inline">\(Q_{n,e}=\Omega_{e}\times I_{n}\)</span> denoting the space-time finite element. Let <span class="math inline">\(n_{e}\)</span> be the total number of spatial nodes in the spatial finite element <span class="math inline">\(\Omega_{e}\)</span>. Let <span class="math inline">\(v_{i}(\mathbf{x},t_{n}^{+})\)</span> and <span class="math inline">\(v_{i}(\mathbf{x},t_{n+1}^{-})\)</span> be the spatial nodal velocities on the bottom and top faces of space-time slab <span class="math inline">\(Q_{n}\)</span>, respectively (see <a href="#fig-ch3-17" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>). Furthermore, time <span class="math inline">\(t\in I_{n}\)</span> is given by</p>
+<p><span id="eq-ch3-140"><span class="math display">\[
+t=T_{1}(\theta)t_{n}+T_{2}(\theta)t_{n+1},\quad\forall\theta\in\left[-1,1\right]
+\tag{9.22}\]</span></span></p>
+<p>where</p>
+<p><span id="eq-ch3-141"><span class="math display">\[
+\begin{aligned}
+T_{1}(\theta) &amp; =\frac{1-\theta}{2} &amp; T_{2}(\theta) &amp; =\frac{1+\theta}{2}
+\end{aligned}
+\tag{9.23}\]</span></span></p>
+<div id="fig-ch3-17" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-17-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="./figures/ch3-fig-17.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;9.1: Schematic diagram of the space-time slabs Q_{n} and Q_{n+1}"><img src="./figures/ch3-fig-17.svg" class="img-fluid figure-img" style="width:50.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-17-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: Schematic diagram of the space-time slabs <span class="math inline">\(Q_{n}\)</span> and <span class="math inline">\(Q_{n+1}\)</span>
+</figcaption>
+</figure>
+</div>
+<div id="fig-ch3-18" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-18-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-18.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-18-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.2: Schematic diagram of the space-time finite element <span class="math inline">\(Q_{n,e}\)</span>
+</figcaption>
+</figure>
+</div>
+<p>The linear trial functions for the velocity defined on <span class="math inline">\(Q_{n,e}\)</span> are give by</p>
+<p><span id="eq-ch3-142"><span class="math display">\[
+{v_{i}}\left({{\mathbf{x}},t}\right)={}_{}^{a}{v_{iI}}{T_{a}}\left(\theta\right){N^{I}}\left({\xi,\eta}\right),\quad\,a=1,2;\quad\,I=1,\cdots,{n_{e}}
+\tag{9.24}\]</span></span></p>
+<p>where <span class="math inline">\(_{}^{a}{v_{iI}}\)</span> denotes the space-time nodal values of velocity; <span class="math inline">\(a=1\)</span> and <span class="math inline">\(a=2\)</span> correspond to the bottom and top face (i.e., temporal nodes) of the space-time element, and <span class="math inline">\(I=1,\cdots,n_{e}\)</span> denotes the spatial node of the space-time element (see <a href="#fig-ch3-18" class="quarto-xref">Figure&nbsp;<span>9.2</span></a>). <span class="math inline">\(N^{I}(\xi,\eta)\)</span> are the spatial shape functions defined on the local domain. Accordingly, <span class="math inline">\(v_{i}(\mathbf{x},t_{n}^{+})\)</span> and <span class="math inline">\(v_{i}(\mathbf{x},t_{n+1}^{-})\)</span> are given by <a href="#eq-ch3-143" class="quarto-xref">Equation&nbsp;<span>9.25</span></a> and <a href="#eq-ch3-144" class="quarto-xref">Equation&nbsp;<span>9.26</span></a>, respectively.</p>
+<p><span id="eq-ch3-143"><span class="math display">\[
+{v_{i}}\left({{\mathbf{x}},t_{n}^{+}}\right)={}_{}^{1}{v_{iI}}{N^{I}}\left({\xi,\eta}\right)
+\tag{9.25}\]</span></span></p>
+<p><span id="eq-ch3-144"><span class="math display">\[
+{v_{i}}\left({{\mathbf{x}},t_{n+1}^{-}}\right)={}_{}^{2}{v_{iI}}{N^{I}}\left({\xi,\eta}\right)
+\tag{9.26}\]</span></span></p>
+<p>The displacement field corresponding to the above-mentioned local interpolation for the velocity field (cf. <a href="#eq-ch3-144" class="quarto-xref">Equation&nbsp;<span>9.26</span></a>) is obtained by using <a href="#eq-ch3-136" class="quarto-xref">Equation&nbsp;<span>9.18</span></a>.</p>
+<p><span id="eq-ch3-145"><span class="math display">\[
+{u_{i}}\left({{\mathbf{x}},t}\right)={u_{i}}\left({{\mathbf{x}},{t_{n}}}\right)+{\tilde{T}_{1}}\left(\theta\right){v_{i}}\left({{\mathbf{x}},{t_{n}}}\right)+{\tilde{T}_{2}}\left(\theta\right){v_{i}}\left({{\mathbf{x}},{t_{n+1}}}\right)
+\tag{9.27}\]</span></span></p>
+<p>where</p>
+<p><span class="math display">\[
+\begin{aligned}
+{{\tilde{T}}_{1}}\left(\theta\right) &amp; =\frac{{\Delta{t_{n}}}}{2}\left[{1-T_{1}^{2}\left(\theta\right)}\right], &amp; {{\tilde{T}}_{2}}\left(\theta\right) &amp; =\frac{{\Delta{t_{n}}}}{2}T_{2}^{2}\left(\theta\right)\label{eq-ch3-146}
+\end{aligned}
+\]</span></p>
+<p>are the quadratic shape function defined on <span class="math inline">\(\left[-1,1\right]\)</span>. Subsequently, <span class="math inline">\(\psi_{ij}\)</span> in <a href="#eq-ch3-138" class="quarto-xref">Equation&nbsp;<span>9.20</span></a> becomes,</p>
+<p><span class="math display">\[
+{\psi_{ij}}\left({{\mathbf{x}},t}\right)={}^{a}{v_{iI}}{{\tilde{T}}_{a}}\frac{{\partial{N^{I}}}}{{\partial{x_{j}}}}\label{eq-ch3-147}
+\]</span></p>
+<p>By using the expression for <span class="math inline">\(psi_{ij}\)</span> in <a href="#eq-ch3-137" class="quarto-xref">Equation&nbsp;<span>9.19</span></a> the stress <span class="math inline">\(\sigma_{ij}\)</span> inside the space-time element is described as,</p>
+<p><span id="eq-ch3-148"><span class="math display">\[
+\begin{aligned}
+{\sigma_{ij}}\left({{\mathbf{x}},t}\right) &amp; ={\sigma_{ij}}\left({{\mathbf{x}},{t_{n}}}\right)+{{\tilde{T}}_{a}}{C_{ijkl}}\frac{{\partial{N^{I}}}}{{\partial{x_{l}}}}{}^{a}{v_{kI}}, &amp; \forall(\mathbf{x},t)\in Q_{n,e}
+\end{aligned}
+\tag{9.28}\]</span></span></p>
+<p>Lastly, the test functions for the velocity field are desribed as</p>
+<p><span id="eq-ch3-149"><span class="math display">\[
+{\delta v_{i}}\left({{\mathbf{x}},t}\right)={}_{}^{a}{\delta v_{iI}}{T_{a}}\left(\theta\right){N^{I}}\left({\xi,\eta}\right),\quad\,a=1,2;\quad\,I=1,\cdots,{n_{e}}
+\tag{9.29}\]</span></span></p>
+<p>Using <a href="#eq-ch3-140" class="quarto-xref">Equation&nbsp;<span>9.22</span></a> – <a href="#eq-ch3-149" class="quarto-xref">Equation&nbsp;<span>9.29</span></a> for the space-time finite element discretization of the weak-form which is given in Eq. <a href="#eq-ch3-139" class="quarto-xref">Equation&nbsp;<span>9.21</span></a>.</p>
+<p><span id="eq-ch3-150"><span class="math display">\[
+\begin{split} &amp; ^{a}\delta{v_{iI}}\left[{\int_{{I_{n}}}^ {}{\int_{{\Omega_{h}}}^ {}{{N^{I}}{T_{a}}\rho\frac{{\partial{N^{J}}{T_{b}}}}{{\partial t}}d\Omega}dt}}\right]{}^{b}{v_{iJ}}{+^{a}}\delta{v_{iI}}\left[{{\delta_{1a}}{\delta_{1b}}\int_{{\Omega_{n}}}^ {}{{N^{I}}\rho{N^{J}}d\Omega}}\right]{}^{b}{v_{iJ}}\\
+&amp; {+^{a}}\delta v_{iI}^ {}\left\{ {\int_{{I_{n}}}^ {}{{T_{a}}\int_{{\Omega_{h}}}^ {}{\frac{{\partial{N^{I}}}}{{\partial{x_{j}}}}\sigma_{ij}^{n}d\Omega}dt}}\right\} {+^{a}}\delta v_{iI}^ {}\left[{\int_{{I_{n}}}^ {}{{T_{a}}{{\tilde{T}}_{b}}\int_{{\Omega_{h}}}^ {}{\frac{{\partial{N^{I}}}}{{\partial{x_{j}}}}{C_{ijkl}}\frac{{\partial{N^{J}}}}{{\partial{x_{l}}}}d\Omega}dt}}\right]{}^{b}{v_{kJ}}\\
+&amp; -^{a}\delta{v_{iI}}\left\{ {\int_{{I_{n}}}^ {}{\int_{\Gamma_{i}^{h}}^ {}{{T_{a}}{N^{I}}f_{i}^{s}ds}dt}}\right\} -{}^{a}\delta{v_{iI}}\left\{ {\int_{{I_{n}}}^ {}{\int_{{\Omega_{h}}}^ {}{{T_{a}}{N^{I}}\rho{b_{i}}d\Omega}dt}}\right\} \\
+&amp; -^{a}\delta{v_{iI}}\left[{{\delta_{1a}}\int_{{\Omega_{n}}}^ {}{{N^{I}}\rho{N^{J}}d\Omega}}\right]v_{iJ}^{-}=0
+\end{split}
+\tag{9.30}\]</span></span></p>
+<p>Let us now use the following notation for representing the global space-time nodal vector,</p>
+<p><span class="math display">\[
+\left\{ {\mathbf{J}}\right\} :=\left\{ J\right\} _{i}^{a}\left(I\right)
+\]</span></p>
+<p>here <span class="math inline">\(a=1,2\)</span> corresponds to the temporal nodes, <span class="math inline">\(I=1,\cdots\)</span> corresponds to the <span class="math inline">\(I^{th}\)</span> spatial node, and <span class="math inline">\(i=1,2\)</span> corresponds to spatial components. Accordingly, <span class="math inline">\(a=1\)</span> corresponds to the spatial nodal values of the vector defined at the bottom space-time slab (i.e., at time <span class="math inline">\(t_{n}^{+}\)</span>). Similarly, <span class="math inline">\(a=2\)</span> corresponds to the spatial nodal values of the vector at the top space-time slab (i.e., at time <span class="math inline">\(t_{n+1}^{-}\)</span>).</p>
+<p>A typical space-time finite element matrix will be denoted as:</p>
+<p><span class="math display">\[
+\left[{\mathbf{K}}\right]:=\left[K\right]_{ij}^{ab}\left({I,J}\right)
+\]</span></p>
+<p>where <span class="math inline">\(a,b=1,2\)</span> corresponds to the temporal nodes, <span class="math inline">\(I=1,\cdots,n_{e}\)</span> corresponds to the spatial node, and <span class="math inline">\(i,j=1,2\)</span> corresponds to the spatial components.</p>
+<p>By using these notations <a href="#eq-ch3-150" class="quarto-xref">Equation&nbsp;<span>9.30</span></a> can be expressed as:</p>
+<p><span id="eq-ch3-151"><span class="math display">\[
+\left\{ {\delta v}\right\} _{i}^{a}\left(I\right)\cdot\left(\begin{gathered}\left[M\right]_{ij}^{ab}\left({I,J}\right)\cdot\left\{ v\right\} _{j}^{b}\left(J\right)+\left[K\right]_{ij}^{ab}\left({I,J}\right)\cdot\left\{ v\right\} _{j}^{b}\left(J\right)\\
++\left\{ {{J_{{\sigma^{n}}}}}\right\} _{i}^{a}\left(I\right)-\left\{ {{J_{ext}}}\right\} _{i}^{a}\left(I\right)-\left\{ {{J_{0}}}\right\} _{i}^{a}\left(I\right)
+\end{gathered}
+\right)=0
+\tag{9.31}\]</span></span></p>
+<p>Since above equation is true for all values of <span class="math inline">\(\left\{ \delta v\right\} _{i}^{a}\)</span> one can obtain the following the system of linear equations:</p>
+<p><span id="eq-ch3-152"><span class="math display">\[
+\left[M\right]_{ij}^{ab}\left({I,J}\right)\cdot\left\{ v\right\} _{j}^{b}\left(J\right)+\left[K\right]_{ij}^{ab}\left({I,J}\right)\cdot\left\{ v\right\} _{j}^{b}\left(J\right)=\left\{ {{J_{ext}}}\right\} _{i}^{a}\left(I\right)+\left\{ {{J_{0}}}\right\} _{i}^{a}\left(I\right)-\left\{ {{J_{{\sigma^{n}}}}}\right\}_{i}^{a}\left(I\right)
+\tag{9.32}\]</span></span></p>
+<p>Matrix-vector form of above equation is given as,</p>
+<p><span id="eq-ch3-153"><span class="math display">\[
+\left[{\mathbf{M}}\right]\cdot\left\{ {{\mathbf{\tilde{v}}}}\right\} +\left[{\mathbf{K}}\right]\cdot\left\{ {{\mathbf{\tilde{v}}}}\right\} =\left\{ {{{\mathbf{J}}_{ext}}}\right\} +\left\{ {{{\mathbf{J}}_{0}}}\right\} -\left\{ {{{\mathbf{J}}_{{\sigma^{n}}}}}\right\}
+\tag{9.33}\]</span></span></p>
+<p>If Rayleigh damping is used to model the material damping then above equation becomes:</p>
+<p><span id="eq-ch3-154"><span class="math display">\[
+\left[{\mathbf{M}}\right]\cdot\left\{ {{\mathbf{\tilde{v}}}}\right\} +\left[{\mathbf{K}}\right]\cdot\left\{ {{\mathbf{\tilde{v}}}}\right\} +\alpha\left[{{{\mathbf{M}}_{R}}}\right]\cdot\left\{ {{\mathbf{\tilde{v}}}}\right\} +\beta\left[{{{\mathbf{K}}_{R}}}\right]\cdot\left\{ {{\mathbf{\tilde{v}}}}\right\} =\left\{ {{{\mathbf{J}}_{ext}}}\right\} +\left\{ {{{\mathbf{J}}_{0}}}\right\} -\left\{ {{{\mathbf{J}}_{{\sigma^{n}}}}}\right\}
+\tag{9.34}\]</span></span></p>
+<p>where <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are the Rayleigh damping coefficients.</p>
+<p>In <a href="#eq-ch3-153" class="quarto-xref">Equation&nbsp;<span>9.33</span></a> – <a href="#eq-ch3-154" class="quarto-xref">Equation&nbsp;<span>9.34</span></a>, <span class="math inline">\(\left\{ {{\mathbf{\tilde{v}}}}\right\}\)</span> denotes the space-time nodal vector of velocity, <span class="math inline">\(\left[{\mathbf{M}}\right]\)</span> denotes the space-time mass matrix, <span class="math inline">\(\left[{\mathbf{K}}\right]\)</span> denotes the space-time tangent stiffness matrix, <span class="math inline">\(\left[{{{\mathbf{M}}_{R}}}\right]\)</span> is the mass proportional Rayleigh damping matrix, and <span class="math inline">\(\left[{{{\mathbf{K}}_{R}}}\right]\)</span> is the stiffness proportional Rayleigh damping matrix. Furthermore, <span class="math inline">\(\left\{ {{{\mathbf{J}}_{ext}}}\right\}\)</span> denotes the space-time nodal vectors which contains the contribution of external body force and external boundary traction, <span class="math inline">\(\left\{ {{{\mathbf{J}}_{0}}}\right\}\)</span> contains the contribution of initial velocity, and <span class="math inline">\(\left\{ {{{\mathbf{J}}_{\sigma}^{n}}}\right\}\)</span> contains the contribution of initial stress <span class="math inline">\(\sigma^{n}\)</span>. In what follows the finite element expressions for these matrices and vectors are described.</p>
+<p><span id="eq-ch3-155"><span class="math display">\[
+\left[{\mathbf{M}}\right]:=\left[M\right]_{ij}^{ab}\left({I,J}\right)={\delta_{ij}}\int_{{I_{n}}}^ {}{{T_{a}}\frac{{\partial{T_{b}}}}{{\partial t}}\int_{{\Omega_{h}}}^ {}{{N^{I}}\rho{N^{J}}d\Omega}dt}+{\delta_{ij}}{\delta_{1a}}{\delta_{1b}}\int_{{\Omega_{n}}}^ {}{{N^{I}}\rho{N^{J}}d\Omega}
+\tag{9.35}\]</span></span></p>
+<p><span id="eq-ch3-156"><span class="math display">\[
+\left[{\mathbf{K}}\right]:=\left[K\right]_{ij}^{ab}\left({I,J}\right)=\int_{{I_{n}}}^ {}{{T_{a}}{{\tilde{T}}_{b}}\int_{{\Omega_{h}}}^ {}{\frac{{\partial{N^{I}}}}{{\partial{x_{p}}}}{C_{pijq}}\frac{{\partial{N^{J}}}}{{\partial{x_{q}}}}d\Omega}dt}
+\tag{9.36}\]</span></span></p>
+<p><span id="eq-ch3-157"><span class="math display">\[
+\left[{{{\mathbf{M}}_{R}}}\right]:=\left[{{M_{R}}}\right]_{ij}^{ab}\left({I,J}\right)={\delta_{ij}}\int_{{I_{n}}}^ {}{{T_{a}}{T_{b}}\int_{{\Omega_{h}}}^ {}{{N^{I}}{N^{J}}d\Omega}dt}
+\tag{9.37}\]</span></span></p>
+<p><span id="eq-ch3-158"><span class="math display">\[
+\left[{{{\mathbf{K}}_{R}}}\right]:=\left[{{K_{R}}}\right]_{ij}^{ab}\left({I,J}\right)=\int_{{I_{n}}}^ {}{{T_{a}}{T_{b}}\int_{{\Omega_{h}}}^ {}{\frac{{\partial{N^{I}}}}{{\partial{x_{p}}}}{C_{pijq}}\frac{{\partial{N^{J}}}}{{\partial{x_{q}}}}d\Omega}dt}
+\tag{9.38}\]</span></span></p>
+<p><span id="eq-ch3-159"><span class="math display">\[
+\left\{ {{{\mathbf{J}}_{ext}}}\right\} :=\left\{ {{J_{ext}}}\right\} _{i}^{a}\left(I\right)=\int_{{I_{n}}}^ {}{\int_{{\Omega_{h}}}^ {}{{N^{I}}{T_{a}}\rho{b_{i}}}d\Omega dt}+\int_{{I_{n}}}^ {}{\int_{\Gamma_{i}^{h}}^ {}{{N^{I}}{T_{a}}\rho f_{i}^{s}}dsdt}
+\tag{9.39}\]</span></span></p>
+<p><span id="eq-ch3-160"><span class="math display">\[
+\left\{ {{{\mathbf{J}}_{0}}}\right\} :=\left\{ {{J_{0}}}\right\} _{i}^{a}\left(I\right)={\delta_{1a}}{\delta_{ij}}\left[{\int_{{\Omega_{h}}}^ {}{{N^{I}}\rho{N^{J}}d\Omega}}\right]\left\{ {^{0}{v_{jJ}}}\right\}
+\tag{9.40}\]</span></span></p>
+<p>where, <span class="math inline">\(\left\{ {^{0}{v_{jJ}}}\right\}\)</span> denotes the initial velocity for the space-time slab <span class="math inline">\(Q_{n}\)</span>, i.e., spatial nodal velocity at time <span class="math inline">\(t_{n}^{-}\)</span>. Note that this velocity vector is known from the computation in the previous space-time slab <span class="math inline">\(Q_{n-1}\)</span>.</p>
+<p><span id="eq-ch3-161"><span class="math display">\[
+\left\{ {{{\mathbf{J}}_{{\sigma^{n}}}}}\right\} :=\left\{ {{J_{{\sigma^{n}}}}}\right\} _{i}^{a}\left(I\right)=\int_{{I_{n}}}^ {}{{T_{a}}\int_{{\Omega_{h}}}^ {}{\frac{{\partial{N^{I}}}}{{\partial{x_{j}}}}\sigma_{ij}^{n}d\Omega}dt}
+\tag{9.41}\]</span></span></p>
+<p>where <span class="math inline">\(\sigma^{n}:=\sigma(\mathbf{x},t_{n})\)</span> is the stress at time <span class="math inline">\(t_{n}\)</span> which is usually computed from the displacement field at time <span class="math inline">\(t_{n}\)</span>.</p>
+<p>This section briefly discusses the space-time matrices and vectors, however, a detailed description about the derivation of the space-time matrices and space-time vectors can be found in Appendix.</p>
+</section>
+<section id="primary-wave-propagation-in-homogeneous-linear-elastic-medium" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="primary-wave-propagation-in-homogeneous-linear-elastic-medium"><span class="header-section-number">9.6</span> Primary wave propagation in homogeneous linear elastic medium</h2>
+<p>A theoretical model of homogenous isotropic linear elastic media occupying a square domain, <span class="math inline">\(\Omega=\left[0,L\right] \times \left[0,L\right]\)</span>, is considered in this section for a numerical analysis of v-ST/FEM. The governing equations of the problem are given by <a href="#eq-ch3-123" class="quarto-xref">Equation&nbsp;<span>9.5</span></a> – <a href="#eq-ch3-127" class="quarto-xref">Equation&nbsp;<span>9.9</span></a>.</p>
+<p>Further, it is assumed that the elastic media is subjected to the periodic boundary conditions with no external body force (i.e., <span class="math inline">\(b_i=0\)</span> in <a href="#eq-ch3-123" class="quarto-xref">Equation&nbsp;<span>9.5</span></a>. The initial conditions for displacement and velocity field corresponding to <a href="#eq-ch3-126" class="quarto-xref">Equation&nbsp;<span>9.8</span></a> and <a href="#eq-ch3-127" class="quarto-xref">Equation&nbsp;<span>9.9</span></a> are given by:</p>
+<p><span id="eq-ch3-162"><span class="math display">\[
+\begin{align}
+    {{\mathbf{u}}_0}\left( {\mathbf{x}} \right) &amp;= {{\mathbf{d}}_0}\cos \left( {k{\mathbf{x}} \cdot {\mathbf{\hat r}}} \right),&amp;
+    {{\mathbf{v}}_0}\left( {\mathbf{x}} \right) &amp;= ck{{\mathbf{d}}_0}\sin \left( {k{\mathbf{x}} \cdot {\mathbf{\hat r}}} \right)
+\end{align}
+\tag{9.42}\]</span></span></p>
+<p>where <span class="math inline">\(k\)</span> is the wave-number, <span class="math inline">\(\hat{\mathbf{r}}\)</span> is the direction vector of the wave propagation, <span class="math inline">\(\mathbf{d}_0 \in \mathbb{R}^2\)</span> denotes the direction of the motion of particles of the medium, and <span class="math inline">\(c\)</span> is related to the speed of the wave in the medium.</p>
+<p>The above-mentioned initial conditions create a plane P-wave if <span class="math inline">\(\hat{\mathbf{r}}\)</span> vector is parallel to <span class="math inline">\(\mathbf{d}_0\)</span>. The analytical solutions for displacement and velocity can be given by <span class="citation" data-cites="Achenbach1973a">(<a href="references.html#ref-Achenbach1973a" role="doc-biblioref">Achenbach 2012</a>)</span>:</p>
+<p><span id="eq-ch3-163"><span class="math display">\[
+\begin{align}
+    {\mathbf{u}}\left( {{\mathbf{x}},t} \right) &amp;= {{\mathbf{d}}_0}\cos \left[ {k\left( {{\mathbf{x}} \cdot {\mathbf{\hat r}} - {c_p}t} \right)} \right]&amp;
+    {\mathbf{v}}\left( {{\mathbf{x}},t} \right) = {c_p}k{{\mathbf{d}}_0}\sin \left[ {k\left( {{\mathbf{x}} \cdot {\mathbf{\hat r}} - {c_p}t} \right)} \right]
+\end{align}
+\tag{9.43}\]</span></span></p>
+<p>where</p>
+<p><span class="math display">\[{c_p} = \sqrt {\frac{{\lambda  + 2\mu }}{\rho }}\]</span></p>
+<p>is the speed of the P-wave.</p>
+<p>The values of constants and the parameters used for solving the problem are given below. <a href="#fig-ch3-19" class="quarto-xref">Figure&nbsp;<span>9.3</span></a> depicts the physical dimensions of the problem. All variables have been dimensionless. Letting <span class="math inline">\(\mathbf{u}^h(\mathbf{x},t)\)</span> and <span class="math inline">\(\mathbf{v}^h(\mathbf{x},t)\)</span> denote the numerical solutions computed by employing the v-ST/FEM, the error in displacement field <span class="math inline">\({E_u}\left( {{t_n}} \right)\)</span> and the error in velocity field <span class="math inline">\({E_v}\left( {{t_n}} \right)\)</span> are then defined as:</p>
+<p><span id="eq-ch3-164"><span class="math display">\[
+\begin{align}
+    {E_u}\left( {{t_n}} \right) &amp;: = {\left\| {{{\mathbf{u}}^h}\left( {{\mathbf{x}},{t_n}} \right) - {\mathbf{u}}\left( {{\mathbf{x}},{t_n}} \right)} \right\|_2},&amp;
+    {E_v}\left( {{t_n}} \right)&amp;: = {\left\| {{{\mathbf{v}}^h}\left( {{\mathbf{x}},t_n^ - } \right) - {\mathbf{v}}\left( {{\mathbf{x}},{t_n}} \right)} \right\|_2}
+\end{align}
+\tag{9.44}\]</span></span></p>
+<p>where <span class="math inline">\(\left\| {\, \cdot \,} \right\|_2\)</span> denotes the <span class="math inline">\(L_2\)</span> norm given by</p>
+<p><span id="eq-ch3-165"><span class="math display">\[
+\begin{equation}
+    {\left\| {\mathbf{u}} \right\|_2} = {\left[ {\int_\Omega ^{} {{\mathbf{u}}\left( {{\mathbf{x}},t} \right) \cdot {\mathbf{u}}\left( {{\mathbf{x}},t} \right)d\Omega } } \right]^{1/2}}
+\end{equation}
+\tag{9.45}\]</span></span></p>
+<div id="fig-ch3-19" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-19-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-19.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-19-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.3: (a) Schematic diagram of the spatial domain for P-wave propagation problem, (b) bilinear quadrilateral element (Quad4), (c) linear triangular element (Tria3)
+</figcaption>
+</figure>
+</div>
+<div id="fig-ch3-20" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-20-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-20.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-20-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.4: Rate of convergence of the solutions in space computed at time <span class="math inline">\(t=1.0\)</span> sec: (a) displacement, and (b) velocity
+</figcaption>
+</figure>
+</div>
+<div id="fig-ch3-21" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-21-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-21.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-21-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.5: Rate of convergence of the solutions in time domain at time <span class="math inline">\(t=35.0\)</span> sec: (a) displacement, and (b) velocity.
+</figcaption>
+</figure>
+</div>
+<p>The numerical experiments for determining the convergence rate of the solution in the space domain are performed on two sequences of regular linear triangular (Tria3) and bilinear quadrilateral (Quad4) meshes (see Fig. <a href="#fig-ch3-19" class="quarto-xref">Figure&nbsp;<span>9.3</span></a>), while keeping the time-step fixed <span class="math inline">\(\Delta t=0.1\)</span> sec.</p>
+<p>Each sequence consists of four meshes with a decreasing mesh size. In <a href="#fig-ch3-20" class="quarto-xref">Figure&nbsp;<span>9.4</span></a>, the L2 norm of the errors in the displacement and velocity fields at time <span class="math inline">\(t=1.0\)</span> sec are given in relation to mesh spacing parameter <span class="math inline">\(h\)</span>. Based on the convergence results, it can be stated that the v-ST/FEM formulation is nearly second-order accurate in the space for both Quad4 and Tria3 elements. In <a href="#fig-ch3-20" class="quarto-xref">Figure&nbsp;<span>9.4</span></a>, it is observed that the error for the triangular spatial mesh (Tria3) is less than that of the quadrilateral spatial element (Quad4) for the same mesh spacing. This can be attributed to the perfect alignment of the diagonal of the triangular elements with the characteristic lines of the wave propagation.</p>
+<div id="fig-ch3-22" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-22-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-22.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-22-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.6: (a) Exact displacement (x-component) waveforms, (b) displacement (x-component) waveforms obtained by using the v-ST/FEM, (c) exact velocity (x-component) waveforms, (d) velocity (x-component) waveforms obtained by using the v-ST/FEM.
+</figcaption>
+</figure>
+</div>
+<p>Furthermore, the convergence of the solutions (displacement and velocity) in the time domain is illustrated in <a href="#fig-ch3-21" class="quarto-xref">Figure&nbsp;<span>9.5</span></a>. It can be seen that both displacement and velocity fields computed by the present method are third order accurate in time. Note that the results presented in <a href="#fig-ch3-21" class="quarto-xref">Figure&nbsp;<span>9.5</span></a> are consistent with <a href="tdg-second-order-ode.html#eq-ch3-114" class="quarto-xref">Equation&nbsp;<span>3.69</span></a>.</p>
+<p><a href="#fig-ch3-22" class="quarto-xref">Figure&nbsp;<span>9.6</span></a> illustrates the spatial variation of the displacement and velocity fields obtained by v-ST/FEM. The results are obtained at time <span class="math inline">\(t=35\)</span> seconds with linear triangular mesh of size <span class="math inline">\(h=0.25\)</span> and uniform time-step of size <span class="math inline">\(\Delta t = 0.1\)</span> sec.&nbsp;The results advocate the ability of v-ST/FEM to maintain the high-order accuracy of the long-term solutions, especially the displacement and velocity waveforms. This can be attributed to the very low numerical dissipation and dispersion characteristics of the present method (see also <a href="tdg-second-order-ode.html#fig-ch3-15" class="quarto-xref">Figure&nbsp;<span>3.11</span></a> and <a href="tdg-second-order-ode.html#fig-ch3-16" class="quarto-xref">Figure&nbsp;<span>3.12</span></a>). To further emphasize the accuracy of the long-term solutions, the time histories of the computed displacement and velocity at the midpoint P1 (see <a href="#fig-ch3-19" class="quarto-xref">Figure&nbsp;<span>9.3</span></a>) and the corresponding relative errors are presented in <a href="#fig-ch3-23" class="quarto-xref">Figure&nbsp;<span>9.7</span></a>.</p>
+<div id="fig-ch3-23" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-23-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-23.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-23-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.7: Temporal variation of the (a) displacement, (b) relative error in displacement, (c) velocity, and (d) relative error in velocity, at the midpoint P1 computed by using v-ST/FEM.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="impulsive-response-of-a-fixed-free-pile" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="impulsive-response-of-a-fixed-free-pile"><span class="header-section-number">9.7</span> Impulsive response of a fixed-free pile</h2>
+<p>In this section, we consider a pile of length <span class="math inline">\(L=50\)</span> m with a unit cross-section area having one fixed end and one end loaded by an axial impulsive force given by a step function, as shown in Fig. <a href="#fig-ch3-24" data-reference-type="ref" data-reference="fig-ch3-24">6</a>. The mass density <span class="math inline">\(\rho\)</span> is <span class="math inline">\(2500.0\)</span>&nbsp;<span class="math inline">\(kg/m^3\)</span> and the Young’s modulus <span class="math inline">\(E\)</span> is <span class="math inline">\(1.0\times 10^{10}\)</span>&nbsp;<span class="math inline">\(N/m^2\)</span>. The magnitude of the implusive force is <span class="math inline">\(1.0 \times 10^6\)</span> <span class="math inline">\(N\)</span>. Under these circumstances, the analytical solutions for the stress and velocity fields are discontinuous in the spatial domain and given by the step functions. Furthermore, the displacements are given by the piecewise continuous linear functions <span class="citation" data-cites="Cormeau1991 Li1998 Verruijt2009">(<a href="references.html#ref-Cormeau1991" role="doc-biblioref">Cormeau 1991</a>; <a href="references.html#ref-Li1998" role="doc-biblioref">Li and Wiberg 1998</a>; <a href="references.html#ref-Verruijt2009" role="doc-biblioref">Verruijt 2009</a>)</span>.</p>
+<div id="fig-ch3-24" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-24-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-24.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-24-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.8: Geometry, boundary conditions, and impulse loading for fixed-free pile problem.
+</figcaption>
+</figure>
+</div>
+<p>To solve the problem by using v-ST/FEM, uniform linear spatial elements of size <span class="math inline">\(h=0.1m\)</span> and a uniform time-step size <span class="math inline">\(\Delta t = 10^{-4}\)</span> sec have been adopted for discretizing the space and time domain, respectively. To assess the performance of the present method, the problem is also solved with semi-discretized FEM techniques using the same mesh parameters. In the latter case, the trapezoidal rule and the HHT-<span class="math inline">\(\alpha\)</span> method (with <span class="math inline">\(\alpha=-1/3\)</span>) have been used as the time-stepping algorithms. The results of the stress field, velocity field, and displacement field obtained by different schemes are compared in <a href="#fig-ch3-25" class="quarto-xref">Figure&nbsp;<span>9.9</span></a>, <a href="#fig-ch3-26" class="quarto-xref">Figure&nbsp;<span>9.10</span></a>, and <a href="#fig-ch3-27" class="quarto-xref">Figure&nbsp;<span>9.11</span></a>, respectively.</p>
+<p>It is observed that the solutions for the stress and velocity fields obtained by the semi-discrete algorithms contain severe oscillations. Even worse, no improvement whatsoever is obtained when refining the mesh spacing or the time-step size. Further, in the case of the Newmark-beta method, these oscillations are present in the whole spatial domain; and thus, the accuracy of the stress and velocity fields deteriorate over time (see <a href="#fig-ch3-25" class="quarto-xref">Figure&nbsp;<span>9.9</span></a> and <a href="#fig-ch3-26" class="quarto-xref">Figure&nbsp;<span>9.10</span></a>). The poor performance with the Newmark-beta method is due to the absence of algorithmic damping, as discussed in previous sections. The HHT-<span class="math inline">\(\alpha\)</span> method improves the solutions by attenuating higher frequencies; however, the results are not satisfactory for the selected time-step size as the oscillations are still present. It is remarkable that v-ST/FEM completely localizes the oscillations in the stress and velocity fields near the point of discontinuity and yields very accurate solutions. The localization phenomenon can be attributed to the presence of jump discontinuity in the velocity field. The jump in the velocity field adds artificial viscous damping to the system, subsequently, increasing the accuracy and stabilizing the solutions <span class="citation" data-cites="Hulbert1990 Johnson1993">(<a href="references.html#ref-Hulbert1990" role="doc-biblioref">Hulbert and Hughes 1990</a>; <a href="references.html#ref-Johnson1993" role="doc-biblioref">Johnson 1993</a>)</span>. Furthermore, the presence of overshooting and undershooting around the point of discontinuity is related to the famous Gibbs phenomenon in the Fourier analysis <span class="citation" data-cites="Olver2016">(<a href="references.html#ref-Olver2016" role="doc-biblioref">Olver 2016</a>)</span>.</p>
+<div id="fig-ch3-25" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-25-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-25.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-25-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.9: Stress field computed by employing the Newmark-beta method (First column), HHT-<span class="math inline">\(\alpha\)</span> (Second column), and v-ST/FEM (Third column) at various timesteps with linear spatial elements. Direction of wave propagation is denoted by the arrow, and dotted lines represent the analytical solutions.
+</figcaption>
+</figure>
+</div>
+<div id="fig-ch3-26" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-26-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-26.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-26-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.10: Velocity field computed by employing the Newmark-beta method (First column), HHT-<span class="math inline">\(\alpha\)</span> (Second column), and v-ST/FEM (Third column) at various time-steps with linear spatial elements. Direction of wave propagation is denoted by the arrow, and dotted lines represent the analytical solutions.
+</figcaption>
+</figure>
+</div>
+<div id="fig-ch3-27" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-27-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-27.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-27-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.11: Displacement field computed by employing the Newmark-beta method (First column), HHT-<span class="math inline">\(\alpha\)</span> (Second column), and v-ST/FEM (Third column) at various timesteps with linear spatial elements. Direction of wave propagation is denoted by the arrow.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="dynamic-plate-load-test-dplt" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="dynamic-plate-load-test-dplt"><span class="header-section-number">9.8</span> Dynamic plate load test (DPLT)</h2>
+<p>In this section, an attempt is made to validate v-ST/FEM by simulating the dynamic plate loading test (DPLT) using a light falling weight deflectometer (LFWD). DPLT using LFWD is a non-destructive technique for a quick assessment of the field compaction quality. In DPLT, a rigid circular loading plate of radius <span class="math inline">\(0.15\)</span> m is placed on the soil surface and subjected to an impulse load generated by the falling weight from a specified height onto the plate. Subsequently, the induced soil movements are recorded and the dynamic resilience modulus of the tested material is computed by some empirical relations. A complete description of the test can be found elsewhere <span class="citation" data-cites="Adam2009 Tawfik2017">(<a href="references.html#ref-Adam2009" role="doc-biblioref">Adam et al. 2009</a>; <a href="references.html#ref-Tawfik2017" role="doc-biblioref">Tawfik and El-Mossallamy 2017</a>)</span>.</p>
+<div id="fig-ch3-28" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-28-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-28.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-28-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.12: Geometry, boundary conditions and spatial mesh adopted for simulating DPLT using v-ST/FEM.
+</figcaption>
+</figure>
+</div>
+<p>In the present study, DPLT is simulated by a two-dimensional axisymmetric v-ST/FEM model, where the center of the loading plate is positioned along the axis of symmetry. The geometry, boundary conditions, and spatial mesh of the finite element model are depicted in <a href="#fig-ch3-28" class="quarto-xref">Figure&nbsp;<span>9.12</span></a>. There are <span class="math inline">\(5201\)</span> linear triangular elements (Tria3) and <span class="math inline">\(2688\)</span> nodes present in the spatial mesh. The impulse load due to the falling weight is modeled by using an equivalent uniform vertical stress pulse of amplitude <span class="math inline">\(100\)</span> kPa and a time duration of <span class="math inline">\(20\)</span> ms <span class="citation" data-cites="Adam2009">(<a href="references.html#ref-Adam2009" role="doc-biblioref">Adam et al. 2009</a>)</span>. The stress pulse <span class="math inline">\(h(t)\)</span> acting on the loading plate is defined by a half sine wave as:</p>
+<p><span class="math display">\[
+h(t)=-10^{5} \sin(50 \pi t) \, \text{N/m}{}^2
+\]</span></p>
+<p>The total simulation time <span class="math inline">\(T\)</span> is set to <span class="math inline">\(30\)</span> ms, and the linear time elements of size <span class="math inline">\(\Delta t = 1\)</span> ms have been adopted for discretizing the time domain. Subsequently, the results computed by the proposed method are compared with the two DPLT studies available in the literature. The first study is denoted as S1 where the in-situ LFWD test was conducted by <span class="citation" data-cites="Tawfik2017">(<a href="references.html#ref-Tawfik2017" role="doc-biblioref">Tawfik and El-Mossallamy 2017</a>)</span>, and the second study is denoted by S2 in which the numerical investigation was conducted by <span class="citation" data-cites="Adam2009">(<a href="references.html#ref-Adam2009" role="doc-biblioref">Adam et al. 2009</a>)</span> using the Boundary Element Method (BEM). In these studies (i.e., S1 and S2), the soils have different values for Young’s modulus <span class="math inline">\(E\)</span> and common values for Poisson’s ratio <span class="math inline">\(\nu\)</span> and mass density <span class="math inline">\(\rho\)</span>, as shown in <a href="#tbl-ch3-3" class="quarto-xref">Table&nbsp;<span>9.1</span></a>.</p>
+<div id="tbl-ch3-3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ch3-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9.1: List of elastic material parameters, and the results of maximum plate deflection and maximum soil-plate normal contact stress obtained by different schemes.
+</figcaption>
+<div aria-describedby="tbl-ch3-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 29%">
+<col style="width: 17%">
+<col style="width: 19%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Elastic parameters</th>
+<th>Method</th>
+<th><span class="math inline">\(d_{max}\)</span></th>
+<th><span class="math inline">\(p_{max}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(E=65\)</span> Mpa</td>
+<td>v-ST/FEM</td>
+<td><span class="math inline">\(0.33\)</span> mm</td>
+<td><span class="math inline">\(90.0\)</span> kPa</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\nu = 0.212\)</span></td>
+<td>In-situ study (S1)</td>
+<td><span class="math inline">\(0.35\)</span> mm</td>
+<td><span class="math inline">\(100\)</span> kPa</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\rho = 2000\)</span> <span class="math inline">\(kg/m^3\)</span></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(E=32\)</span> Mpa</td>
+<td>v-ST/FEM</td>
+<td><span class="math inline">\(0.67\)</span> mm</td>
+<td><span class="math inline">\(90.0\)</span> kPa</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\nu = 0.212\)</span></td>
+<td>BEM study (S2)</td>
+<td><span class="math inline">\(0.65\)</span> mm</td>
+<td><span class="math inline">\(93.1\)</span> kPa</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The results of the time histories of the vertical displacement and the velocity of the loading plate, and the soil-plate contact stress are plotted in <a href="#fig-ch3-29" class="quarto-xref">Figure&nbsp;<span>9.13</span></a>. The maximum deflection of the plate <span class="math inline">\(d_{max}\)</span> obtained by v-ST/FEM is about <span class="math inline">\(0.33\)</span> mm and <span class="math inline">\(0.67\)</span> mm corresponding to the material parameters used in the studies S1 and S2, respectively. From <a href="#tbl-ch3-3" class="quarto-xref">Table&nbsp;<span>9.1</span></a>, it is evident that these computed values for <span class="math inline">\(d_{max}\)</span> are in good agreement with those reported in studies S1 and S2. In the present study, the maximum soil-plate normal contact stress <span class="math inline">\(p_{max}\)</span> is about <span class="math inline">\(90\)</span> kPa; which lower than the values reported in studies S1 and S2 (see <a href="#tbl-ch3-3" class="quarto-xref">Table&nbsp;<span>9.1</span></a>). This may be due to the use of linear triangular elements and the absence of the soil-plate interface elements in the present formulation. Furthermore, the maximum deflection of the plate occurs at time <span class="math inline">\(t_d = 11\)</span> ms, and the maximum contact stress <span class="math inline">\(p_{max}\)</span> occurs at time <span class="math inline">\(t_p =10\)</span> ms. The displacement contours at these time steps are depicted in <a href="#fig-ch3-30" class="quarto-xref">Figure&nbsp;<span>9.14</span></a>, where displacements are normalized with respect to the maximum deflection of the plate.</p>
+<div id="fig-ch3-29" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-29-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-29.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-29-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.13: Temporal variation of the vertical displacement of plate (top-left), the vertical velocity of plate (top-right), and soil-plate contact stress (bottom-left), and variation of normal contact stress with the plate displacement (bottom-right) obtained by v-ST/FEM.
+</figcaption>
+</figure>
+</div>
+<div id="fig-ch3-30" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch3-30-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch3-fig-30.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch3-30-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.14: Normalized contours of the vertical displacements computed by v-ST/FEM at various time-steps.
+</figcaption>
+</figure>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Achenbach1973a" class="csl-entry" role="listitem">
+Achenbach, Jan D. 2012. <em><a href="https://www.ncbi.nlm.nih.gov/pubmed/25246403"><span class="nocase">Wave propagation in elastic solids</span></a></em>. Vol. 16. Elsevier.
+</div>
+<div id="ref-Adam2009" class="csl-entry" role="listitem">
+Adam, Christoph, Dietmar Adam, Fritz Kopf, and Ivan Paulmichl. 2009. <span>“Computational Validation of Static and Dynamic Plate Load Testing.”</span> <em>Acta Geotechnica</em> 4 (1): 35–55.
+</div>
+<div id="ref-Bonelli2003" class="csl-entry" role="listitem">
+Bonelli, A, and OS Bursi. 2003. <span>“Iterative Solutions for Implicit Time Discontinuous Galerkin Methods Applied to Non-Linear Elastodynamics.”</span> <em>Computational Mechanics</em> 30 (5-6): 487–98.
+</div>
+<div id="ref-Bonelli2002" class="csl-entry" role="listitem">
+Bonelli, A, OS Bursi, and M Mancuso. 2002. <span>“Explicit Predictor–Multicorrector Time Discontinuous Galerkin Methods for Non-Linear Dynamics.”</span> <em>Journal of Sound and Vibration</em> 256 (4): 695–724.
+</div>
+<div id="ref-Cormeau1991" class="csl-entry" role="listitem">
+Cormeau, I. 1991. <span>“The Taylor Impact Test Problem Revisiting the Standard 2-Node Rod Finite Element.”</span> In <em>The Finite Element Method in the 1990’s</em>, 225–33. Springer.
+</div>
+<div id="ref-Hughes2012" class="csl-entry" role="listitem">
+Hughes, Thomas JR. 2012. <em>The Finite Element Method: Linear Static and Dynamic Finite Element Analysis</em>. Courier Corporation.
+</div>
+<div id="ref-Hughes1988" class="csl-entry" role="listitem">
+Hughes, Thomas JR, and Gregory M Hulbert. 1988. <span>“Space-Time Finite Element Methods for Elastodynamics: Formulations and Error Estimates.”</span> <em>Computer Methods in Applied Mechanics and Engineering</em> 66 (3): 339–63.
+</div>
+<div id="ref-Hulbert1990" class="csl-entry" role="listitem">
+Hulbert, Gregory M, and Thomas JR Hughes. 1990. <span>“Space-Time Finite Element Methods for Second-Order Hyperbolic Equations.”</span> <em>Computer Methods in Applied Mechanics and Engineering</em> 84 (3): 327–48.
+</div>
+<div id="ref-Johnson1993" class="csl-entry" role="listitem">
+Johnson, Claes. 1993. <span>“Discontinuous Galerkin Finite Element Methods for Second Order Hyperbolic Problems.”</span> <em>Computer Methods in Applied Mechanics and Engineering</em> 107 (1-2): 117–29.
+</div>
+<div id="ref-Kunthong2005" class="csl-entry" role="listitem">
+Kunthong, Prapot, and Lonny L Thompson. 2005. <span>“An Efficient Solver for the High-Order Accurate Time-Discontinuous Galerkin (TDG) Method for Second-Order Hyperbolic Systems.”</span> <em>Finite Elements in Analysis and Design</em> 41 (7-8): 729–62.
+</div>
+<div id="ref-Li1998" class="csl-entry" role="listitem">
+Li, XD, and N-E Wiberg. 1998. <span>“Implementation and Adaptivity of a Space-Time Finite Element Method for Structural Dynamics.”</span> <em>Computer Methods in Applied Mechanics and Engineering</em> 156 (1-4): 211–29.
+</div>
+<div id="ref-Mancuso2003" class="csl-entry" role="listitem">
+Mancuso, Massimo, and Francesco Ubertini. 2003. <span>“An Efficient Integration Procedure for Linear Dynamics Based on a Time Discontinuous Galerkin Formulation.”</span> <em>Computational Mechanics</em> 32 (3): 154–68.
+</div>
+<div id="ref-Olver2016" class="csl-entry" role="listitem">
+Olver, Peter J. 2016. <em>Introduction to Partial Differential Equations</em>. Springer.
+</div>
+<div id="ref-Tawfik2017" class="csl-entry" role="listitem">
+Tawfik, Mohamed M, and Yasser M El-Mossallamy. 2017. <span>“Application of the Finite Element Method for Investigating the Dynamic Plate Loading Test.”</span> <em>Ain Shams Engineering Journal</em> 8 (1): 39–49.
+</div>
+<div id="ref-Verruijt2009" class="csl-entry" role="listitem">
+Verruijt, Arnold. 2009. <em>An Introduction to Soil Dynamics</em>. Vol. 24. Springer Science &amp; Business Media.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/poromechanics\.github\.io\/sdee");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./elastodynamics-introduction.html" class="pagination-link" aria-label="Elastodynamics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Elastodynamics</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./dynamic-ssi-vstfem.html" class="pagination-link" aria-label="v-STFEM for Dynamic-soil-structure interaction">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">v-STFEM for Dynamic-soil-structure interaction</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2025, Vikas Sharma</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/poromechanics/sdee/edit/main/elastodynamics-vstfem.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/poromechanics/sdee/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vickysharma0812">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/vickysharma0812">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/vickysharma0812">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

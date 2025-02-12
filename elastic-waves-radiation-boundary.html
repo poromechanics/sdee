@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Radiation boundary conditions for elastic waves – Soil Dynamics and Earthquake Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./elastodynamics-introduction.html" rel="next">
+<link href="./elastic-waves-surface-waves-in-solids.html" rel="prev">
+<link href="././figures/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-93074729595c0d1bb0917954c6b21507.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta name="twitter:title" content="7&nbsp; Radiation boundary conditions for elastic waves – Soil Dynamics and Earthquake Engineering">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://poromechanics.github.io/sdee/figures/dynamic-ssi.svg">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar docked slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./elastic-waves-radiation-boundary.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Radiation boundary conditions for elastic waves</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Soil Dynamics and Earthquake Engineering</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/poromechanics/sdee/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Soil-Dynamics-and-Earthquake-Engineering.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Soil-Dynamics-and-Earthquake-Engineering.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tdg-first-order-ode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">TDG/FEM for the first order ODE</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tdg-second-order-ode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">TDG/FEM for the second order ODE</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Elastic waves</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-body-waves-in-solids.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Body waves in elastic solids</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-surface-waves-in-solids.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Surface waves in elastic solids</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-radiation-boundary.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Radiation boundary conditions for elastic waves</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastodynamics-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Elastodynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastodynamics-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">V-STFEM for Elastodynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">v-STFEM for Dynamic-soil-structure interaction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Dynamic SSI of Dam-Reservoir System</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-equations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Governing equation for Dam-Reservoir System</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">VSTFEM for dynamic SSI in dam-reservoir system</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-nonlinear-problem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Nonlinear dynamic behavior of concrete gravity dams</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-nonlinear-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">V-STFEM for nonlinear dynamic analysis of concrete gravity dams</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#review-of-artificial-boundary-conditions" id="toc-review-of-artificial-boundary-conditions" class="nav-link active" data-scroll-target="#review-of-artificial-boundary-conditions"><span class="header-section-number">7.1</span> Review of artificial boundary conditions</a></li>
+  <li><a href="#local-artificial-boundary-conditions" id="toc-local-artificial-boundary-conditions" class="nav-link" data-scroll-target="#local-artificial-boundary-conditions"><span class="header-section-number">7.2</span> Local artificial boundary conditions</a></li>
+  <li><a href="#lk-abc-for-normal-incidence-of-p-wave" id="toc-lk-abc-for-normal-incidence-of-p-wave" class="nav-link" data-scroll-target="#lk-abc-for-normal-incidence-of-p-wave"><span class="header-section-number">7.3</span> LK-ABC for normal incidence of P-wave</a></li>
+  <li><a href="#lk-abc-for-normal-incidence-of-s-wave" id="toc-lk-abc-for-normal-incidence-of-s-wave" class="nav-link" data-scroll-target="#lk-abc-for-normal-incidence-of-s-wave"><span class="header-section-number">7.4</span> LK-ABC for normal incidence of S-wave</a></li>
+  <li><a href="#lk-abc-for-general-case-of-plane-waves" id="toc-lk-abc-for-general-case-of-plane-waves" class="nav-link" data-scroll-target="#lk-abc-for-general-case-of-plane-waves"><span class="header-section-number">7.5</span> LK-ABC for general case of plane waves</a></li>
+  <li><a href="#reflection-of-a-p-wave-at-the-lk-boundary" id="toc-reflection-of-a-p-wave-at-the-lk-boundary" class="nav-link" data-scroll-target="#reflection-of-a-p-wave-at-the-lk-boundary"><span class="header-section-number">7.6</span> Reflection of a P-wave at the LK-boundary</a></li>
+  <li><a href="#reflection-of-a-sv-wave-at-the-lk-boundary" id="toc-reflection-of-a-sv-wave-at-the-lk-boundary" class="nav-link" data-scroll-target="#reflection-of-a-sv-wave-at-the-lk-boundary"><span class="header-section-number">7.7</span> Reflection of a SV-wave at the LK-boundary</a></li>
+  <li><a href="#free-field-response-and-effective-seismic-input" id="toc-free-field-response-and-effective-seismic-input" class="nav-link" data-scroll-target="#free-field-response-and-effective-seismic-input"><span class="header-section-number">7.8</span> Free field response and effective seismic input</a></li>
+  <li><a href="#sec:ch4_sec5-1" id="toc-sec:ch4_sec5-1" class="nav-link" data-scroll-target="#sec\:ch4_sec5-1"><span class="header-section-number">7.9</span> Viscous boundary condition for free field input</a></li>
+  <li><a href="#effective-seismic-input" id="toc-effective-seismic-input" class="nav-link" data-scroll-target="#effective-seismic-input"><span class="header-section-number">7.10</span> Effective seismic input</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">7.11</span> Summary</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/poromechanics/sdee/edit/main/elastic-waves-radiation-boundary.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/poromechanics/sdee/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Radiation boundary conditions for elastic waves</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="review-of-artificial-boundary-conditions" class="level2 page-columns page-full" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="review-of-artificial-boundary-conditions"><span class="header-section-number">7.1</span> Review of artificial boundary conditions</h2>
+<p>Dynamic soil-structure problems can be viewed as a wave propagation problem. Consider a structure (finite dimension) embedded in the unbounded domain of semi-infinite soil (see <a href="#fig-ssi" class="quarto-xref">Figure&nbsp;<span>7.1</span></a>). The soil domain can further be divided into two regions; (i) the irregular bounded region near to the structure, and (ii) the regular unbounded region extending to infinity. Both structure and irregular bounded region are allowed to exhibit nonlinear behaviour. However, note that the regular unbounded region must remain linear<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Henceforth the term <em>structure</em> will be used to denote system of irregular bounded region and structure and the term <em>unbounded domain</em> will be used for denoting the regular unbounded region. The dynamic soil-structure interaction occurs through the interface between unbounded domain and structure.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<div id="fig-ssi" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ssi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/dynamic-ssi.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig" id="fig-ssi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.1: Schematic diagram of dynamic soil-structure interaction problem
+</figcaption>
+</figure>
+</div>
+</div></div><p>For finite element analysis of dynamic SSI problems, a superficial surface called <em>interaction-horizon</em> that encloses the structure and forms the boundary of the computational domain has to be selected <span class="citation" data-cites="Wolf1996">(<a href="references.html#ref-Wolf1996" role="doc-biblioref">John P. Wolf and Song 1996</a>)</span>. The key issue of this approach is to impose the so called artificial boundary conditions (ABC) so that the <em>interaction-horizon</em> can model the radiation damping accurately and spurious reflections from the boundaries can be prohibited. In literature these boundary conditions have been known as <em>absorbing</em>, <em>non-reflecting</em>, <em>transparent</em>, <em>silent</em>, and <em>one-way</em> boundary conditions. Further, the use of ABC’s enables one to get rid of the exterior unbounded domain from the computations.</p>
+<p>To appreciate the radiation damping, consider a vertically propagating SV-wave in a elastic half-space with two layers of soil (see <a href="#fig-vertical-shear-wave-two-layer" class="quarto-xref">Figure&nbsp;<span>7.2</span></a>). The normal incidence of SV-wave at the interface of two layers produces reflected and refracted SV-waves. As it was shown earlier the partition of the wave depends upon the mechanical impedance of the two media. The wave reflected to lower half-space never returns to the interface due to its infinite extension in <span class="math inline">\(x_2\)</span>-direction. This loss of energy is known as radiation damping <span class="citation" data-cites="Kramer2014">(<a href="references.html#ref-Kramer2014" role="doc-biblioref">Kramer 2014</a>)</span>. Further, refracted wave approaches the free surface layered system and subsequently reflected back towards the interface. At the interface when this wave reaches again a part of energy is reflected back and a part of the energy is transmitted to the lower half-space and therefore it will be lost in the semi-infinite domain of bottom layer. This loss of energy represents again the radiation damping. One of the big challenges of dynamic finite element analysis is to model correctly this radiation damping. Further, difficulties arises due to the presence of structures (such as dam, tunnel, buildings etc.) in or on the half-space that causes multiple reflection and refraction of incoming waves.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<div id="fig-vertical-shear-wave-two-layer" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vertical-shear-wave-two-layer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/vertical-shear-wave-two-layer.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig" id="fig-vertical-shear-wave-two-layer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.2: Schematic diagram of reflections and refractions of vertically propagating SV-wave in two layered elastic half-space
+</figcaption>
+</figure>
+</div>
+</div></div><p>The minimal requirements of ABC’s presented by <span class="citation" data-cites="Givoli1991">(<a href="references.html#ref-Givoli1991" role="doc-biblioref">D. Givoli 1991</a>)</span> are; (a) the problem in truncated domain with ABC should be mathematically well posed, (b) ABC’s should allow the waves that come from inside the computational domain to go out<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and produces little spurious reflections at the artificial boundaries, (c) the solutions of truncated problem in some sense should be close enough to the original problem in unbounded domain, (d) the combination of a numerical scheme and ABC’s should yield a stable numerical method, (e) ABC should be easy to implement and the cost of implementation should not be huge.</p>
+<p>Kausel and Tassoulas in their review paper <span class="citation" data-cites="Kausel1981">(<a href="references.html#ref-Kausel1981" role="doc-biblioref">Kausel and Tassoulas 1981</a>)</span> grouped ABC’s into following three categories;</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Elementary boundaries">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Elementary boundaries
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This type of boundary conditions are also known as Dirichlet, Neumann and Mixed boundary conditions. Displacements and stresses are prescribed in the case of Dirichlet and Neumann boundary condition, respectively. In case of mixed boundary conditions some components of displacement and stress are prescribed (for example roller boundary condition). Recalling that such boundary conditions act as the perfect reflector waves as no energy is absorbed or transmitted. Therefore, adoption of such boundary conditions to model the unbounded domain will cause spurious reflections and spoil the accuracy of the solutions. Elementary boundaries will be adequate only under certain circumstances: (i) when the problem can be regarded as pseudo-static; frequency of excitation is below the natural frequency of a soil stratum problem, (ii) when the internal damping of the soil is sufficient to suppress the reflected wave before it return to the region of study, (iii) when the time duration of numerical simulation is shorter than the time required for a wave to return to the area of interest.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Local boundaries">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Local boundaries
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The main characteristic of local boundaries is that the boundary conditions involve only spatial and temporal points in the neighbourhood of the boundary point under consideration at the time of evaluation. Further, these boundaries are based upon the physical or mathematical approximations.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Consisting (nonlocal) transmitting boundaries">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Consisting (nonlocal) transmitting boundaries
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These boundaries are perfect absorbers of any kind of waves impinging with arbitrary incidence. The conditions imposed by such boundaries are essentially nonlocal in nature. Most of these boundaries are frequency-dependent and thus in time domain analysis they are restricted to steady state problems.</p>
+</div>
+</div>
+</section>
+<section id="local-artificial-boundary-conditions" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="local-artificial-boundary-conditions"><span class="header-section-number">7.2</span> Local artificial boundary conditions</h2>
+<p>The first attempt to simulate radiation with simple local boundaries was presented by <span class="citation" data-cites="Lysmer1969">(<a href="references.html#ref-Lysmer1969" role="doc-biblioref">Lysmer and Kuhlemeyer 1969</a>)</span>. These authors developed viscous boundary conditions based on physical consideration. In essence, these conditions can be interpreted as dashpots connected to the boundary points. The damping coefficient was given by the mechanical impedance of the soil to which dashpots were attached to. The derivation of this type of boundary condition is considered in the next section.</p>
+<p><span class="citation" data-cites="Smith1974">(<a href="references.html#ref-Smith1974" role="doc-biblioref">Smith 1974</a>)</span> used the principle of superposition to filter out the contribution of spurious reflections from the solutions. Two solutions were obtained corresponding to the two types of boundary conditions; one in which tangential displacement and normal stresses vanishes, another in which normal displacement and tangential stresses vanishes. The reflected P-wave and S-wave corresponding to these boundary conditions have the same amplitude but they have phase difference of <span class="math inline">\(180 \,^{\circ}\)</span>. However, this approach is computationally not efficient, moreover this approach is limited to the linear problem only.</p>
+<p><span class="citation" data-cites="Engquist1977">(<a href="references.html#ref-Engquist1977" role="doc-biblioref">Engquist and Majda 1977</a>)</span> and <span class="citation" data-cites="Clayton1977a">(<a href="references.html#ref-Clayton1977a" role="doc-biblioref">R. W. Clayton and Egquist 1977</a>)</span>, developed a set of time-dependent <em>local-ABC</em> of increasing order based on paraxial approximations of the scalar and elastic wave equation. In their technique they approximated the irrational dispersion relation by a rational function to obtain the local differential operator from the nonlocal pseudodifferential operators. In this way by using rational approximations of increasing order, they obtain local boundary conditions of increasing accuracy. Further, they mentioned that a higher order paraxial approximation based on Taylor series expansions induces numerical instability. Although this difficulty can be overcome by use of Pade approximations instead of Taylor series expansions, the presence of higher order derivatives in boundary conditions greatly complicates its implementation. Another set of local boundary conditions with adjustable free parameters was proposed by <span class="citation" data-cites="Clayton1980">(<a href="references.html#ref-Clayton1980" role="doc-biblioref">Robert W. Clayton and Engquist 1980</a>)</span>. Later, <span class="citation" data-cites="Cohen1980">(<a href="references.html#ref-Cohen1980" role="doc-biblioref">M. Cohen 1980</a>)</span> showed that the paraxial boundary becomes unstable when Poisson’s ratio exceeds <span class="math inline">\(0.33\)</span>. A modified version of paraxial boundary called extended-paraxial boundary and its finite element implementation was provided by <span class="citation" data-cites="Cohen1983 Cohen1981">(<a href="references.html#ref-Cohen1983" role="doc-biblioref">M. Cohen and Jennings 1983</a>; <a href="references.html#ref-Cohen1981" role="doc-biblioref">M. F. Cohen, Hughes, and Jennings 1981</a>)</span>. It was also shown that the performance of extended-paraxial boundary is only slightly superior to the standard-viscous boundary. <span class="citation" data-cites="Stacey1988">(<a href="references.html#ref-Stacey1988" role="doc-biblioref">Stacey 1988</a>)</span> presented three new paraxial approximations superior to those presented by Clayton and Engquist while avoiding the higher order derivatives. Better finite-difference equations for internal boundaries and corners were also presented in this research.</p>
+<p><span class="citation" data-cites="Bayliss1980">(<a href="references.html#ref-Bayliss1980" role="doc-biblioref">Bayliss and Turkel 1980</a>)</span> presented the sequence of local absorbing boundary conditions in spherical coordinates by employing the asymptotic expansion of the solution of scalar wave equation at large distances. The radiation conditions are given by hierarchy of differential operators <span class="math inline">\(B_{m}\)</span> which annihilate the first <span class="math inline">\(m\)</span> terms in the asymptotic expansion of the solution. The boundary conditions are given by</p>
+<p><span id="eq-bayliss1980"><span class="math display">\[
+{B_m}u = \left[ {\prod\limits_{k = 1}^m {\left( {\frac{1}{c}\frac{\partial }{{\partial t}} + \frac{\partial }{{\partial r}} + \frac{{2j - 1}}{R}} \right)} } \right]u = 0
+\tag{7.1}\]</span></span></p>
+<p>where <span class="math inline">\(R\)</span> is the radius of the artificial boundary. This higher order local boundary condition, like previous schemes given by other researchers, contains the higher order derivatives which makes their practical implementation near to impossible.</p>
+<p><span class="citation" data-cites="Higdon1986">(<a href="references.html#ref-Higdon1986" role="doc-biblioref">Robert L. Higdon 1986</a>)</span> considered the two-dimensional wave equation in a rectangular truncated domain <span class="math inline">\(\Omega\)</span>. In his work scalar wave equation was first discretized in space and time domain using finite difference scheme. Subsequently, some discrete boundary conditions were derived for the artificial boundary. He then presented the analytical boundary condition corresponding to the discrete one. The <span class="math inline">\(p\)</span>-order boundary condition, for a boundary vertical boundary located at some <span class="math inline">\(x&gt;0\)</span>, is described by the product type differential operators <span class="math inline">\(H_{p}\)</span></p>
+<p><span id="eq-higdon-bc-1"><span class="math display">\[
+{H_p}u = \left[ {\prod\limits_{j = 1}^p {\left( {\cos {\theta _j}\frac{\partial }{{\partial t}} + c\frac{\partial }{{\partial x}}} \right)} } \right]u = 0
+\tag{7.2}\]</span></span></p>
+<p>where <span class="math inline">\(c\)</span> is some reference wave-speed and <span class="math inline">\(\theta_{j}\)</span> is the angle of incident and <span class="math inline">\(\left| {{\theta _j}} \right| &lt; \pi /2,\quad \,\forall j = 1, \cdots ,p\)</span>. In literature <span class="math inline">\(H_{p}\)</span> is know as <em>Higdon-boundary operator</em>, and Eq. <a href="#eq-Higdon-BC-1" data-reference-type="eqref" data-reference="eq-Higdon-BC-1">[eq-Higdon-BC-1]</a> is called the Higdon absorbing boundary condition (Higdon ABC). The alternatively form of this boundary condition is given by</p>
+<p><span id="eq-higdon-bc-2"><span class="math display">\[
+{H_p}u = \left[ {\prod\limits_{j = 1}^p {\left( {\frac{\partial }{{\partial t}} + {C_j}\frac{\partial }{{\partial x}}} \right)} } \right]u = 0
+\tag{7.3}\]</span></span></p>
+<p>where <span class="math inline">\(C_{j}=c/cos\theta_{j}; \quad C_{j} \ge c\)</span> signify the phase speed in the <span class="math inline">\(x\)</span>-direction.</p>
+<p>Higdon ABC is perfectly absorbing for a plane wave hitting the artificial boundary at one the angles <span class="math inline">\(\pm \theta_{j}\)</span> for <span class="math inline">\(j=1,\cdots, p\)</span> with speed <span class="math inline">\(c\)</span>. Therefore, <em>Higdon-boundary</em> will appear absolutely transparent at the discrete angle of incidence <span class="math inline">\(\pm \theta_{1}, \cdots, \pm \theta_{p}\)</span>. The second order Higdon ABC (i.e.&nbsp;<span class="math inline">\(p=2\)</span> in <a href="#eq-higdon-bc-1" class="quarto-xref">Equation&nbsp;<span>7.2</span></a>) corresponds to the linear space time interpolation of solution at the artificial boundary. Higdon also demonstrated that p-order Engquist-Majda condition is special case of <a href="#eq-higdon-bc-1" class="quarto-xref">Equation&nbsp;<span>7.2</span></a> with <span class="math inline">\(\theta_{j}=0,\quad \forall j=1,\cdots, p\)</span> for more general description see <span class="citation" data-cites="Higdon1986">(<a href="references.html#ref-Higdon1986" role="doc-biblioref">Robert L. Higdon 1986</a> Propostition 9.1)</span>.</p>
+<p>Through several numerical experiments it was demonstrated that the amount of spurious reflection is not very sensitive to the choice of the <span class="math inline">\(\theta_j\)</span> <span class="citation" data-cites="Higdon1987">(<a href="references.html#ref-Higdon1987" role="doc-biblioref">Robert L. Higdon 1987</a>)</span>. Therefore, the fact that <span class="math inline">\(\theta_{j}\)</span> are not known a priori is not a major restriction for the Higdon ABC. Further, Higdon ABC is very general as they are applicable to variety of wave problems including waves in dispersive media <span class="citation" data-cites="Higdon1994">(<a href="references.html#ref-Higdon1994" role="doc-biblioref">Robert L. Higdon 1994</a>)</span> and stratified media <span class="citation" data-cites="Higdon1992">(<a href="references.html#ref-Higdon1992" role="doc-biblioref">Robert L. Higdon 1992</a>)</span>. Moreover, the condition is exact in the sense that when the order <span class="math inline">\(p\)</span> in <a href="#eq-higdon-bc-1" class="quarto-xref">Equation&nbsp;<span>7.2</span></a> increases to infinity, it gives a global formulation. Unfortunately, the <span class="math inline">\(p\)</span>-order Higdon ABC will contain <span class="math inline">\(p\)</span>-order space and time derivatives. Therefore, high order conditions are impractical beyond 2nd or 3rd order from the implementation point of view. Finally, it is noteworthy that Higdon ABC is local in space and time.</p>
+<p><span class="citation" data-cites="Higdon1990 Higdon1991">(<a href="references.html#ref-Higdon1990" role="doc-biblioref">Robert L. Higdon 1990</a>; <a href="references.html#ref-Higdon1991" role="doc-biblioref">R. L. Higdon 1991</a>)</span> extended the Higdon ABC for the case of elastic wave propagating in two-dimensional space. In the case of elastic waves <em>Higdon-boundary operator</em> is written by</p>
+<p><span id="eq-higdon-bc-3"><span class="math display">\[
+{H_p}{\mathbf{u}} = \left[ {\prod\limits_{j = 1}^p {\left( {{\beta _j}\frac{\partial }{{\partial t}} + {c_L}\frac{\partial }{{\partial x}}} \right)} } \right]{\mathbf{u}} = 0
+\tag{7.4}\]</span></span></p>
+<p>where <span class="math inline">\(c_{L}\)</span> is phase-velocity of longitudinal plane wave (cf. <a href="elastic-waves-body-waves-in-solids.html#eq-longi-wave-speed" class="quarto-xref">Equation&nbsp;<span>5.10</span></a>) and <span class="math inline">\(\beta_{j}&gt;0,\forall j\)</span> resemble to the cosine of angle of incident. The <span class="math inline">\(j\)</span>th operator in <a href="#eq-higdon-bc-3" class="quarto-xref">Equation&nbsp;<span>7.4</span></a> is perfectly absorbing for P-waves traveling at angle of incidence <span class="math inline">\(\pm {\cos ^{-1}}{\beta_{j}}\)</span> and S-wave traveling at angle of incidence <span class="math inline">\(\pm {\cos ^{-1}}\left( {{\beta_{j}}{c_T}/{c_L}} \right)\)</span>. If <span class="math inline">\(\beta_{j} \le 1,\forall j\)</span>, then <a href="#eq-higdon-bc-3" class="quarto-xref">Equation&nbsp;<span>7.4</span></a> is oriented mainly to absorb P-waves but also helps to absorb S-waves. If <span class="math inline">\(\beta_j\)</span>’s are are all near the ratio <span class="math inline">\(c_{L}/c_{T}&gt;1\)</span> then <a href="#eq-higdon-bc-3" class="quarto-xref">Equation&nbsp;<span>7.4</span></a> is oriented mainly to absorb S-waves but helps absorb P-wave. In addition, Higdon showed that Higdon ABC is stable for all values of the ratio <span class="math inline">\(c_{L}/c_{T}\)</span> while the second order Engquist-Majda boundary conditions is unstable for large value of <span class="math inline">\(c_{L}/c_{T}\)</span>.</p>
+<p><span class="citation" data-cites="Underwood1981">(<a href="references.html#ref-Underwood1981" role="doc-biblioref">Underwood and Geers 1981</a>)</span> presented a local transmitting boundary condition for a structure embedded in the elastic medium problem. Their method was based on a substructure approach in which to model the effect of infinite domain <em>interaction-horizon</em> was placed at the soil-structure interface. The soil-structure interaction was approximated by first order doubly asymptotic boundary element techniques. The following relation was used for surface force vector <span class="math inline">\(\left\{ {{{\mathbf{f}}^s}} \right\}\)</span> associated with the scattered waves</p>
+<p><span id="eq-underwood-abc-1"><span class="math display">\[
+\left\{ {{{\mathbf{f}}^s}} \right\} = \left[ {{\mathbf{K}}_b^0} \right]\left\{ {\mathbf{u}} \right\} + \left[ {{\mathbf{C}}_b^\infty } \right]\left\{ {\mathbf{v}} \right\}
+\tag{7.5}\]</span></span></p>
+<p>where <span class="math inline">\(\left\{ {\mathbf{u}} \right\}\)</span> and <span class="math inline">\(\left\{ {\mathbf{v}}\right\}\)</span> is the vector of nodal displacement and velocity, respectively. From <a href="#eq-underwood-abc-1" class="quarto-xref">Equation&nbsp;<span>7.5</span></a> it can be observed that in high (low frequency) limit the unbounded domain is modelled as an array of dashpots (springs). The boundary stiffness matrix <span class="math inline">\(\left[ {{\mathbf{K}}_b^0} \right]\)</span> is non-symmetric and it couples all the nodes at the <em>interaction-horizon</em>, therefore, this approach is local in time but non-local in space. The method behaves poorly in intermediate range of frequency. Moreover, this approach can only absorb the waves propagating normal to the <em>interaction-horizon</em>.</p>
+<p>Later <span class="citation" data-cites="Wolf1995">(<a href="references.html#ref-Wolf1995" role="doc-biblioref">John P. Wolf and Song 1995</a>)</span> combined the doubly asymptotic approach of <span class="citation" data-cites="Underwood1981">(<a href="references.html#ref-Underwood1981" role="doc-biblioref">Underwood and Geers 1981</a>)</span> and Higdon ABC to derive the <em>doubly asymptotic multi-directional</em> (DAMD) ABC. In his approach <a href="#eq-underwood-abc-1" class="quarto-xref">Equation&nbsp;<span>7.5</span></a> additionally contains the surface force vector <span class="math inline">\(\left\{ {{\mathbf{Q}}_b^s} \right\}\)</span> which represents the remaining interaction forces. These forces were computed from the second-order Higdon ABC (cf. <a href="#eq-higdon-bc-1" class="quarto-xref">Equation&nbsp;<span>7.2</span></a>) while replacing <span class="math inline">\(u\)</span> with the <span class="math inline">\(Q\)</span>. Explicit finite difference scheme was employed to calculate <span class="math inline">\(\left\{ {{\mathbf{Q}}_b^s} \right\}\)</span> and then used in finite element formulation of the total dynamic system to compute the displacement and velocity field. By numerical examples, they showed that the approach is rigorous for both low and high frequency limit in all preselected angles of incidence. In addition, DAMD-ABC is highly accurate for plane waves at intermediate frequency and at other angles. The main disadvantage of this approach is that it uses explicit finite difference scheme to solve Higdon ABC which obviously makes entire scheme conditionally stable even if one uses unconditionally stable direct time integration scheme for finite element analysis. Therefore, a very small time step must be selected to ensure the overall stability. Of course one can use implicit unconditionally stable schemes but then this will increase the overall computational cost.</p>
+<p>Following the Bayliss-Turkel conditions, <span class="citation" data-cites="Hagstrom1998">(<a href="references.html#ref-Hagstrom1998" role="doc-biblioref">T. Hagstrom and Hariharan 1998</a>)</span> derived a sequence of local boundary conditions for isotropic problems (i.e.&nbsp;non-dispersive case). In contrast to previous high-order schemes their conditions avoids the use of higher order derivatives in the normal direction and in the preferred wave propagation direction. This was made possible due to the use of auxiliary functions; the local conditions of arbitrary order are expressed recursively using auxiliary functions. This way practical use of higher order ABC is possible. However, the scheme was only applicable in the case of spherical symmetry and axial symmetry.</p>
+<p><span class="citation" data-cites="Collino1993">(<a href="references.html#ref-Collino1993" role="doc-biblioref"><strong>Collino1993?</strong></a>)</span> presented the first use of high order asymptotic boundary conditions, within finite difference framework, for two-dimensional time-dependent waves in rectangular domain. Corner compatibility conditions were also provided in their formulation. <span class="citation" data-cites="Givoli2001">(<a href="references.html#ref-Givoli2001" role="doc-biblioref">Dan Givoli 2001</a>)</span> presented a general approach to construct local arbitrary high-order boudary conditions (AHOC) with a symmetric structure and with only low order spatial and/or temporal derivatives. This enables the practical use of ABCs of arbitrarily high order.</p>
+<p>Later, <span class="citation" data-cites="Givoli2003">(<a href="references.html#ref-Givoli2003" role="doc-biblioref">Dan Givoli and Neta 2003</a>)</span> reformulated the sequence of ABCs proposed by Higdon to obtain the arbitrary high-order local ABCs. This scheme is similar to the one proposed by <span class="citation" data-cites="Hagstrom1998">(<a href="references.html#ref-Hagstrom1998" role="doc-biblioref">T. Hagstrom and Hariharan 1998</a>)</span> only in the sense that it eliminates the higher order derivatives by use of special auxiliary variables. In this case, however, the auxiliary variables are defined by simple recursive relations. Moreover, the formulation was presented in Cartesian coordinates for rectangular domain.</p>
+<p>The standard (<span class="math inline">\(C^{0}\)</span> continuous) finite element implementation of this scheme was presented in <span class="citation" data-cites="Givoli2003a">(<a href="references.html#ref-Givoli2003a" role="doc-biblioref">Dan Givoli, Neta, and Patlashenko 2003</a>)</span> for the case of linear inhomogeneous dispersive wave (Klein-Gordon) equation. It was shown that the scheme is stable even for equal-order nodal interpolation for all the variables. Besides, the computational effort associated with the boundary condition grows only linearly with the order of accuracy.</p>
+<p><span class="citation" data-cites="VanJoolen2005">(<a href="references.html#ref-VanJoolen2005" role="doc-biblioref">Joolen, Neta, and Givoli 2005</a>)</span> applied the Givoli-Neta boundary conditions for exterior time-dependent wave problems in two-dimensional unbounded domain. They reported long-time instability of the method and suggested that the special compatibility conditions at the corner of rectangular domain should be include in the auxiliary-variable formulation.</p>
+<p>The corner compatibility conditions for wave equation with artificial boundary conditions were discussed by <span class="citation" data-cites="vacus2005">(<a href="references.html#ref-vacus2005" role="doc-biblioref">Vacus 2005</a>)</span>.</p>
+<p>Following the work of <span class="citation" data-cites="Givoli2003">(<a href="references.html#ref-Givoli2003" role="doc-biblioref">Dan Givoli and Neta 2003</a>)</span>, <span class="citation" data-cites="Hagstrom2004">(<a href="references.html#ref-Hagstrom2004" role="doc-biblioref">Thomas Hagstrom and Warburton 2004</a>)</span> presented a new auxiliary variable formulation which includes the special corner compatibility conditions. Hangstrom and Warburton conditions can be considered as the symmetrized modification of the Givoli-Neta conditions with enhanced stability characteristics. Their formulation was also based in Cartesian coordinate system with rectangular truncated domain. In the paper they presented a finite difference formulation of their approach. The finite element implementation of Hagstrom-Warburton formulation is presented by <span class="citation" data-cites="Givoli2006">(<a href="references.html#ref-Givoli2006" role="doc-biblioref">Dan Givoli, Hagstrom, and Patlashenko 2006</a>)</span> for exterior time-dependent wave problems governed by the scalar wave equation.</p>
+<p><span class="citation" data-cites="Samii2012 Samii2013">(<a href="references.html#ref-Samii2012" role="doc-biblioref">Samii and Lotfi 2012</a>, <a href="references.html#ref-Samii2013" role="doc-biblioref">2013</a>)</span> implemented the Hagstrom-Warburton ABC for the dam-reservoir interaction problem using finite element methods. <span class="citation" data-cites="Hagstrom2008">(<a href="references.html#ref-Hagstrom2008" role="doc-biblioref">Thomas Hagstrom, Mar-Or, and Givoli 2008</a>)</span> employed the Hagstrom-Warburton ABC for dispersive medium for which the Klein-Gordon wave equation governs. They also extended the boundary conditions to take into account of evanescent modes. <span class="citation" data-cites="Rabinovich2011">(<a href="references.html#ref-Rabinovich2011" role="doc-biblioref">Rabinovich et al. 2011</a>)</span> extended the Hagstrom-Warburton ABC for time dependent elastic wave in unbounded domain and presented a variational formulation for the finite element implementation. However, their scheme suffers from long-time instability. Later, <span class="citation" data-cites="Baffet2012">(<a href="references.html#ref-Baffet2012" role="doc-biblioref">Baffet et al. 2012</a>)</span> suggested that the cause of this instability may be due to the use of only Higdon-type ABC for elastic wave problem. In their formulation they combined Lysmer-Kuhlemeyer type boundary operator with the Higdon-type operators. This modification leads to the long-time stability of their formulation.</p>
+<p><span class="citation" data-cites="Kellezi2000">(<a href="references.html#ref-Kellezi2000" role="doc-biblioref">Kellezi 2000</a>)</span> developed a cone boundary condition for the vibration problems on the surface of a half-space where the generated waves propagates in an area that increases with depth. This boundary condition can be considered as an extension of the standard viscous boundary condition of <span class="citation" data-cites="Lysmer1969">(<a href="references.html#ref-Lysmer1969" role="doc-biblioref">Lysmer and Kuhlemeyer 1969</a>)</span>. Physically, cone boundary condition represents a series of dashpots and springs placed in the normal and tangential direction of the truncated boundary. Due to the inclusion of the additional springs, the cone boundary condition approximates the stiffness of the unbounded soil domain and therefore it eliminates the permanent movement which occurs with the viscous boundary condition at low frequencies <span class="citation" data-cites="Kontoe2009">(<a href="references.html#ref-Kontoe2009" role="doc-biblioref">Kontoe, Zdravkovic, and Potts 2009</a>)</span>. However, a drawback of the cone boundary is that the stiffness coefficients of the springs depend on the distance of the boundary from the source of excitation. Therefore, its use is restricted to problems with surface excitations where the distance of the boundary from the source is known.</p>
+<p><span class="citation" data-cites="Lysmer1969">(<a href="references.html#ref-Lysmer1969" role="doc-biblioref">Lysmer and Kuhlemeyer 1969</a>)</span> first proposed the artificial boundary condition for elastic waves (henceforth known as LK-ABC). In this section LK-ABC is first derived for the case of one-dimensional longitudinal wave (P-wave) impinging normally at the boundary, then the condition is derived for the case of vertically propagating SV-wave again impinging normally at the boundary. Finally, the LK-condition is derived for plane wave impinging at some angle <span class="math inline">\(\theta\)</span> at the artificial boundary.</p>
+</section>
+<section id="lk-abc-for-normal-incidence-of-p-wave" class="level2 page-columns page-full" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="lk-abc-for-normal-incidence-of-p-wave"><span class="header-section-number">7.3</span> LK-ABC for normal incidence of P-wave</h2>
+<p>Consider an isotropic, homogeneous, linear elastic half-space, initially at rest, subjected to the uniform pressure <span class="math inline">\(p(t)\)</span> at the plane <span class="math inline">\(x_{1} = 0\)</span> (see <a href="#fig-lk-abc-half-space-1" class="quarto-xref">Figure&nbsp;<span>7.3</span></a>). Here any plane parallel to the <span class="math inline">\(x_{1}\)</span>-axis is a plane of symmetry, therefore, the displacement can be described by <span class="math inline">\(\mathbf{u}=\left[ u_{1}(x_{1},t),0,0 \right]\)</span>. Additionally, the wave-fronts are normal to <span class="math inline">\(x_{1}\)</span>-axis. By using strain-displacement relationship <a href="elastic-waves-body-waves-in-solids.html#eq-strain-disp" class="quarto-xref">Equation&nbsp;<span>5.3</span></a> it can be shown that the present situation is a case of one-dimensional longitudinal strain; only non-trivial strain component is <span class="math inline">\(\epsilon_{11}\)</span>. Accordingly, the equation of motion <a href="elastic-waves-body-waves-in-solids.html#eq-momentum" class="quarto-xref">Equation&nbsp;<span>5.1</span></a> becomes a one-dimensional wave equation of the form</p>
+<p><span id="eq-p-wave-eq-1d"><span class="math display">\[
+\frac{{{\partial ^2}{u_1}}}{{\partial x_1^2}} = \frac{1}{{c_L^2}}\frac{{{\partial ^2}{u_1}}}{{\partial {t^2}}}
+\tag{7.6}\]</span></span></p>
+<p>where <span class="math inline">\(c_{L}\)</span> is the phase velocity of longitudinal wave and given by <a href="elastic-waves-body-waves-in-solids.html#eq-longi-wave-speed" class="quarto-xref">Equation&nbsp;<span>5.10</span></a>. Initial conditions and boundary conditions are given by <a href="#eq-ic-1" class="quarto-xref">Equation&nbsp;<span>7.7</span></a> and <a href="#eq-bc-1" class="quarto-xref">Equation&nbsp;<span>7.8</span></a>.</p>
+<p><span id="eq-ic-1"><span class="math display">\[
+{u_1}\left( {{x_1},0} \right) = 0;\quad \,{v_1}\left( {{x_1},0} \right) = 0
+\tag{7.7}\]</span></span></p>
+<p><span id="eq-bc-1"><span class="math display">\[
+{\sigma _{11}}\left( {0,t} \right) =  - p\left( t \right)
+\qquad  p(t)=0 \quad \textit{for} \quad t&lt;0
+\tag{7.8}\]</span></span></p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<div id="fig-lk-abc-half-space-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lk-abc-half-space-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/lk-abc-half-space-1.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig" id="fig-lk-abc-half-space-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.3: Illustration of (A) a half-space subjected to uniform pressure, (B) truncation of unbounded domain by introducing artificial boundary to obtain finite computational domain, (C) satisfying radiation condition by placing series of dashpots along the artificial boundary
+</figcaption>
+</figure>
+</div>
+</div></div><p>The general form of solution to the wave equation <a href="#eq-p-wave-eq-1d" class="quarto-xref">Equation&nbsp;<span>7.6</span></a> is given by</p>
+<p><span class="math display">\[
+{u_1}\left( {{x_1},t} \right) = f\left( {t - \frac{{{x_1}}}{{{c_L}}}} \right) + g\left( {t + \frac{{{x_1}}}{{{c_L}}}} \right)
+\]</span> </p>
+<p>where <span class="math inline">\(f(\cdot)\)</span> and <span class="math inline">\(g(\cdot)\)</span> denote the wave traveling positive and negative <span class="math inline">\(x_{1}\)</span>-direction, respectively. Obviously, in the present case no wave will travel in the negative <span class="math inline">\(x_{1}\)</span>-direction <span class="citation" data-cites="Achenbach1973a">(see <a href="references.html#ref-Achenbach1973a" role="doc-biblioref">Achenbach 2012, vol. 16, chap. 2</a>)</span>, hence</p>
+<p><span id="eq-u1-1d-2"><span class="math display">\[
+{u_1}\left( {{x_1},t} \right) = f\left( {t - \frac{{{x_1}}}{{{c_L}}}} \right)
+\tag{7.9}\]</span></span></p>
+<p>Employing <a href="elastic-waves-body-waves-in-solids.html#eq-hooke" class="quarto-xref">Equation&nbsp;<span>5.2</span></a> and <a href="#eq-u1-1d-2" class="quarto-xref">Equation&nbsp;<span>7.9</span></a> the non-trivial components of stress tensor become</p>
+<p><span id="eq-sigma11-1d-1"><span class="math display">\[
+\sigma_{11}(x_{1},t) =  - \frac{{\left( {\lambda  + 2\mu } \right)}}{{{c_L}}}{f^{'}}\left( {t - \frac{x_{1}}{{{c_L}}}} \right) = -\rho {c_L}{f^{'}}\left( {t - \frac{x_{1}}{{{c_L}}}} \right)
+\tag{7.10}\]</span></span></p>
+<p><span id="eq-sigma22-1d-1"><span class="math display">\[
+{\sigma _{22}}(x_{1},t) = {\sigma _{33}} =  - \frac{\lambda }{{{c_L}}}{f^{'}}\left( {t - \frac{x_{1}}{{{c_L}}}} \right)
+\tag{7.11}\]</span></span></p>
+<p>Futher, the velocity is given by</p>
+<p><span id="eq-v1-1d-1"><span class="math display">\[
+{v_1}\left( {{x_1},t} \right) = {f^{'}}\left( {t - \frac{x_{1}}{{{c_L}}}} \right)
+\tag{7.12}\]</span></span></p>
+<p>Noting <a href="#eq-sigma11-1d-1" class="quarto-xref">Equation&nbsp;<span>7.10</span></a> and <a href="#eq-v1-1d-1" class="quarto-xref">Equation&nbsp;<span>7.12</span></a> we can obtain the following relation between normal stress <span class="math inline">\(\sigma_{11}\)</span> and normal velocity <span class="math inline">\(v_{1}\)</span> (here space, time coordinates are omitted for clarity of expressions).</p>
+<p><span id="eq-sig11-v1"><span class="math display">\[
+{\sigma _{11}} =  - \rho {c_L}{v_1}
+\tag{7.13}\]</span></span></p>
+<p><a href="#eq-sig11-v1" class="quarto-xref">Equation&nbsp;<span>7.13</span></a> is the <em>LK boundary condition</em> for the case of one-dimensional P-wave propagation. In this relation the term <span class="math inline">\(\rho c_{L}\)</span> is called the <em>mechanical impedance</em> of the medium. <em>Mechanical impedance</em> is the property of the medium which measures the stress that is required to generate the motion of particles <span class="citation" data-cites="Achenbach1973a">(<a href="references.html#ref-Achenbach1973a" role="doc-biblioref">Achenbach 2012</a>)</span>. In simple terms, <a href="#eq-sig11-v1" class="quarto-xref">Equation&nbsp;<span>7.13</span></a> signifies the amount of stress required to completely transfer the motion (linear momentum and energy) of a plane to the next plane. Consequently, the wave will be reflected (partially or completely) if the stress does not satisfy the above relation. Further, <a href="#eq-sig11-v1" class="quarto-xref">Equation&nbsp;<span>7.13</span></a> is a characteristic equation of a <em>dashpot</em> with damping coefficient equal to the <em>mechanical impedance</em>. Therefore, it is possible to work with the finite computational domain by introducing the artificial boundary with boundary condition given by <a href="#eq-sig11-v1" class="quarto-xref">Equation&nbsp;<span>7.13</span></a>. In this way unbounded domain can be replaced by a series of dashpot normal to artificial boundary as depicted in <a href="#fig-lk-abc-half-space-1" class="quarto-xref">Figure&nbsp;<span>7.3</span></a> c.</p>
+</section>
+<section id="lk-abc-for-normal-incidence-of-s-wave" class="level2 page-columns page-full" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="lk-abc-for-normal-incidence-of-s-wave"><span class="header-section-number">7.4</span> LK-ABC for normal incidence of S-wave</h2>
+<p><a href="#fig-lk-abc-half-space-2" class="quarto-xref">Figure&nbsp;<span>7.4</span></a> a illustrates the vertically propagating SV-wave in an isotropic, homogeneous, linear elastic half-space. The system is initially at rest and subjected to the uniform surface traction <span class="math inline">\(s(t)\)</span> at the plane <span class="math inline">\(x_{2} = 0\)</span>. In this case displacement is described by <span class="math inline">\(\mathbf{u}=\left[ u_{1}(x_{2},t),0,0 \right]\)</span>. Additionally, the wave-fronts are normal to <span class="math inline">\(x_{2}\)</span>-axis. <span class="math inline">\(\epsilon_{12}\)</span> is the only non-trivial strain component (cf. <a href="elastic-waves-body-waves-in-solids.html#eq-strain-disp" class="quarto-xref">Equation&nbsp;<span>5.3</span></a>). The equation of motion is given by following one-dimensional wave equation.</p>
+<p><span id="eq-sv-wave-eq-1d"><span class="math display">\[
+\frac{{{\partial ^2}{u_1}}}{{\partial x_2^2}} = \frac{1}{{c_T^2}}\frac{{{\partial ^2}{u_1}}}{{\partial {t^2}}}
+\tag{7.14}\]</span></span></p>
+<p>where <span class="math inline">\(c_{T}\)</span> is the phase velocity of transverse wave and given by <a href="elastic-waves-body-waves-in-solids.html#eq-trans-wave-speed" class="quarto-xref">Equation&nbsp;<span>5.11</span></a>.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<div id="fig-lk-abc-half-space-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lk-abc-half-space-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/lk-abc-half-space-2.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig" id="fig-lk-abc-half-space-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.4: Schematic diagram of (A) vertically propagating SV-wave in half-space subjected to uniform surface traction, (B) truncation of unbounded domain by introducing artificial boundary to obtain finite computational domain, (C) satisfying radiation condition by placing series of dashpots along the artificial boundary.
+</figcaption>
+</figure>
+</div>
+</div></div><p>The general solution of <a href="#eq-sv-wave-eq-1d" class="quarto-xref">Equation&nbsp;<span>7.14</span></a> should represent a wave propagating in the <span class="math inline">\(x_{2}\)</span>-direction. This solution can be described by</p>
+<p><span id="eq-u1-1d-3"><span class="math display">\[
+{u_1}\left( {{x_2},t} \right) = f\left( {t - \frac{{{x_2}}}{{{c_T}}}} \right)
+\tag{7.15}\]</span></span></p>
+<p>The non-trivial stress component <span class="math inline">\(\sigma_{12}\)</span> and velocity <span class="math inline">\(v_{1}\)</span> are given by</p>
+<p><span id="eq-sigma12-1d-1"><span class="math display">\[
+{\sigma _{12}}\left( {{x_2},t} \right) =  - \rho c_{T}{f^{'}}\left( {t - \frac{{{x_2}}}{{{c_T}}}} \right)
+\tag{7.16}\]</span></span></p>
+<p><span id="eq-v1-1d-2"><span class="math display">\[
+{v_1}\left( {{x_2},t} \right) = {f^{'}}\left( {t - \frac{x_{2}}{{{c_L}}}} \right)
+\tag{7.17}\]</span></span></p>
+<p>Accordingly, the following relationship between tangential stress <span class="math inline">\(\sigma_{12}\)</span> and tangential velocity <span class="math inline">\(v_{1}\)</span> is self evident.</p>
+<p><span id="eq-sig12-v1"><span class="math display">\[
+{\sigma _{12}} =  - \rho {c_T}{v_1}
+\tag{7.18}\]</span></span></p>
+<p>Eq. <a href="#eq-sig12-v1" class="quarto-xref">Equation&nbsp;<span>7.18</span></a> is the <em>LK boundary condition</em> for the case of one-dimensional S-wave propagation. In this relation the term <span class="math inline">\(\rho c_{T}\)</span> again denotes the <em>mechanical impedance</em> of the medium. It can observed that <a href="#eq-sig12-v1" class="quarto-xref">Equation&nbsp;<span>7.18</span></a>, analogues to <a href="#eq-sig11-v1" class="quarto-xref">Equation&nbsp;<span>7.13</span></a>, represents a <em>dashpot</em> with damping coefficient equal to <span class="math inline">\(\rho c_{T}\)</span>. Further, the unbounded domain can be truncated by placing an artificial boundary parallel to the <span class="math inline">\(x_{1}\)</span>-axis as depicted in <a href="#fig-lk-abc-half-space-2" class="quarto-xref">Figure&nbsp;<span>7.4</span></a> b. In the present case, the artificial boundary will perfectly absorb the normally impinging S-wave given <a href="#eq-sig12-v1" class="quarto-xref">Equation&nbsp;<span>7.18</span></a> is imposed on it. Physically, the unbounded media (outside the computational domain) resembles to a situation in which an array of dashpots is placed in tangential to the truncated boundary as shown in <a href="#fig-lk-abc-half-space-2" class="quarto-xref">Figure&nbsp;<span>7.4</span></a> c.</p>
+</section>
+<section id="lk-abc-for-general-case-of-plane-waves" class="level2 page-columns page-full" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="lk-abc-for-general-case-of-plane-waves"><span class="header-section-number">7.5</span> LK-ABC for general case of plane waves</h2>
+<p>In preceding two subsections LK-ABC is derived for the case of normal incidence of a P-wave and a S-wave. In such cases LK-ABC is exact; it perfectly absorbs the incident wave. If, however, incident wave is impinging the boundary at some angle (<span class="math inline">\(\theta &lt;\pi/2\)</span>) some amount of reflection is expected. <span class="citation" data-cites="Lysmer1969">(<a href="references.html#ref-Lysmer1969" role="doc-biblioref">Lysmer and Kuhlemeyer 1969</a>)</span> suggested to use following absorbing boundary conditions in order to minimize such spurious reflection.</p>
+<p><span id="eq-lk-abc-normal"><span class="math display">\[
+\sigma_{n}=-a\rho c_{L} v_{n}
+\tag{7.19}\]</span></span></p>
+<p><span id="eq-lk-abc-tangent"><span class="math display">\[
+\tau=-b\rho c_{T} v_{s}
+\tag{7.20}\]</span></span></p>
+<p>where <span class="math inline">\(\sigma_{n}\)</span> and <span class="math inline">\(\tau\)</span> are the normal and tangential stress at the boundary, respectively. Similarly, <span class="math inline">\(v_{n}\)</span> and <span class="math inline">\(v_{s}\)</span> are the normal and tangential velocity at the boundary, respectively. As seen earlier, this condition corresponds to a situation in which a series of dashpots are placed at the absorbing boundary in parallel and normal direction (see <a href="#fig-lk-abc-half-space-4" class="quarto-xref">Figure&nbsp;<span>7.5</span></a> b).</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<div id="fig-lk-abc-half-space-4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lk-abc-half-space-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/lk-abc-half-space-4.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig" id="fig-lk-abc-half-space-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.5: (A) Illustration of a plane-wave impinging at the artificial boundary at some angle <span class="math inline">\(\theta_{0}\)</span>, (B) Interpretation of the LK-ABC as a series of dashpots configured parallel and normal to artificial boundary.
+</figcaption>
+</figure>
+</div>
+</div></div></section>
+<section id="reflection-of-a-p-wave-at-the-lk-boundary" class="level2 page-columns page-full" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="reflection-of-a-p-wave-at-the-lk-boundary"><span class="header-section-number">7.6</span> Reflection of a P-wave at the LK-boundary</h2>
+<p><a href="#fig-lk-abc-half-space-4" class="quarto-xref">Figure&nbsp;<span>7.5</span></a> a shows a P-wave approaching the boundary at some angle <span class="math inline">\(\theta_{0}\)</span>. The wave will be reflected as a P-wave and a SV-wave <span class="citation" data-cites="Achenbach1973a">(see <a href="references.html#ref-Achenbach1973a" role="doc-biblioref">Achenbach 2012, vol. 16, chap. 5</a>)</span>. The displacement and velocity field due to incident and reflected waves is represented by</p>
+<p><span id="eq-lk-abc-u1"><span class="math display">\[
+{{\mathbf{u}}^{\left( n \right)}} = {A_n}\left[ {\begin{array}{cc}
+  {d_1^{\left( n \right)}} \\
+  {d_2^{\left( n \right)}}
+\end{array}} \right]\exp \left[ {i{k_n}\left( {{x_1}p_1^{\left( n \right)} + {x_2}p_2^{\left( n \right)} - {c_n}t} \right)} \right]
+\tag{7.21}\]</span></span></p>
+<p><span id="eq-lk-abc-v1"><span class="math display">\[
+{{\mathbf{v}}^{\left( n \right)}} =  - i{k_n}{c_n}{A_n}\left[ {\begin{array}{cc}
+  {d_1^{\left( n \right)}} \\
+  {d_2^{\left( n \right)}}
+\end{array}} \right]\exp \left[ {i{k_n}\left( {{x_1}p_1^{\left( n \right)} + {x_2}p_2^{\left( n \right)} - {c_n}t} \right)} \right]
+\tag{7.22}\]</span></span></p>
+<p>where the unit vectors <span class="math inline">\({{\mathbf{d}}^{\left( n \right)}} = {\left[ {d_1^{\left( n \right)},d_2^{\left( n \right)}} \right]^T}\)</span> and <span class="math inline">\({{\mathbf{p}}^{\left( n \right)}} = {\left[ {p_1^{\left( n \right)},p_2^{\left( n \right)}} \right]^T}\)</span> denote the direction of motion of particle and wave propagation, respectively (see <a href="#tbl-lk-abc-parameter-p-wave" class="quarto-xref">Table&nbsp;<span>7.1</span></a>). The number <span class="math inline">\(n=0,1,2\)</span> is used to denote the type of wave.</p>
+<div id="tbl-lk-abc-parameter-p-wave" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-lk-abc-parameter-p-wave-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7.1: Parameters for the impinging P-wave, reflected P-wave and reflected SV-wave
+</figcaption>
+<div aria-describedby="tbl-lk-abc-parameter-p-wave-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 2%">
+<col style="width: 6%">
+<col style="width: 38%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Wave-type</th>
+<th>n</th>
+<th><span class="math inline">\(c_{n}\)</span></th>
+<th><span class="math inline">\(\mathbf{p}^{n}\)</span></th>
+<th><span class="math inline">\(\mathbf{d}^{n}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Incident P-wave</td>
+<td>0</td>
+<td><span class="math inline">\(c_{L}\)</span></td>
+<td><span class="math inline">\(\left( \sin\theta_{0}, \cos\theta_{0} \right)^{T}\)</span></td>
+<td><span class="math inline">\(\left( \sin\theta_{0}, \cos\theta_{0} \right)^{T}\)</span></td>
+</tr>
+<tr class="even">
+<td>Reflected P-wave</td>
+<td>1</td>
+<td><span class="math inline">\(c_{L}\)</span></td>
+<td><span class="math inline">\(\left( \sin\theta_{1}, -\cos\theta_{1} \right)^{T}\)</span></td>
+<td><span class="math inline">\(\left( \sin\theta_{1}, -\cos\theta_{1} \right)^{T}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Reflected SV-wave</td>
+<td>2</td>
+<td><span class="math inline">\(c_{T}\)</span></td>
+<td><span class="math inline">\(\left( \sin\theta_{2}, -\cos\theta_{2} \right)^{T}\)</span></td>
+<td><span class="math inline">\(\left( \cos\theta_{2}, \sin\theta_{2} \right)^{T}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Using <a href="elastic-waves-body-waves-in-solids.html#eq-plane-harmonic-stress" class="quarto-xref">Equation&nbsp;<span>5.22</span></a>, the normal stress <span class="math inline">\(\sigma_n=\sigma_{22}\)</span> and tangential stress <span class="math inline">\(\tau=\sigma_{12}\)</span> at the artificial boundary <span class="math inline">\(x_{2}=0\)</span> can be computed. These expressions are given in <a href="#tbl-lk-abc-stress-p-wave" class="quarto-xref">Table&nbsp;<span>7.2</span></a> .</p>
+<p><span class="math display">\[
+\eta_{n}=k_{n}\left( x_{1}p^{n}_{1} - c_{n}t \right)
+\]</span></p>
+<div id="tbl-lk-abc-stress-p-wave" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-lk-abc-stress-p-wave-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7.2: Expression for normal and tangential stress at <span class="math inline">\(x_{2}=0\)</span> due to impinging P-wave (n=0), reflected P-wave (n=1) and reflected SV-wave (n=2)
+</figcaption>
+<div aria-describedby="tbl-lk-abc-stress-p-wave-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">n</th>
+<th style="text-align: center;"><span class="math inline">\(\sigma^{(n)}_{22}\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\sigma^{(n)}_{12}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(0)</td>
+<td style="text-align: center;"><span class="math inline">\(i{k_0}{A_0}\left( {\lambda  + 2\mu {{\cos }^2}{\theta _0}} \right)\exp \left( {i{{\overline \eta  }_0}} \right)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(i{k_0}{A_0}\mu \sin 2{\theta _0}\exp \left( {i{{\bar \eta }_0}} \right)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(1)</td>
+<td style="text-align: center;"><span class="math inline">\(i{k_1}{A_1}\left( {\lambda  + 2\mu {{\cos }^2}{\theta _1}} \right)\exp \left( {i{{\bar \eta }_1}} \right)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(- i{k_1}{A_1}\mu \sin 2{\theta _1}\exp \left( {i{{\bar \eta }_1}} \right)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(2)</td>
+<td style="text-align: center;"><span class="math inline">\(- i{k_2}{A_2}\mu \sin 2{\theta _2}\exp \left( {i{{\bar \eta }_2}} \right)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sigma _{12}^{\left( 2 \right)} =  - i{k_2}{A_2}\mu \cos 2{\theta _2}\exp \left( {i{{\bar \eta }_2}} \right)\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The system of incident and reflected waves should satisfy the continuity of normal and tangential stress at the truncated boundary. This condition is given by</p>
+<p><span id="eq-lk-abc-continuity-normal-stress"><span class="math display">\[
+\sigma _{22}^{\left( 0 \right)} + \sigma _{22}^{\left( 1 \right)} + \sigma _{22}^{\left( 2 \right)} =  - a\rho {c_L}\left( {v_2^{\left( 0 \right)} + v_2^{\left( 1 \right)} + v_2^{\left( 2 \right)}} \right)
+\tag{7.23}\]</span></span></p>
+<p><span id="eq-lk-abc-continuity-tangent-stress"><span class="math display">\[
+\sigma _{12}^{\left( 0 \right)} + \sigma _{12}^{\left( 1 \right)} + \sigma _{12}^{\left( 2 \right)} =  - b\rho {c_T}\left( {v_1^{\left( 0 \right)} + v_1^{\left( 1 \right)} + v_1^{\left( 2 \right)}} \right)
+\tag{7.24}\]</span></span></p>
+<p>Using <a href="#eq-lk-abc-u1" class="quarto-xref">Equation&nbsp;<span>7.21</span></a> , <a href="#eq-lk-abc-v1" class="quarto-xref">Equation&nbsp;<span>7.22</span></a>, <a href="#tbl-lk-abc-parameter-p-wave" class="quarto-xref">Table&nbsp;<span>7.1</span></a> and <a href="#tbl-lk-abc-stress-p-wave" class="quarto-xref">Table&nbsp;<span>7.2</span></a> in above stress continuity equations one can get two linear equations in <span class="math inline">\(A_{1}\)</span> and <span class="math inline">\(A_{2}\)</span></p>
+<p><span id="eq-lk-abc-linearsys-eq1"><span class="math display">\[
+A_1( s^2 - 2^2_0 + as^2 ) - A_2( s + as ) = A_0(as^2 - s^2 + 2^2_0)
+\tag{7.25}\]</span></span></p>
+<p><span id="eq-lk-abc-linearsys-eq2"><span class="math display">\[
+A_1(+bs) + A_2( s + bs ) = A_0(-bs)
+\tag{7.26}\]</span></span></p>
+<p>where <span class="math inline">\(A_{1}\)</span> and <span class="math inline">\(A_{2}\)</span> are the amplitude of reflected P-wave and SV-wave, respectively. Note that <a href="#eq-lk-abc-linearsys-eq1" class="quarto-xref">Equation&nbsp;<span>7.25</span></a> – <a href="#eq-lk-abc-linearsys-eq2" class="quarto-xref">Equation&nbsp;<span>7.26</span></a> are obtained using the following intermediate results</p>
+<p><span class="math display">\[
+s = \frac{c_L}{c_T}
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_{1} &amp;=\theta_{0} &amp; k_{1}&amp;=k_{0}
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\sin {\theta _2} &amp;= \frac{{\sin {\theta _0}}}{s} &amp; {k_2} &amp;= {k_0}s
+\end{aligned}
+\]</span></p>
+<p>In order to measure the ability of LK-ABC to absorb impinging elastic waves <em>energy-ratio</em> — the ratio between the transmitted energy of the reflected waves (<span class="math inline">\(E_{r}\)</span>) and the transmitted energy of the incident wave (<span class="math inline">\(E_{i}\)</span>) — can be used <span class="citation" data-cites="Lysmer1969">(<a href="references.html#ref-Lysmer1969" role="doc-biblioref">Lysmer and Kuhlemeyer 1969</a>)</span>. Consequently, a unit energy ratio denotes the perfect reflection while a zero energy ratio denotes the complete absorption of the incident wave. The time averaged stress-power<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> for impinging and reflected waves is given by</p>
+<p><span id="eq-lk-abc-stress-power"><span class="math display">\[
+\left\langle {{\mathscr{P}^{\left( n \right)}}} \right\rangle  = \frac{1}{2}\rho {c_n}{\omega_{n} ^2}{A_n}
+\tag{7.27}\]</span></span></p>
+<p>where <span class="math inline">\(\omega_{n}=k_{n}c_{n}\)</span>. The incident energy is given by</p>
+<p><span id="eq-lk-abc-incoming-energy"><span class="math display">\[
+E_{i}=\left\langle {{\mathscr{P}^{\left( 0 \right)}}} \right\rangle \cos\theta_{0}
+\tag{7.28}\]</span></span></p>
+<p>Similarly, the reflected energy is</p>
+<p><span id="eq-lk-abc-reflected-energy"><span class="math display">\[
+E_{r}=\left\langle {{\mathscr{P}^{\left( 1 \right)}}} \right\rangle \cos\theta_{1} + \left\langle {{\mathscr{P}^{\left( 2 \right)}}} \right\rangle \cos\theta_{2}
+\tag{7.29}\]</span></span></p>
+<p>and the energy ratio becomes</p>
+<p><span id="eq-lk-abc-energy-ratio"><span class="math display">\[
+\mathscr{E}:=\frac{{{E_r}}}{{{E_i}}} = {\left( {\frac{{{A_1}}}{{{A_0}}}} \right)^2} + \frac{1}{s}\frac{{\cos {\theta _2}}}{{\cos {\theta _0}}}{\left( {\frac{{{A_2}}}{{{A_0}}}} \right)^2}
+\tag{7.30}\]</span></span></p>
+<p>From <a href="#eq-lk-abc-energy-ratio" class="quarto-xref">Equation&nbsp;<span>7.30</span></a> it can be observed that for a given choice of <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> the energy ratio depends only in the angle of incidence <span class="math inline">\(\theta_{0}\)</span> and the Poisson’s ratio <span class="math inline">\(\nu\)</span>.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<div id="fig-lk-abc-p-wave-energy-vs-ab" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lk-abc-p-wave-energy-vs-ab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/lk-abc-p-wave-energy-vs-ab.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig" id="fig-lk-abc-p-wave-energy-vs-ab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.6: Effect of parameters <span class="math inline">\(a,b\)</span> on energy ratio for incident P-wave (Poisson’s ratio=<span class="math inline">\(0.25\)</span>)
+</figcaption>
+</figure>
+</div>
+</div><div class="">
+<div id="fig-lk-abc-p-wave-energy-vs-poisson" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lk-abc-p-wave-energy-vs-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/lk-abc-p-wave-energy-vs-poisson.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig" id="fig-lk-abc-p-wave-energy-vs-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.7: Effect of Poisson’s ratio on energy ratio for incident P-wave (<span class="math inline">\(a=b=1.0\)</span>)
+</figcaption>
+</figure>
+</div>
+</div><div class="">
+<div id="fig-lk-abc-p-wave-amp-vs-angle" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lk-abc-p-wave-amp-vs-angle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/lk-abc-p-wave-amp-vs-angle.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig" id="fig-lk-abc-p-wave-amp-vs-angle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.8: Variation of the normalized amplitudes <span class="math inline">\(A_{1}/A_{0}\)</span> and <span class="math inline">\(A_{2}/A_{0}\)</span> with the angle of incidence for incident P-wave (Poisson’s ratio=<span class="math inline">\(0.25\)</span>, <span class="math inline">\(a=b=1.0\)</span>)
+</figcaption>
+</figure>
+</div>
+</div></div>
+
+<p>Fig. <a href="#fig:LK-ABC-P-Wave-Energy-vs-ab" data-reference-type="ref" data-reference="fig:LK-ABC-P-Wave-Energy-vs-ab">10</a> depicts the effect of choice of free parameters <span class="math inline">\(a,b\)</span> on the performance of LK-ABC (Poisson’s ratio =<span class="math inline">\(0.25\)</span>). It can be observed that the choice of <span class="math inline">\(a=b=1.0\)</span> provides highly efficient LK-ABC as it gives the maximum absorption. The absorption cannot be made perfect over the whole rage of incident angles by any choice of <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>. This is further confirmed by Fig. <a href="#fig:LK-ABC-P-Wave-Amp-vs-angle" data-reference-type="ref" data-reference="fig:LK-ABC-P-Wave-Amp-vs-angle">12</a> which present the variation of amplitudes with the angle of incidence at <span class="math inline">\(a=b=1.0\)</span> and Poisson’s ratio=0.25. Further, nearly perfect absorption is attained in the range <span class="math inline">\(0&lt;\theta&lt;60{}^{\circ{}}\)</span> for <span class="math inline">\(a=b=1\)</span>. <span class="citation" data-cites="Lysmer1969">(<a href="references.html#ref-Lysmer1969" role="doc-biblioref">Lysmer and Kuhlemeyer 1969</a>)</span> showed that the LK-ABC for <span class="math inline">\(a=b=1\)</span> is <span class="math inline">\(98.5\)</span> % effective in absorbing the impinging P-waves. Besides, Fig. <a href="#fig:LK-ABC-P-Wave-Energy-vs-Poisson" data-reference-type="ref" data-reference="fig:LK-ABC-P-Wave-Energy-vs-Poisson">11</a> shows that LK-ABC is almost insensitive to the value of Poisson’s ratio.</p>
+</section>
+<section id="reflection-of-a-sv-wave-at-the-lk-boundary" class="level2 page-columns page-full" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="reflection-of-a-sv-wave-at-the-lk-boundary"><span class="header-section-number">7.7</span> Reflection of a SV-wave at the LK-boundary</h2>
+<p>Consider a SV-wave impinging the LK-boundary at an angle <span class="math inline">\(\theta_{0}\)</span> with the normal as shown in <a href="#fig-lk-abc-half-space-4" class="quarto-xref">Figure&nbsp;<span>7.5</span></a> a. The displacement and velocity of the incident and reflected waves is given by <a href="#eq-lk-abc-u1" class="quarto-xref">Equation&nbsp;<span>7.21</span></a> and <a href="#eq-lk-abc-v1" class="quarto-xref">Equation&nbsp;<span>7.22</span></a>, respectively. Note that in present case the unit vector <span class="math inline">\(\mathbf{d}^{(0)}\)</span> and <span class="math inline">\(\mathbf{p}^{(0)}\)</span> in <a href="#tbl-lk-abc-parameter-p-wave" class="quarto-xref">Table&nbsp;<span>7.1</span></a> are given by <a href="#eq-lk-abc-d0-sv" class="quarto-xref">Equation&nbsp;<span>7.31</span></a> and <span class="math inline">\(c_{0}=c_{T}\)</span> while other entries related to the reflected waves remain the same.</p>
+<p><span id="eq-lk-abc-d0-sv"><span class="math display">\[
+\begin{aligned}
+{{\mathbf{d}}^{\left( 0 \right)}} &amp;= {\left( { - \cos {\theta _0},\sin {\theta _0}} \right)^T} &amp; {{\mathbf{p}}^{\left( 0 \right)}} &amp;= {\left( {\sin {\theta _0},\cos {\theta _0}} \right)^T}
+\end{aligned}
+\tag{7.31}\]</span></span></p>
+<p>In <a href="#tbl-lk-abc-stress-p-wave" class="quarto-xref">Table&nbsp;<span>7.2</span></a> the normal and tangential stress at LK-boundary due to impinging SV-wave are given by</p>
+<p><span id="eq-lk-abc-sigma220-sv"><span class="math display">\[
+\sigma _{22}^{\left( 0 \right)} = i{k_0}{A_0}\mu \sin 2{\theta _0}\exp \left( {i{{\bar \eta }_0}} \right)
+\tag{7.32}\]</span></span></p>
+<p><span id="eq-lk-abc-sigma120-sv"><span class="math display">\[
+\sigma _{12}^{\left( 0 \right)} =  - i{k_0}{A_0}\mu \cos 2{\theta _0}\exp \left( {i{{\bar \eta }_0}} \right)
+\tag{7.33}\]</span></span></p>
+<p>After satisfying the continuity of normal and tangential stress at LK-boundary (see <a href="#eq-lk-abc-continuity-normal-stress" class="quarto-xref">Equation&nbsp;<span>7.23</span></a> and <a href="#eq-lk-abc-continuity-tangent-stress" class="quarto-xref">Equation&nbsp;<span>7.24</span></a>) one can obtain the following linear equations in amplitudes <span class="math inline">\(A_{1}\)</span> and <span class="math inline">\(A_{2}\)</span>.</p>
+<p><span id="eq-lk-abc-linearsys-eq3"><span class="math display">\[
+A_1(s^2 - 2^2_1 + as^2) - A_2(s + as^2) = A_0(as^2 - s)
+\tag{7.34}\]</span></span></p>
+<p><span id="eq-lk-abc-linearsys-eq4"><span class="math display">\[
+A_1(+bs) + A_2(s+bs) = A_0(bs - s)
+\tag{7.35}\]</span></span></p>
+<p><a href="#eq-lk-abc-linearsys-eq3" class="quarto-xref">Equation&nbsp;<span>7.34</span></a> and <a href="#eq-lk-abc-linearsys-eq4" class="quarto-xref">Equation&nbsp;<span>7.35</span></a> are obtained using the following intermediate results</p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_{2} &amp;=\theta_{0} &amp; k_{2}&amp;=k_{0}
+\end{aligned}
+\]</span></p>
+<p><span id="eq-lk-abc-sv-theta1"><span class="math display">\[
+\begin{aligned}
+\sin {\theta _1} &amp;= {s} \sin {\theta _0} &amp; {k_1} &amp;= {k_0}/s
+\end{aligned}
+\tag{7.36}\]</span></span></p>
+<p>Accordingly, the energy ratio becomes</p>
+<p><span id="eq-lk-abc-sv-energy-ratio"><span class="math display">\[
+\mathscr{E}:=\frac{{{E_r}}}{{{E_i}}} = {\left( {\frac{{{A_2}}}{{{A_0}}}} \right)^2} + {s}\frac{{\cos {\theta _1}}}{{\cos {\theta _0}}}{\left( {\frac{{{A_1}}}{{{A_0}}}} \right)^2}
+\tag{7.37}\]</span></span></p>
+<p>In case of impinging SV-wave, a special case occurs when the angle of incidence <span class="math inline">\(\theta_{0}\)</span> is greater than some critical angle <span class="math inline">\(\theta_{cr}\)</span> defined by</p>
+<p><span class="math display">\[
+{\theta _{cr}} = {\sin ^{ - 1}}\left( {1/s} \right)
+\]</span></p>
+<p>In this situation (i.e.&nbsp;<span class="math inline">\(\theta_{0}&gt;\theta_{cr}\)</span>) <a href="#eq-lk-abc-sv-theta1" class="quarto-xref">Equation&nbsp;<span>7.36</span></a> a) shows that <span class="math inline">\(\sin\theta_{1}&gt;1\)</span>, consequently <span class="math inline">\(\cos\theta_{1}\)</span> and <span class="math inline">\(\mathbf{p}^{(1)}\)</span> (see <a href="#tbl-lk-abc-parameter-p-wave" class="quarto-xref">Table&nbsp;<span>7.1</span></a> should be described by a complex number. It is noteworthy that critical angle depends only on the Poisson’s ratio of the medium. <a href="#tbl-lk-abc-critical-angle-s-wave" class="quarto-xref">Table&nbsp;<span>7.3</span></a> shows that <span class="math inline">\(\theta_{cr}\)</span> decreases with increasing Poisson’s ratio. Further, amplitudes <span class="math inline">\(A_{1}\)</span> and <span class="math inline">\(A_{2}\)</span> are also given by complex numbers.</p>
+<p><span id="eq-lk-abc-sv-a1-a2"><span class="math display">\[
+\begin{aligned}
+{A_1} &amp;= A_1^R + iA_1^I &amp; {A_2} &amp;= A_2^R + iA_2^I
+\end{aligned}
+\tag{7.38}\]</span></span></p>
+<p>Noting these changes in <a href="#eq-lk-abc-linearsys-eq3" class="quarto-xref">Equation&nbsp;<span>7.34</span></a> and <a href="#eq-lk-abc-linearsys-eq4" class="quarto-xref">Equation&nbsp;<span>7.35</span></a> the system of linear equations in real and imaginary components of amplitudes takes the form</p>
+<p><span class="math display">\[
+\left[ {\mathbf{A}} \right]\left\{ {\mathbf{x}} \right\} = \left\{ {\mathbf{b}} \right\}
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\left\{ {\mathbf{x}} \right\} &amp;= \left[ {\begin{array}{cc}
+  {A_1^R} \\
+  {A_1^I} \\
+  {A_2^R} \\
+  {A_2^I}
+\end{array}} \right]
+&amp;
+\left\{ {\mathbf{b}} \right\} &amp;= \left[ {\begin{array}{cc}
+  {a{s^2}\sin {\theta _0} - s\sin 2{\theta _0}} \\
+  0 \\
+  {bs\cos {\theta _0} - s\cos 2{\theta _0}} \\
+  0
+\end{array}} \right]
+\end{aligned}
+\]</span></p>
+<div id="tbl-lk-abc-critical-angle-s-wave" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-lk-abc-critical-angle-s-wave-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7.3: Critical angle of incidence (<span class="math inline">\(\theta_{cr}\)</span>) for different values of Poisson’s ratio (<span class="math inline">\(\nu\)</span>)
+</figcaption>
+<div aria-describedby="tbl-lk-abc-critical-angle-s-wave-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(\nu\)</span></th>
+<th><span class="math inline">\(\theta_{cr}\)</span></th>
+<th><span class="math inline">\(\nu\)</span></th>
+<th><span class="math inline">\(\theta_{cr}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.10</td>
+<td><span class="math inline">\({41.8}^{\circ{}}\)</span></td>
+<td>0.30</td>
+<td><span class="math inline">\({32.3}^{\circ{}}\)</span></td>
+</tr>
+<tr class="even">
+<td>0.15</td>
+<td><span class="math inline">\({39.9}^{\circ{}}\)</span></td>
+<td>0.35</td>
+<td><span class="math inline">\({28.7}^{\circ{}}\)</span></td>
+</tr>
+<tr class="odd">
+<td>0.20</td>
+<td><span class="math inline">\({37.8}^{\circ{}}\)</span></td>
+<td>0.40</td>
+<td><span class="math inline">\({24.0}^{\circ{}}\)</span></td>
+</tr>
+<tr class="even">
+<td>0.25</td>
+<td><span class="math inline">\({35.3}^{\circ{}}\)</span></td>
+<td>0.45</td>
+<td><span class="math inline">\({17.5}^{\circ{}}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The physical significance of the complex amplitudes (or <span class="math inline">\(\sin\theta_{1}&gt;1\)</span>) is that a reflected P-wave does not exist and, instead, a surface wave appears. The amplitude of the surface wave decays exponentially in the normal direction to the surface. Accordingly, in computation of energy-ratio the energy due to surface wave should be excluded as this wave travels parallel to the surface. <a href="#eq-lk-abc-sv-energy-ratio" class="quarto-xref">Equation&nbsp;<span>7.37</span></a> now becomes</p>
+<p><span id="eq-lk-abc-sv-energy-ratio-surface"><span class="math display">\[
+\mathscr{E}= {\left( {\frac{{{A_2}}}{{{A_0}}}} \right)^2}={\left( {\frac{{A_2^R}}{{{A_0}}}} \right)^2} + {\left( {\frac{{A_2^I}}{{{A_0}}}} \right)^2}
+\tag{7.39}\]</span></span></p>
+<p>From <a href="#fig-lk-abc-s-wave-energy-vs-ab" class="quarto-xref">Figure&nbsp;<span>7.9</span></a> it can be observed that the choice of <span class="math inline">\(a=b=1.0\)</span> provides highly efficient LK-ABC. <span class="citation" data-cites="Lysmer1969">(<a href="references.html#ref-Lysmer1969" role="doc-biblioref">Lysmer and Kuhlemeyer 1969</a>)</span> showed that for <span class="math inline">\(a=b=1.0\)</span> the LK-ABC is <span class="math inline">\(95\)</span>% effective in absorbing the S-waves. <a href="#fig-lk-abc-s-wave-amp-vs-angle" class="quarto-xref">Figure&nbsp;<span>7.11</span></a> depicts the variation of real and imaginary part of amplitudes with the angle of incidence at <span class="math inline">\(a=b=1.0\)</span> and Poisson’s ratio=0.25. In all cases the performance of LK-ABC decreases significantly when the angle of incidence becomes greater than the critical angle. It indicates that LK-ABC are not very efficient for the absorbing the surface waves. Further, <a href="#fig-lk-abc-s-wave-energy-vs-poisson" class="quarto-xref">Figure&nbsp;<span>7.10</span></a> suggests that the performance of LK-ABC is nearly independent of the Poisson’s ratio. Finally, it can be concluded that the performance of LK-ABC mainly depends upon the angle of incidence. In particular, the LK-ABC performs reasonably well when the angle of incidence is in the range <span class="math inline">\(0&lt;\theta_{0}&lt;60{}^{\circ{}}\)</span> for <span class="math inline">\(a=b=1\)</span>.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<div id="fig-lk-abc-s-wave-energy-vs-ab" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lk-abc-s-wave-energy-vs-ab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/lk-abc-s-wave-energy-vs-ab.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig" id="fig-lk-abc-s-wave-energy-vs-ab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.9: Effect of parameters <span class="math inline">\(a,b\)</span> on energy ratio for incident S-wave (Poisson’s ratio=<span class="math inline">\(0.25\)</span>)
+</figcaption>
+</figure>
+</div>
+</div><div class="">
+<div id="fig-lk-abc-s-wave-energy-vs-poisson" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lk-abc-s-wave-energy-vs-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/lk-abc-s-wave-energy-vs-poisson.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig" id="fig-lk-abc-s-wave-energy-vs-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.10: Effect of Poisson’s ratio (<span class="math inline">\(\nu\)</span>) on energy ratio for incident S-wave (<span class="math inline">\(a=b=1.0\)</span>)
+</figcaption>
+</figure>
+</div>
+</div><div class="">
+<div id="fig-lk-abc-s-wave-amp-vs-angle" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lk-abc-s-wave-amp-vs-angle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/lk-abc-s-wave-amp-vs-angle.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig" id="fig-lk-abc-s-wave-amp-vs-angle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.11: Variation of real and imaginary part of amplitude with angle of incidence for incident S-wave (Poisson’s ratio=<span class="math inline">\(0.25\)</span>, <span class="math inline">\(a=b=1.0\)</span>)
+</figcaption>
+</figure>
+</div>
+</div></div>
+
+</section>
+<section id="free-field-response-and-effective-seismic-input" class="level2 page-columns page-full" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="free-field-response-and-effective-seismic-input"><span class="header-section-number">7.8</span> Free field response and effective seismic input</h2>
+<p>When the source of excitation is present inside the truncated computation domain, as discussed in previous section, the mechanical disturbance generates inside the domain and propagates towards the infinity through the artificial boundaries. In such cases, consequently, the dynamic response of structure does not depend upon the response of exterior unbounded domain. Accordingly, the prescribed boundary condition on artificial boundary should satisfy the radiation damping with significant accuracy in order to simulate this one-way interaction.</p>
+<p>In practical cases, such as earthquake excitation, blast engineering, vibrations due to high-speed railways and road-traffic among others, the source of dynamic loading may be present outside of computational domain. Consequently, the response of structure is coupled with the dynamic response of the unbounded domain. It is clear that, irrespective of the type of ABC employed to truncate the domain, the response of unbounded domain with the structure present will differ significantly from that of the free field ground motion <span class="citation" data-cites="Bielak1984">(<a href="references.html#ref-Bielak1984" role="doc-biblioref">Bielak and Christiano 1984</a>)</span>. Thereby, to correctly model the dynamic SSI one has to ensure not only the absorption of the outgoing scattered wave motion using appropriate ABC but also the input of the free field ground motion into the numerical model. Unfortunately, the seismic excitation cannot be specified directly at the artificial boundaries as this would render any absorbing boundary ineffective <span class="citation" data-cites="Lokke2017">(<a href="references.html#ref-Lokke2017" role="doc-biblioref">Løkke and Chopra 2017</a>)</span>. Thus it is necessary to prescribe the seismic excitation in the form of effective generalized earthquake forces.</p>
+<p>Bielak and his coworkers <span class="citation" data-cites="Bielak1984 Bielak2003 Yoshimura2003 Cremonini1988">(<a href="references.html#ref-Bielak1984" role="doc-biblioref">Bielak and Christiano 1984</a>; <a href="references.html#ref-Bielak2003" role="doc-biblioref">Bielak et al. 2003</a>; <a href="references.html#ref-Yoshimura2003" role="doc-biblioref">Yoshimura et al. 2003</a>; <a href="references.html#ref-Cremonini1988" role="doc-biblioref">Cremonini, Christiano, and Bielak 1988</a>)</span> presented a two step procedure for an effective seismic input while treating the dynamic SSI as a scattering problem. In first step, effective seismic forces were expressed in terms of free-field tractions and displacements in unperturbed soil-medium. In second step, the effective forces are applied as input over the domain slightly bigger to contain both structure and absorbing boundary. Their method seems to be very efficient for reducing the size of computation domain as it requires to store free-field displacements only in a single layer of elements next to the soil-structure interface. Clearly, their method has the advantage of eliminating the need to transmit seismic excitation through the artificial boundary into the region of interest, in this way absorbing boundary need to only absorb the outgoing waves. However, implementation of such schemes requires a significant change in the existing finite element programs.</p>
+<p>Alternatively, the LK-ABC can be engineered to allow sesimic excitation to enter the computation domain. Such procedures are very simple, quite effective and require little changes in the existing computer programs <span class="citation" data-cites="Miura1989 Zienkiewicz1989 Saouma2011 Lokke2017 Nielsen2006 Zhang2003">(<a href="references.html#ref-Miura1989" role="doc-biblioref">Miura and Okinaka 1989</a>; <a href="references.html#ref-Zienkiewicz1989" role="doc-biblioref">Zienkiewicz, Bicanic, and Shen 1989</a>; <a href="references.html#ref-Saouma2011" role="doc-biblioref">Saouma et al. 2011</a>; <a href="references.html#ref-Lokke2017" role="doc-biblioref">Løkke and Chopra 2017</a>; <a href="references.html#ref-Nielsen2006" role="doc-biblioref">Nielsen 2006</a>; <a href="references.html#ref-Zhang2003" role="doc-biblioref">Zhang et al. 2003</a>)</span>.</p>
+<div id="fig-lk-abc-half-space-5" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-lk-abc-half-space-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/lk-abc-half-space-5.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-lk-abc-half-space-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.12: Illustration of soil-structure interaction as a scattering problem
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-lk-abc-half-space-5" class="quarto-xref">Figure&nbsp;<span>7.12</span></a> illustrates the situation where a structure (possibly with nonlinear material behaviour) embedded inside a linear elastic half-space is subjected to the earthquake excitation. The auxiliary state of the system is defined by elastic-half space without the structure (see <a href="#fig-lk-abc-half-space-5" class="quarto-xref">Figure&nbsp;<span>7.12</span></a> b). The term <em>free field</em> response will used for the dynamic response of the auxiliary state under seismic loading.</p>
+<p>As described earlier in this chapter, once the wave reaches at the free surface (and/or interface between two soil layers) reflection will occur. Hence, the free field variables (<span class="math inline">\(\mathbf{u}_{0}, \mathbf{v}_{0}, \sigma_{0}\)</span>) contains the contribution due to both incoming and reflected waves. If some structure is embedded inside the half-space then it will perturbed the free-field response. The degree of perturbation, of course, depends upon the dynamic response of the structure itself. Clearly, the dynamic SSI can be scrutinized from the point of view of scattering problem <span class="citation" data-cites="Bielak1984 Bielak2003 Yoshimura2003 Cremonini1988 Lokke2017 Basu2004">(<a href="references.html#ref-Bielak1984" role="doc-biblioref">Bielak and Christiano 1984</a>; <a href="references.html#ref-Bielak2003" role="doc-biblioref">Bielak et al. 2003</a>; <a href="references.html#ref-Yoshimura2003" role="doc-biblioref">Yoshimura et al. 2003</a>; <a href="references.html#ref-Cremonini1988" role="doc-biblioref">Cremonini, Christiano, and Bielak 1988</a>; <a href="references.html#ref-Lokke2017" role="doc-biblioref">Løkke and Chopra 2017</a>; <a href="references.html#ref-Basu2004" role="doc-biblioref">Basu and Chopra 2004</a>)</span>. In the following subsection this concept will be utilized to modify the viscous boundary condition, <a href="#eq-lk-abc-normal" class="quarto-xref">Equation&nbsp;<span>7.19</span></a> and <a href="#eq-lk-abc-tangent" class="quarto-xref">Equation&nbsp;<span>7.20</span></a>, so that LK ABC can absorb the outgoing scattered waves while allowing the energy inflow from the outer free fields.</p>
+</section>
+<section id="sec:ch4_sec5-1" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="sec:ch4_sec5-1"><span class="header-section-number">7.9</span> Viscous boundary condition for free field input</h2>
+<p>Let <span class="math inline">\(\Omega_{0}\)</span> be some fictitious finite domain of the auxiliary state which will contain the structure in the future (see <a href="#fig-lk-abc-half-space-5" class="quarto-xref">Figure&nbsp;<span>7.12</span></a>). Let <span class="math inline">\(\Gamma_{\infty}^{+}\)</span> denotes that part of the boundary of <span class="math inline">\(\Omega_{0}\)</span> which will eventually coincide with the absorbing boundaries. Let <span class="math inline">\(\mathbf{u}_{0}, \mathbf{v}_{0}, \sigma_{0}\)</span> be the free field displacement, velocity and stress, respectively. Let <span class="math inline">\(\Omega_{\infty}^{+}\)</span> be the regular unbounded domain exterior to the <span class="math inline">\(\Gamma_{\infty}^{+}\)</span>. One should keep in mind that that the auxiliary state does not correspond to any physical state but is introduced to formulate the appropriate absorbing boundary condition. <a href="#fig-lk-abc-half-space-5" class="quarto-xref">Figure&nbsp;<span>7.12</span></a> c depicts the actual computation domain <span class="math inline">\(\Omega\)</span> separated from the <span class="math inline">\(\Omega_{\infty}^{+}\)</span> through the viscous boundary <span class="math inline">\(\Gamma_{\infty}^{+}\)</span>. <span class="math inline">\(\mathbf{u}, \mathbf{v}, \sigma\)</span> denote the total displacement, total velocity and total stress, respectively, inside the computation domain <span class="math inline">\(\Omega\)</span>. On contrary, the variables <span class="math inline">\({\mathbf{\tilde u}},{\mathbf{\tilde v}},\tilde \sigma\)</span> represent the scattered motion in the exterior unbounded domain <span class="math inline">\(\Omega_{\infty}^{+}\)</span>. Further, the total displacement and velocity can be decomposed in terms of scattered solution and free-field solution <span class="citation" data-cites="Bielak1984">(<a href="references.html#ref-Bielak1984" role="doc-biblioref">Bielak and Christiano 1984</a>)</span>.</p>
+<p><span id="eq-lk-abc-uv-decomp"><span class="math display">\[
+\begin{aligned}
+{\mathbf{u}} &amp;= {\mathbf{\tilde u}} + {{\mathbf{u}}_0}
+&amp;{\mathbf{v}} &amp;= {\mathbf{\tilde v}} + {{\mathbf{v}}_0}
+\end{aligned}
+\tag{7.40}\]</span></span></p>
+<p>Noting the fact that the material in the vicinity of the absorbing boundary behaves linearly, the stress at the boundary can be written as</p>
+<p><span id="eq-lk-abc-sigma-decomp"><span class="math display">\[
+\sigma\cdot \mathbf{n} = \tilde \sigma \cdot \mathbf{n} + \sigma_0 \cdot \mathbf{n} \quad \texttt{on} \quad \Gamma_{\infty}^{+}
+\tag{7.41}\]</span></span></p>
+<p>where <span class="math inline">\(\tilde{\sigma}\)</span> denotes the stress corresponding to <span class="math inline">\(\mathbf{\tilde u}\)</span> and <span class="math inline">\(\mathbf{n}\)</span> is the unit outward normal to <span class="math inline">\(\Gamma_{\infty}^{+}\)</span>.</p>
+<p>To simulate the effect of unbounded domain viscous boundary should absorb the outgoing scattered waves, accordingly <a href="#eq-lk-abc-normal" class="quarto-xref">Equation&nbsp;<span>7.19</span></a> and <a href="#eq-lk-abc-tangent" class="quarto-xref">Equation&nbsp;<span>7.20</span></a> becomes</p>
+<p><span id="eq-lk-abc-freefield-normal1"><span class="math display">\[
+\tilde{\sigma}_{n}= -a \rho c_{L} \tilde{v}_{n}
+\tag{7.42}\]</span></span></p>
+<p><span id="eq-LK-ABC-freefield-tangent1"><span class="math display">\[
+\tilde{\tau}= -b \rho c_{T} \tilde{v}_{s}
+\tag{7.43}\]</span></span></p>
+<p>where <span class="math inline">\(\tilde{\sigma}_{n}\)</span> and <span class="math inline">\(\tilde{\tau}\)</span> are the normal and tangential boundary traction and <span class="math inline">\(\tilde{v}_{n}, \tilde{v}_{s}\)</span> are the normal and tangential scattered velocity components. Finally, using <a href="#eq-lk-abc-uv-decomp" class="quarto-xref">Equation&nbsp;<span>7.40</span></a> and <a href="#eq-lk-abc-sigma-decomp" class="quarto-xref">Equation&nbsp;<span>7.41</span></a> in the above two equation</p>
+<p><span id="eq-lk-abc-freefield-normal2"><span class="math display">\[
+{\sigma _n} =  - a\rho {c_L}{v_n} + a\rho {c_L}{\left( {{v_0}} \right)_n} + {\left( {{\sigma _0}} \right)_n}
+\tag{7.44}\]</span></span></p>
+<p><span id="eq-lk-abc-freefield-tangent2"><span class="math display">\[
+\tau  =  - b\rho {c_T}{v_s} + b\rho {c_T}{\left( {{v_0}} \right)_s} + {\tau _0}
+\tag{7.45}\]</span></span></p>
+<p>The presence of last two terms in <a href="#eq-lk-abc-freefield-normal2" class="quarto-xref">Equation&nbsp;<span>7.44</span></a> and <a href="#eq-lk-abc-freefield-tangent2" class="quarto-xref">Equation&nbsp;<span>7.45</span></a> will allow the energy to flow from the exterior domain <span class="math inline">\(\Omega_{\infty}^{+}\)</span> into the computation domain <span class="math inline">\(\Omega_{0}\)</span> through the viscous boundaries <span class="math inline">\(\Gamma_{\infty}^{+}\)</span>. At this point it is critical to note that the modified viscous boundary requires information of the free field response (<span class="math inline">\(\mathbf{u}_{0}, \mathbf{v}_{0}\)</span>) only at the absorbing boundary.</p>
+</section>
+<section id="effective-seismic-input" class="level2" data-number="7.10">
+<h2 data-number="7.10" class="anchored" data-anchor-id="effective-seismic-input"><span class="header-section-number">7.10</span> Effective seismic input</h2>
+<p>In order to compute the effective seismic input using <a href="#eq-lk-abc-freefield-normal2" class="quarto-xref">Equation&nbsp;<span>7.44</span></a> and <a href="#eq-lk-abc-freefield-tangent2" class="quarto-xref">Equation&nbsp;<span>7.45</span></a> it is necessary to determine the free field motion (<span class="math inline">\(\mathbf{u}_{0}, \mathbf{v}_{0}\)</span>). There are various methodologies to compute <span class="math inline">\(\mathbf{u}_{0}\)</span>. For example, if the informations about the rupture characteristics of earthquake faults, the geological material between the earthquake source and the site, and local site conditions is available then one can conduct a large-scale 3D simulation of seismic wave propagation from an earthquake source to region near the structure <span class="citation" data-cites="Bao1998">(<a href="references.html#ref-Bao1998" role="doc-biblioref">Bao et al. 1998</a>)</span>. This level of details, however, is rarely available, therefore such simulation are impractical at present.</p>
+<p>One of the practical ways, is to define the ground motion at the some control point based on a design spectrum. Probabilistic seismic hazard analysis, artificially generated motions, recorded ground motions, among other techniques can be used to generate earthquake motions. Further, these motions can be scaled and modified to match the target spectrum in some sense <span class="citation" data-cites="Hariri2016 Zhang2003">(<a href="references.html#ref-Hariri2016" role="doc-biblioref">Hariri-Ardebili, Seyed-Kolbadi, and Kianoush 2016</a>; <a href="references.html#ref-Zhang2003" role="doc-biblioref">Zhang et al. 2003</a>)</span>. Furthermore, under the assumption of vertically propagating body waves and homogeneous or layered soil stratum, the free-field motion <span class="math inline">\(\mathbf{u}_{0}\)</span> at the boundary <span class="math inline">\(\Gamma_{\infty}^{+}\)</span> can be obtained by one-dimensional deconvolution of the ground motion at the control point <span class="citation" data-cites="Schnabel1972 Hashash2009">(<a href="references.html#ref-Schnabel1972" role="doc-biblioref">Schnabel 1972</a>; <a href="references.html#ref-Hashash2009" role="doc-biblioref">Hashash 2009</a>)</span>. In principle, the motion of every nodal point on <span class="math inline">\(\Gamma_{\infty}^{+}\)</span> can computed usig the the deconvolution analysis, but in practice this approach may become a computational burden for a large number of elevations.</p>
+<p>The above problem related to the deconvolution technique can be avoided under the condition that the body waves (P-wave and S-wave) due to the seismic excitation propagates in the vertical direction in an isotropic, homogeneous, elastic half space. To derive the expression for effective seismic input consider a vertically propagating SV-wave as described in the previous Section. Let absorbing boundary be placed at <span class="math inline">\(x_{2}=0\)</span> where the seismic wave is entering the system. Total displacement of the particle will be</p>
+<p><span id="eq-lk-abc-effective-1"><span class="math display">\[
+{u_1}\left( {{x_2},t} \right) = f\left( {t - \frac{{{x_2}}}{{{c_T}}}} \right) + g\left( {t + \frac{{{x_2}}}{{{c_T}}}} \right)
+\tag{7.46}\]</span></span></p>
+<p>and the velocity</p>
+<p><span id="eq-lk-abc-effective-2"><span class="math display">\[
+{v_1}\left( {{x_2},t} \right) = {f^{'}}\left( {t - \frac{{{x_2}}}{{{c_T}}}} \right) + {g^{'}}\left( {t + \frac{{{x_2}}}{{{c_T}}}} \right)
+\tag{7.47}\]</span></span></p>
+<p>or</p>
+<p><span id="eq-lk-abc-effective-3"><span class="math display">\[
+{v_1} = v_1^I + v_1^R
+\tag{7.48}\]</span></span></p>
+<p>where <span class="math inline">\(v_1^I=f^{'}(\cdot)\)</span> and <span class="math inline">\(v_1^R=g^{'}(\cdot)\)</span> denote incoming and outgoing velocity wave. Noting that <span class="math inline">\(\sigma_{12}\)</span> is the only non-zero stress component and <span class="math inline">\(\mathbf{n}=(0,-1)^{T}\)</span> at the boundary <span class="math inline">\(x_{2}=0\)</span>, the tangential boundary traction becomes</p>
+<p><span id="eq-lk-abc-effective-4"><span class="math display">\[
+\tau  =  - {\sigma _{12}} =  - \rho {c_T}\left( { - v_1^I + v_1^R} \right)
+\tag{7.49}\]</span></span></p>
+<p>using <a href="#eq-lk-abc-effective-3" class="quarto-xref">Equation&nbsp;<span>7.48</span></a> in <a href="#eq-lk-abc-effective-4" class="quarto-xref">Equation&nbsp;<span>7.49</span></a></p>
+<p><span id="eq-lk-abc-effective-5"><span class="math display">\[
+\tau  =  - \rho {c_T}{v_1} + \rho {c_T}2v_1^I
+\tag{7.50}\]</span></span></p>
+<p>adopting <span class="math inline">\(v_{s}^{I}=v_{1}^{I}\)</span> and <span class="math inline">\(v_{s}=v_{1}\)</span> for the component of incoming and total velocity tangential to the boundary <span class="math inline">\(x_{2}=0\)</span>, respectively.</p>
+<p><span id="eq-lk-abc-effective-6"><span class="math display">\[
+\tau  =  - \rho {c_T}{v_s} + \rho {c_T}2v_s^I
+\tag{7.51}\]</span></span></p>
+<p>Following the same procedure for the vertically propagating P-wave one can obtain</p>
+<p><span id="eq-lk-abc-effective-7"><span class="math display">\[
+{\sigma _n} =  - \rho {c_L}{v_n} + \rho {c_L}2v_n^I
+\tag{7.52}\]</span></span></p>
+<p>Comparing <a href="#eq-lk-abc-effective-6" class="quarto-xref">Equation&nbsp;<span>7.51</span></a> with <a href="#eq-lk-abc-freefield-tangent2" class="quarto-xref">Equation&nbsp;<span>7.45</span></a> and <a href="#eq-lk-abc-effective-7" class="quarto-xref">Equation&nbsp;<span>7.52</span></a> with <a href="#eq-lk-abc-freefield-normal2" class="quarto-xref">Equation&nbsp;<span>7.44</span></a> it can be seen that under the assumption of vertically propagating body waves in an isotropic, homogeneous, linear elastic-half space the equivalent forces due to seismic motion on the bottom boundary can be described completely in terms of the incoming velocity at <span class="math inline">\(x_{2}=0\)</span>. In this way the incoming velocity at the bottom can be computed through the deconvolution of the ground motion at the control point. Furthermore, from <a href="#eq-lk-abc-effective-6" class="quarto-xref">Equation&nbsp;<span>7.51</span></a> and <a href="#eq-lk-abc-effective-7" class="quarto-xref">Equation&nbsp;<span>7.52</span></a> it is evident that the incident velocity <span class="math inline">\(v^{I}\)</span> is half of the total velocity at the free surface<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+</section>
+<section id="summary" class="level2" data-number="7.11">
+<h2 data-number="7.11" class="anchored" data-anchor-id="summary"><span class="header-section-number">7.11</span> Summary</h2>
+<p>In this chapter, a concise presentation regarding the theory of wave propagation in an elastic solid is given. After briefly discussing the reflection and refraction of a plane harmonic waves it is shown that the problem of dynamic soil-structure interaction can be viewed as a wave-scattering phenomenon, in which the free-field response of an elastic half-space is perturbed by the existing structure. Furthermore, the chapter presents some of the most popular boundary conditions for solving wave propagation problems in the unbounded domain. In addition, the viscous boundary conditions first proposed by <span class="citation" data-cites="Lysmer1969">(<a href="references.html#ref-Lysmer1969" role="doc-biblioref">Lysmer and Kuhlemeyer 1969</a>)</span> are derived, and a comprehensive discussion related to the numerical characteristics of the viscous boundary conditions is made. Lastly, the viscous boundary conditions are reviewed to allow seismic excitation to enter the computational domain.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Achenbach1973a" class="csl-entry" role="listitem">
+Achenbach, Jan D. 2012. <em><a href="https://www.ncbi.nlm.nih.gov/pubmed/25246403"><span class="nocase">Wave propagation in elastic solids</span></a></em>. Vol. 16. Elsevier.
+</div>
+<div id="ref-Baffet2012" class="csl-entry" role="listitem">
+Baffet, Daniel, Jacobo Bielak, Dan Givoli, Thomas Hagstrom, and Daniel Rabinovich. 2012. <span>“<span class="nocase">Long-time stable high-order absorbing boundary conditions for elastodynamics</span>.”</span> <em>Computer Methods in Applied Mechanics and Engineering</em> 241-244: 20–37.
+</div>
+<div id="ref-Bao1998" class="csl-entry" role="listitem">
+Bao, Hesheng, Jacobo Bielak, Omar Ghattas, Loukas F. Kallivokas, David R. O’Hallaron, Jonathan R. Shewchuk, and Jifeng Xu. 1998. <span>“<span class="nocase">Large-scale simulation of elastic wave propagation in heterogeneous media on parallel computers</span>.”</span> <em>Computer Methods in Applied Mechanics and Engineering</em> 152 (1-2): 85–102.
+</div>
+<div id="ref-Basu2004" class="csl-entry" role="listitem">
+Basu, Ushnish, and Anil K Chopra. 2004. <span>“Perfectly Matched Layers for Transient Elastodynamics of Unbounded Domains.”</span> <em>International Journal for Numerical Methods in Engineering</em> 59 (8): 1039–74.
+</div>
+<div id="ref-Bayliss1980" class="csl-entry" role="listitem">
+Bayliss, Alvin, and Eli Turkel. 1980. <span>“<span class="nocase">Radiation boundary conditions for wave‐like equations</span>.”</span> <em>Communications on Pure and Applied Mathematics</em> 33 (6): 707–25.
+</div>
+<div id="ref-Bielak1984" class="csl-entry" role="listitem">
+Bielak, Jacobo, and Paul Christiano. 1984. <span>“<span class="nocase">On the effective seismic input for non‐linear soil‐structure interaction systems</span>.”</span> <em>Earthquake Engineering <span>&amp;</span> Structural Dynamics</em> 12 (1): 107–19.
+</div>
+<div id="ref-Bielak2003" class="csl-entry" role="listitem">
+Bielak, Jacobo, Kostas Loukakis, Yoshiaki Hisada, and Chiaki Yoshimura. 2003. <span>“Domain Reduction Method for Three-Dimensional Earthquake Modeling in Localized Regions, Part i: Theory.”</span> <em>Bulletin of the Seismological Society of America</em> 93 (2): 817–24.
+</div>
+<div id="ref-Clayton1977a" class="csl-entry" role="listitem">
+Clayton, R. W., and B. Egquist. 1977. <span>“<span class="nocase">Absorbing boundary conditions for acoustic and elastic wave equations.</span>”</span> <em>Bulletin of the Seismological Society of America</em> 67: 1529–1540.
+</div>
+<div id="ref-Clayton1980" class="csl-entry" role="listitem">
+Clayton, Robert W, and Bjtjrn Engquist. 1980. <span>“<span class="nocase">Absorbing boundary conditions for wave-equation</span>.”</span> <em>Geophysics</em> 45 (5): 895–904. <a href="https://doi.org/10.1190/1.1441094">https://doi.org/10.1190/1.1441094</a>.
+</div>
+<div id="ref-Cohen1980" class="csl-entry" role="listitem">
+Cohen, M. 1980. <span>“Silent Boundary Methods for Transient Wave Analysis.”</span> PhD thesis, California Institute of Technology.
+</div>
+<div id="ref-Cohen1981" class="csl-entry" role="listitem">
+Cohen, M. F., T. J. R. Hughes, and P. C. Jennings. 1981. <span>“<span class="nocase">Comparison of paraxial and viscous silent boundary methods in finite element analysis</span>.”</span> In <em>American Society of Mechanical Engineers, Applied Mechanics Division, AMD</em>. Vol. 44.
+</div>
+<div id="ref-Cohen1983" class="csl-entry" role="listitem">
+Cohen, M., and P. C. Jennings. 1983. <span>“Silent Boundary Methods for Transient Analysis.”</span> In <em>Computational Methods for Transient Analysis</em>, 1:301–60. Amsterdam, North-Holland(Computational Methods in Mechanics.
+</div>
+<div id="ref-Cremonini1988" class="csl-entry" role="listitem">
+Cremonini, Marco G, Paul Christiano, and Jacobo Bielak. 1988. <span>“Implementation of Effective Seismic Input for Soil-Structure Interaction Systems.”</span> <em>Earthquake Engineering &amp; Structural Dynamics</em> 16 (4): 615–25.
+</div>
+<div id="ref-Engquist1977" class="csl-entry" role="listitem">
+Engquist, Bjorn, and Andrew Majda. 1977. <span>“<span class="nocase">Absorbing Boundary Conditions for the Numerical Simulation of Waves</span>.”</span> <em>Mathematics of Computation</em> 31 (139): 629. <a href="https://doi.org/10.2307/2005997">https://doi.org/10.2307/2005997</a>.
+</div>
+<div id="ref-Givoli1991" class="csl-entry" role="listitem">
+Givoli, D. 1991. <span>“<a href="https://www.ncbi.nlm.nih.gov/pubmed/31"><span>Non-Reflecting Boundary Conditions</span></a>.”</span> <em>Journal of Computational Physics</em> 94 (1): 1–29.
+</div>
+<div id="ref-Givoli2001" class="csl-entry" role="listitem">
+Givoli, Dan. 2001. <span>“<span class="nocase">High-Order Nonreflecting Boundary Conditions without High-Order Derivatives</span>.”</span> <em>Journal of Computational Physics</em> 170 (2): 849–70.
+</div>
+<div id="ref-Givoli2006" class="csl-entry" role="listitem">
+Givoli, Dan, Thomas Hagstrom, and Igor Patlashenko. 2006. <span>“<span class="nocase">Finite element formulation with high-order absorbing boundary conditions for time-dependent waves</span>.”</span> <em>Computer Methods in Applied Mechanics and Engineering</em> 195 (29-32): 3666–90.
+</div>
+<div id="ref-Givoli2003" class="csl-entry" role="listitem">
+Givoli, Dan, and Beny Neta. 2003. <span>“<a href="https://www.ncbi.nlm.nih.gov/pubmed/19"><span class="nocase">High-order non-reflecting boundary scheme for time-dependent waves</span></a>.”</span> <em>Journal of Computational Physics</em> 186 (1): 24–26.
+</div>
+<div id="ref-Givoli2003a" class="csl-entry" role="listitem">
+Givoli, Dan, Beny Neta, and Igor Patlashenko. 2003. <span>“<span class="nocase">Finite element analysis of time-dependent semi-infinite wave-guides with high-order boundary treatment</span>.”</span> <em>International Journal for Numerical Methods in Engineering</em> 58 (13): 1955–83.
+</div>
+<div id="ref-Hagstrom1998" class="csl-entry" role="listitem">
+Hagstrom, T., and S. I. Hariharan. 1998. <span>“<span class="nocase">A formulation of asymptotic and exact boundary conditions using local operators</span>.”</span> <em>Applied Numerical Mathematics</em> 27 (4): 403–16.
+</div>
+<div id="ref-Hagstrom2008" class="csl-entry" role="listitem">
+Hagstrom, Thomas, Assaf Mar-Or, and Dan Givoli. 2008. <span>“<span class="nocase">High-order local absorbing conditions for the wave equation: Extensions and improvements</span>.”</span> <em>Journal of Computational Physics</em> 227 (6): 3322–57.
+</div>
+<div id="ref-Hagstrom2004" class="csl-entry" role="listitem">
+Hagstrom, Thomas, and Timothy Warburton. 2004. <span>“<span class="nocase">A new auxiliary variable formulation of high-order local radiation boundary conditions: Corner compatibility conditions and extensions to first-order systems</span>.”</span> <em>Wave Motion</em> 39 (4): 327–38.
+</div>
+<div id="ref-Hariri2016" class="csl-entry" role="listitem">
+Hariri-Ardebili, M. A., S. M. Seyed-Kolbadi, and M. R. Kianoush. 2016. <span>“<span class="nocase">FEM-based parametric analysis of a typical gravity dam considering input excitation mechanism</span>.”</span> <em>Soil Dynamics and Earthquake Engineering</em> 84: 22–43.
+</div>
+<div id="ref-Hashash2009" class="csl-entry" role="listitem">
+Hashash, Y. M. A. 2009. <span>“<span class="nocase">DeepSoil USER MANUAL and TUTORIAL</span>.”</span> <em>University of Illinois, Urbana, IL, USA</em> 57.
+</div>
+<div id="ref-Higdon1991" class="csl-entry" role="listitem">
+Higdon, R. L. 1991. <span>“<span class="nocase">Absorbing boundary conditions for elastic waves</span>.”</span> <em>Geophysics</em> 56 (2): 231.
+</div>
+<div id="ref-Higdon1990" class="csl-entry" role="listitem">
+Higdon, Robert L. 1990. <span>“<span class="nocase">Radiation Boundary Conditions for Elastic Wave Propagation</span>.”</span> <em>SIAM Journal on Numerical Analysis</em> 27 (4): 831–69.
+</div>
+<div id="ref-Higdon1986" class="csl-entry" role="listitem">
+Higdon, Robert L. 1986. <span>“<span class="nocase">Absorbing boundary conditions for difference approximations to the multidimensional wave equation</span>.”</span> <em>Mathematics of Computation</em> 47 (176): 437–37.
+</div>
+<div id="ref-Higdon1987" class="csl-entry" role="listitem">
+———. 1987. <span>“<span class="nocase">Numerical absorbing boundary conditions for the wave equation</span>.”</span> <em>Mathematics of Computation</em> 49 (179): 65–65.
+</div>
+<div id="ref-Higdon1992" class="csl-entry" role="listitem">
+———. 1992. <span>“<span class="nocase">Absorbing boundary conditions for acoustic and elastic waves in stratified media</span>.”</span> <em>Journal of Computational Physics</em> 101 (2): 386–418.
+</div>
+<div id="ref-Higdon1994" class="csl-entry" role="listitem">
+———. 1994. <span>“<span class="nocase">Radiation Boundary Conditions for Dispersive Waves</span>.”</span> <em>SIAM Journal on Numerical Analysis</em> 31 (1): 64–100.
+</div>
+<div id="ref-VanJoolen2005" class="csl-entry" role="listitem">
+Joolen, Vince J., Beny Neta, and Dan Givoli. 2005. <span>“<span class="nocase">High-order Higdon-like boundary conditions for exterior transient wave problems</span>.”</span> <em>International Journal for Numerical Methods in Engineering</em> 63 (7): 1041–68.
+</div>
+<div id="ref-Kausel1981" class="csl-entry" role="listitem">
+Kausel, Eduardo, and John L Tassoulas. 1981. <span>“Transmitting Boundaries: A Closed-Form Comparison.”</span> <em>Bulletin of the Seismological Society of America</em> 71 (1): 143–59.
+</div>
+<div id="ref-Kellezi2000" class="csl-entry" role="listitem">
+Kellezi, L. 2000. <span>“Local Transmitting Boundaries for Transient Elastic Analysis.”</span> <em>Soil Dynamics and Earthquake Engineering</em> 19 (7): 533–47.
+</div>
+<div id="ref-Kontoe2009" class="csl-entry" role="listitem">
+Kontoe, Stavroula, Lidija Zdravkovic, and David M Potts. 2009. <span>“An Assessment of the Domain Reduction Method as an Advanced Boundary Condition and Some Pitfalls in the Use of Conventional Absorbing Boundaries.”</span> <em>International Journal for Numerical and Analytical Methods in Geomechanics</em> 33 (3): 309–30.
+</div>
+<div id="ref-Kramer2014" class="csl-entry" role="listitem">
+Kramer, S. L. 2014. <em>Geotechnical Earthquake Engineering</em>. Always Learning. Pearson.
+</div>
+<div id="ref-Lokke2017" class="csl-entry" role="listitem">
+Løkke, Arnkjell, and Anil K. Chopra. 2017. <span>“<span class="nocase">Direct finite element method for nonlinear analysis of semi-unbounded dam–water–foundation rock systems</span>.”</span> <em>Earthquake Engineering and Structural Dynamics</em> 46 (8): 1267–85.
+</div>
+<div id="ref-Lysmer1969" class="csl-entry" role="listitem">
+Lysmer, John, and Roger L Kuhlemeyer. 1969. <span>“Finite Dynamic Model for Infinite Media.”</span> <em>Journal of the Engineering Mechanics Division</em> 95 (4): 859–78.
+</div>
+<div id="ref-Miura1989" class="csl-entry" role="listitem">
+Miura, F., and H. Okinaka. 1989. <span>“Dynamic Analysis Method for 3-d Soil-Structure Interaction Systems with the Viscous Boundary Based on the Principle of Virtual Work.”</span> <em>Doboku Gakkai Ronbunshu</em> 1989 (404): 395–404.
+</div>
+<div id="ref-Nielsen2006" class="csl-entry" role="listitem">
+Nielsen, A. H. 2006. <span>“<span class="nocase">Absorbing Boundary Conditions for Seismic Analysis in ABAQUS</span>.”</span> <em>2006 ABAQUS Users’ Conference</em>, 359–76.
+</div>
+<div id="ref-Rabinovich2011" class="csl-entry" role="listitem">
+Rabinovich, Daniel, Dan Givoli, Jacobo Bielak, and Thomas Hagstrom. 2011. <span>“<span class="nocase">A finite element scheme with a high order absorbing boundary condition for elastodynamics</span>.”</span> <em>Computer Methods in Applied Mechanics and Engineering</em> 200 (23-24): 2048–66.
+</div>
+<div id="ref-Samii2012" class="csl-entry" role="listitem">
+Samii, Ali, and Vahid Lotfi. 2012. <span>“<span class="nocase">Application of H-W boundary condition in damr-eservoir interaction problem</span>.”</span> <em>Finite Elements in Analysis and Design</em> 50: 86–97.
+</div>
+<div id="ref-Samii2013" class="csl-entry" role="listitem">
+———. 2013. <span>“<span class="nocase">A high-order based boundary condition for dynamic analysis of infinite reservoirs</span>.”</span> <em>Computers &amp; Structures</em> 120: 65–76.
+</div>
+<div id="ref-Saouma2011" class="csl-entry" role="listitem">
+Saouma, V., F. Miura, G. Lebon, and Y. Yagome. 2011. <span>“<span class="nocase">A simplified 3D model for soil-structure interaction with radiation damping and free field input</span>.”</span> <em>Bulletin of Earthquake Engineering</em> 9 (5): 1387–1402.
+</div>
+<div id="ref-Schnabel1972" class="csl-entry" role="listitem">
+Schnabel, Per B. 1972. <span>“SHAKE a Computer Program for Earthquake Response Analysis of Horizontally Layered Sites.”</span> <em>EERC Report, Univ. Of California, Berkeley</em>.
+</div>
+<div id="ref-Smith1974" class="csl-entry" role="listitem">
+Smith, Warwick D. 1974. <span>“<span class="nocase">A nonreflecting plane boundary for wave propagation problems</span>.”</span> <em>Journal of Computational Physics</em> 15 (4): 492–503.
+</div>
+<div id="ref-Stacey1988" class="csl-entry" role="listitem">
+Stacey, Richard. 1988. <span>“<span class="nocase">Improved transparent boundary formulations for the elastic-wave equation</span>.”</span> <em>Bulletin of the Seismological Society of America</em> 78 (6): 2089–97.
+</div>
+<div id="ref-Underwood1981" class="csl-entry" role="listitem">
+Underwood, Philip, and T. L. Geers. 1981. <span>“<span class="nocase">Doubly asymptotic, boundary-element analysis of dynamic soil-structure interaction</span>.”</span> <em>International Journal of Solids and Structures</em> 17 (7): 687–97.
+</div>
+<div id="ref-vacus2005" class="csl-entry" role="listitem">
+Vacus, Olivier. 2005. <span>“Mathematical Analysis of Absorbing Boundary Conditions for the Wave Equation: The Corner Problem.”</span> <em>Mathematics of Computation</em> 74 (249): 177–200.
+</div>
+<div id="ref-Wolf1995" class="csl-entry" role="listitem">
+Wolf, John P., and Chongmin Song. 1995. <span>“<span class="nocase">Doubly asymptotic multi‐directional transmitting boundary for dynamic unbounded medium‐structure‐interaction analysis</span>.”</span> <em>Earthquake Engineering <span>&amp;</span> Structural Dynamics</em> 24 (2): 175–88.
+</div>
+<div id="ref-Wolf1996" class="csl-entry" role="listitem">
+Wolf, John P, and Chongmin Song. 1996. <em>Finite-Element Modelling of Unbounded Media</em>. Wiley Chichester.
+</div>
+<div id="ref-Yoshimura2003" class="csl-entry" role="listitem">
+Yoshimura, Chiaki, Jacobo Bielak, Yoshiaki Hisada, and Antonio Fernández. 2003. <span>“<span class="nocase">Domain reduction method for three-dimensional earthquake modeling in localized regions, part II: Verification and applications</span>.”</span> <em>Bulletin of the Seismological Society of America</em> 93 (2): 825–40.
+</div>
+<div id="ref-Zhang2003" class="csl-entry" role="listitem">
+Zhang, Yuyi, Zhaohui Yang, Jacobo Bielak, Joel P. Conte, and Ahmed Elgamal. 2003. <span>“<span class="nocase">Treatment of Seismic Input and Boundary Conditions in Nonlinear Seismic Analysis of a Bridge Ground System</span>.”</span> In <em>Proceedings of the 16th ASCE Engineering Mechanics Conference</em>, 1–11.
+</div>
+<div id="ref-Zienkiewicz1989" class="csl-entry" role="listitem">
+Zienkiewicz, OC, N Bicanic, and FQ Shen. 1989. <span>“Earthquake Input Definition and the Trasmitting Boundary Conditions.”</span> In <em>Advances in Computational Nonlinear Mechanics</em>, 109–38. Springer.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>As the amplitudes of all body and surface waves decay due to geometric spreading, the nonlinearity will be limited to the irregular bounded medium<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>In some physical situations where the source is located outside the computational domain the artificial boundaries should allow the waves to come inside the computational domain.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Stress-power denotes the instantaneous rate of work done by the surface traction acting on the surface element of unit area. It is given by the scalar product of surface traction and particle velocity. Moreover, it denotes the energy flux across the surface element.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>This result can be obtain by setting zero traction at the free surface using <a href="#eq-lk-abc-effective-6" class="quarto-xref">Equation&nbsp;<span>7.51</span></a> and <a href="#eq-lk-abc-effective-7" class="quarto-xref">Equation&nbsp;<span>7.52</span></a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/poromechanics\.github\.io\/sdee");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./elastic-waves-surface-waves-in-solids.html" class="pagination-link" aria-label="Surface waves in elastic solids">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Surface waves in elastic solids</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./elastodynamics-introduction.html" class="pagination-link" aria-label="Elastodynamics">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Elastodynamics</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2025, Vikas Sharma</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/poromechanics/sdee/edit/main/elastic-waves-radiation-boundary.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/poromechanics/sdee/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vickysharma0812">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/vickysharma0812">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/vickysharma0812">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

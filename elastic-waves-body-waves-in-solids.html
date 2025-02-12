@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Body waves in elastic solids – Soil Dynamics and Earthquake Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./elastic-waves-surface-waves-in-solids.html" rel="next">
+<link href="./elastic-waves-introduction.html" rel="prev">
+<link href="././figures/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-93074729595c0d1bb0917954c6b21507.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta name="twitter:title" content="5&nbsp; Body waves in elastic solids – Soil Dynamics and Earthquake Engineering">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://poromechanics.github.io/sdee/figures/plane-wave-1.svg">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./elastic-waves-body-waves-in-solids.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Body waves in elastic solids</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Soil Dynamics and Earthquake Engineering</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/poromechanics/sdee/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Soil-Dynamics-and-Earthquake-Engineering.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Soil-Dynamics-and-Earthquake-Engineering.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tdg-first-order-ode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">TDG/FEM for the first order ODE</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tdg-second-order-ode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">TDG/FEM for the second order ODE</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Elastic waves</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-body-waves-in-solids.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Body waves in elastic solids</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-surface-waves-in-solids.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Surface waves in elastic solids</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-radiation-boundary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Radiation boundary conditions for elastic waves</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastodynamics-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Elastodynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastodynamics-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">V-STFEM for Elastodynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">v-STFEM for Dynamic-soil-structure interaction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Dynamic SSI of Dam-Reservoir System</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-equations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Governing equation for Dam-Reservoir System</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">VSTFEM for dynamic SSI in dam-reservoir system</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-nonlinear-problem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Nonlinear dynamic behavior of concrete gravity dams</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-nonlinear-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">V-STFEM for nonlinear dynamic analysis of concrete gravity dams</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#governing-equations-of-motion" id="toc-governing-equations-of-motion" class="nav-link active" data-scroll-target="#governing-equations-of-motion"><span class="header-section-number">5.1</span> Governing equations of motion</a></li>
+  <li><a href="#displacement-potentials" id="toc-displacement-potentials" class="nav-link" data-scroll-target="#displacement-potentials"><span class="header-section-number">5.2</span> Displacement potentials</a></li>
+  <li><a href="#longitudinal-and-transverse-plane-waves" id="toc-longitudinal-and-transverse-plane-waves" class="nav-link" data-scroll-target="#longitudinal-and-transverse-plane-waves"><span class="header-section-number">5.3</span> Longitudinal and transverse plane waves</a></li>
+  <li><a href="#reflection-and-refraction-of-plane-waves" id="toc-reflection-and-refraction-of-plane-waves" class="nav-link" data-scroll-target="#reflection-and-refraction-of-plane-waves"><span class="header-section-number">5.4</span> Reflection and refraction of plane waves</a>
+  <ul class="collapse">
+  <li><a href="#reflection-and-refraction-of-sh-wave" id="toc-reflection-and-refraction-of-sh-wave" class="nav-link" data-scroll-target="#reflection-and-refraction-of-sh-wave"><span class="header-section-number">5.4.1</span> Reflection and refraction of SH-wave:</a></li>
+  <li><a href="#reflection-and-refraction-of-longitudinal-wave" id="toc-reflection-and-refraction-of-longitudinal-wave" class="nav-link" data-scroll-target="#reflection-and-refraction-of-longitudinal-wave"><span class="header-section-number">5.4.2</span> Reflection and refraction of longitudinal wave</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/poromechanics/sdee/edit/main/elastic-waves-body-waves-in-solids.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/poromechanics/sdee/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-body-waves-in-solid" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Body waves in elastic solids</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="governing-equations-of-motion" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="governing-equations-of-motion"><span class="header-section-number">5.1</span> Governing equations of motion</h2>
+<p>Consider a body <span class="math inline">\(\mathfrak{B}\)</span> occupying a regular domain <span class="math inline">\(\Omega \subset \mathbb{R}^{n_{sd}}\)</span> in the space which may be bounded or unbounded. <span class="math inline">\(n_{sd}\)</span> is the number of spatial dimensions. Let <span class="math inline">\(\Gamma\)</span> denotes the boundary of the domain, and <span class="math inline">\(\bar \Omega = \Omega \cup \Gamma\)</span> be the closure of <span class="math inline">\(\Omega\)</span>. Let indices <span class="math inline">\({i,j,k,l}\)</span> take values from <span class="math inline">\(1,\cdots, n_{sd}\)</span>. The system of equations describing the motion of a homogeneous, isotropic, linearly elastic body consists of the Cauchy’s equation of the motion, generalized Hooke’s law and linear strain-displacement relationship:</p>
+<p><span id="eq-momentum"><span class="math display">\[
+\frac{{\partial {\sigma _{ij}}}}{{\partial {x_j}}} + \rho {b_i} = \rho \frac{{{\partial ^2}{u_i}}}{{\partial {t^2}}}
+\tag{5.1}\]</span></span></p>
+<p><span id="eq-hooke"><span class="math display">\[
+\sigma_{ij} = \lambda \epsilon_{kk} \delta_{ij} + 2 \mu \epsilon_{ij}
+\tag{5.2}\]</span></span></p>
+<p><span id="eq-strain-disp"><span class="math display">\[
+\epsilon_{ij} = \frac{1}{2}\left( {\frac{{\partial {u_i}}}{{\partial {x_j}}} + \frac{{\partial {u_j}}}{{\partial {x_i}}}} \right)
+\tag{5.3}\]</span></span></p>
+<p>Here, <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\mu\)</span> are the Lame’s parameters. Subsequently, the displacement equation of motion <a href="#eq-momentum-disp-form" class="quarto-xref">Equation&nbsp;<span>5.4</span></a> can be obtained by using Eq. <a href="#eq-hooke" class="quarto-xref">Equation&nbsp;<span>5.2</span></a> and <a href="#eq-strain-disp" class="quarto-xref">Equation&nbsp;<span>5.3</span></a> in Eq. <a href="#eq-momentum" class="quarto-xref">Equation&nbsp;<span>5.1</span></a></p>
+<p><span id="eq-momentum-disp-form"><span class="math display">\[
+\mu \frac{{{\partial ^2}{u_i}}}{{\partial x_j^2}} + \left( {\lambda  + \mu } \right)\frac{{{\partial ^2}{u_j}}}{{\partial {x_j}\partial {x_i}}} + \rho {b_i} = \rho \frac{{{\partial ^2}{u_i}}}{{\partial {t^2}}}
+\tag{5.4}\]</span></span></p>
+<p>To obtain a unique solution of the problem boundary conditions on the boundary <span class="math inline">\(\Gamma\)</span> and initial state of the body must be prescribed. Some of the commonly used boundary conditions are mentioned below.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><em>Displacement boundary conditions</em>: Components of displacement field <span class="math inline">\(u_i(\mathbf{x},t)\)</span> are prescribed on the boundary</p>
+<p><span class="math display">\[
+u_i(\mathbf{x},t) = g_i(\mathbf{x},t) \quad \textit{on} \quad \Gamma
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><em>Traction boundary conditions</em>: This boundary condition relates the stress <span class="math inline">\(\sigma_{ij}\)</span> to the externally applied surface force <span class="math inline">\(t_i\)</span> using the Cauchy’s formula</p>
+<p><span class="math display">\[
+\sigma_{ij}{n_j} = t_{i} \quad \textit{on} \quad \Gamma
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><em>Mixed boundary conditions</em>: On a part of the boundary <span class="math inline">\(\Gamma_{i}^{g}\subset \Gamma\)</span> displacement <span class="math inline">\(u_i\)</span> is prescribed and on the remaining part of the boundary <span class="math inline">\(\Gamma_{i}^{h} \subset \Gamma\)</span> traction boundary condition is imposed.</p>
+<p><span class="math display">\[
+u_i(\mathbf{x},t) = g_i(\mathbf{x},t) \quad \textit{on} \quad \Gamma_{i}^{g}
+\]</span></p>
+<p><span class="math display">\[
+\sigma_{ij}{n_j} = t_{i} \quad \textit{on} \quad \Gamma_{i}^{h}
+\]</span></p>
+<p>with</p>
+<p><span class="math display">\[
+\Gamma_{i}^{g} \cup \Gamma_{i}^{h} = \Gamma \quad \textit{and} \quad \Gamma_{i}^{g} \cap \Gamma_{i}^{h} = \phi
+\]</span></p>
+</div>
+</div>
+</div>
+<p>The initial state of the body, the displacement and velocity field at time <span class="math inline">\(t=0\)</span>, must be well defined to complete the problem.</p>
+<p><span class="math display">\[
+u_i(\mathbf{x},0) = u_{i}^{0}(\mathbf{x}) \quad \forall \mathbf{x} \in \bar{\Omega}
+\]</span></p>
+<p><span class="math display">\[
+\dot{u_i}(\mathbf{x},0) = v_{i}^{0}(\mathbf{x}) \quad \forall \mathbf{x} \in \bar{\Omega}
+\]</span></p>
+<p>The ordered pair <span class="math inline">\(\left( {{\mathbf{u}},\sigma } \right)\)</span> defines the elastodynamic state on <span class="math inline">\(\left( \bar{\Omega}  \times T \right)\)</span> with the displacement field <span class="math inline">\(\mathbf{u}\)</span> and the stress field <span class="math inline">\(\sigma\)</span>, corresponding to given external body force density <span class="math inline">\(\mathbf{b}\)</span>, the mass density <span class="math inline">\(\rho \in \mathbb{R}^{+}\)</span> and the Lame parameters <span class="math inline">\(\lambda, \mu \in \mathbb{R}^{+}\)</span>, if <span class="math inline">\({\mathbf{u}} \in {C^{2}}\left( {\Omega  \times T} \right) \cap {C^1}\left( {\bar{\Omega}  \times T} \right)\)</span>, <span class="math inline">\(\sigma  \in {C^1}\left( {\bar \Omega  \times T} \right)\)</span> and <span class="math inline">\({\mathbf{b}} \in {C^1}\left( {\bar \Omega  \times T} \right)\)</span>, and <a href="#eq-momentum" class="quarto-xref">Equation&nbsp;<span>5.1</span></a> – <a href="#eq-strain-disp" class="quarto-xref">Equation&nbsp;<span>5.3</span></a> is satisfied for all <span class="math inline">\((\mathbf{x},t) \in \Omega \times T\)</span> along with prescribed initial and boundary conditions.</p>
+</section>
+<section id="displacement-potentials" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="displacement-potentials"><span class="header-section-number">5.2</span> Displacement potentials</h2>
+<p>The displacement equation of motion <a href="#eq-momentum-disp-form" class="quarto-xref">Equation&nbsp;<span>5.4</span></a> couples all the displacement components <span class="math inline">\(u_i(\mathbf{x},t)\)</span>. This equation, however, can be decoupled by introducing the concept of displacement potentials <span class="citation" data-cites="Achenbach1973a">(<a href="references.html#ref-Achenbach1973a" role="doc-biblioref">Achenbach 2012</a>)</span>. For brevity, <a href="#eq-momentum-disp-form" class="quarto-xref">Equation&nbsp;<span>5.4</span></a> is first written in its vector form.</p>
+<p><span id="eq-momentum-disp-vec-form"><span class="math display">\[
+\mu {\nabla ^2}{\mathbf{u}} + \left( {\lambda  + \mu } \right)\nabla  \otimes \left( {\nabla  \cdot {\mathbf{u}}} \right) + \rho {\mathbf{b}} = \rho \frac{{{\partial ^2}{\mathbf{u}}}}{{\partial {t^2}}}
+\tag{5.5}\]</span></span></p>
+<p>Let <span class="math inline">\({\mathbf{u}} \in {C^2}\left( {\Omega  \times T} \right)\)</span> and <span class="math inline">\({\mathbf{b}} \in {C^{1}}\left( {\Omega  \times T} \right)\)</span> satisfies <a href="#eq-momentum-disp-vec-form" class="quarto-xref">Equation&nbsp;<span>5.5</span></a> for all <span class="math inline">\(\left( {{\mathbf{x}},t} \right) \in \Omega  \times T\)</span>. Let the Helmholtz decomposition of the external body force density <span class="math inline">\(\mathbf{b}\)</span>[^1] is given by</p>
+<p><span id="eq-helmholtz-b"><span class="math display">\[
+\mathbf{b} = c_{L}^{2}\nabla{F} + c_{T}^{2}\nabla \times \mathbf{G}
+\tag{5.6}\]</span></span></p>
+<p>Then there exists a scalar function <span class="math inline">\(\phi :\Omega  \times T \to \mathbb{R}\)</span> and a vector-valued function <span class="math inline">\(\boldsymbol{\psi}:\Omega  \times T \to \mathbb{R}^{n_{sd}}\)</span> such that the displacement field can be described by</p>
+<p><span id="eq-helmholz-disp-vec-form"><span class="math display">\[
+{\mathbf{u}} = \nabla \phi  + \nabla  \times \boldsymbol{\psi}
+\tag{5.7}\]</span></span></p>
+<p>Further, the displacement potential <span class="math inline">\(\boldsymbol{\psi}\)</span> usually satisfies the following constraint equation.</p>
+<p><span class="math display">\[
+\nabla \cdot \boldsymbol{\psi} = 0
+\]</span></p>
+<p>After substituting <a href="#eq-helmholtz-b" class="quarto-xref">Equation&nbsp;<span>5.6</span></a> – <a href="#eq-helmholz-disp-vec-form" class="quarto-xref">Equation&nbsp;<span>5.7</span></a> into <a href="#eq-momentum-disp-vec-form" class="quarto-xref">Equation&nbsp;<span>5.5</span></a> one can obtain the following two uncoupled wave equations.</p>
+<p><span id="eq-wave-phi"><span class="math display">\[
+{\nabla ^2}\phi + F = \frac{1}{{c_L^2}}\frac{{{\partial ^2}\phi }}{{\partial {t^2}}}
+\tag{5.8}\]</span></span></p>
+<p>and</p>
+<p><span id="eq-wave-psi"><span class="math display">\[
+{\nabla ^2}\boldsymbol{\psi} + \mathbf{G}  = \frac{1}{{c_T^2}}\frac{{{\partial ^2}\boldsymbol{\psi} }}{{\partial {t^2}}}
+\tag{5.9}\]</span></span></p>
+<p><a href="#eq-wave-phi" class="quarto-xref">Equation&nbsp;<span>5.8</span></a> is a scalar wave equation and <a href="#eq-wave-psi" class="quarto-xref">Equation&nbsp;<span>5.9</span></a> represents wave equation in <span class="math inline">\(n_{sd}\)</span> components of <span class="math inline">\(\boldsymbol{\psi}\)</span>. The characteristic-speed <span class="math inline">\(c_L\)</span> and <span class="math inline">\(c_T\)</span> is given by <a href="#eq-longi-wave-speed" class="quarto-xref">Equation&nbsp;<span>5.10</span></a> and <a href="#eq-trans-wave-speed" class="quarto-xref">Equation&nbsp;<span>5.11</span></a>, respectively.</p>
+<p><span id="eq-longi-wave-speed"><span class="math display">\[
+{c_L} = \sqrt {\frac{{\lambda  + 2\mu }}{\rho }}
+\tag{5.10}\]</span></span></p>
+<p><span id="eq-trans-wave-speed"><span class="math display">\[
+{c_T} = \sqrt {\frac{{\mu }}{\rho }}
+\tag{5.11}\]</span></span></p>
+</section>
+<section id="longitudinal-and-transverse-plane-waves" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="longitudinal-and-transverse-plane-waves"><span class="header-section-number">5.3</span> Longitudinal and transverse plane waves</h2>
+<p>Consider a plane displacement wave traveling with phase velocity <span class="math inline">\(c\)</span> in the direction <span class="math inline">\(\mathbf{p}\)</span> is given by</p>
+<p><span id="eq-plane-wave-1"><span class="math display">\[
+{\mathbf{u}} = {\mathbf{d}}f\left( {\mathbf{x}} \cdot {\mathbf{p}} - ct  \right)
+\tag{5.12}\]</span></span></p>
+<p>where <span class="math inline">\(\mathbf{d}\)</span> is the direction of motion of the particles, <span class="math inline">\(\mathbf{x}\)</span> is the position vector of the particle in the space and the argument of <span class="math inline">\(f(\cdot)\)</span> is called the phase of the wave and given by</p>
+<p><span id="eq-phase-eta"><span class="math display">\[
+\eta  = {\mathbf{x}} \cdot {\mathbf{p}} - ct
+\tag{5.13}\]</span></span></p>
+<p>It is evident from <a href="#eq-plane-wave-1" class="quarto-xref">Equation&nbsp;<span>5.12</span></a> that at any given time <span class="math inline">\(t\)</span> the plane of constant phase, i.e.&nbsp;<span class="math inline">\(\mathbf{x}\cdot \mathbf{p} =\)</span> constant, are normal to the direction of wave propagation. Further, the planes moves in the direction <span class="math inline">\(\mathbf{p}\)</span> with phase-velocity <span class="math inline">\(c\)</span>.</p>
+<p>Furthermore, the displacement given by <a href="#eq-plane-wave-1" class="quarto-xref">Equation&nbsp;<span>5.12</span></a> can satisfy the wave equation <a href="#eq-momentum-disp-form" class="quarto-xref">Equation&nbsp;<span>5.4</span></a> only in two cases:</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Longitudinal wave">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Longitudinal wave
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In this case the motion of particles is in the direction of the wave propagation (see <a href="#fig-plane-wave-motion" class="quarto-xref">Figure&nbsp;<span>5.2</span></a>) and phase-velocity is given by <a href="#eq-longi-wave-speed" class="quarto-xref">Equation&nbsp;<span>5.10</span></a>. Mathematically speaking,</p>
+<p><span id="eq-longi-wave-cond"><span class="math display">\[
+{\mathbf{d}} =  \pm {\mathbf{p}}; \quad c = c_L
+\tag{5.14}\]</span></span></p>
+<p>and</p>
+<p><span id="eq-plane-wave-longi"><span class="math display">\[
+{\mathbf{u}} = \pm {\mathbf{p}}f\left( {\mathbf{x}} \cdot {\mathbf{p}} - c_{L}t  \right)
+\tag{5.15}\]</span></span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Transverse wave">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Transverse wave
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In this case the motion of particles of media is restricted in the plane that is normal to the direction of wave propagation (see <a href="#fig-plane-wave-motion" class="quarto-xref">Figure&nbsp;<span>5.2</span></a>) and the phase velocity <span class="math inline">\(c\)</span> is given by <a href="#eq-trans-wave-speed" class="quarto-xref">Equation&nbsp;<span>5.11</span></a>.</p>
+<p><span class="math display">\[
+{\mathbf{p}} \cdot {\mathbf{d}} = 0; \quad c = {c_T}
+\]</span></p>
+</div>
+</div>
+<p>The transverse waves further categorized into <em>SV-waves</em> and <em>SH-waves</em> depending upon the plane in which particle motion resides. Let’s say the wave is traveling in <span class="math inline">\(\left( x_1, x_2 \right)\)</span> plane then in case of the <em>SV-waves</em> particle motion resides in the same <span class="math inline">\(\left( x_1, x_2 \right)\)</span> plane but normal to the direction of wave propagation. Therefore, <span class="math inline">\(\mathbf{d}\)</span> can be represented by</p>
+<p><span id="eq-sv-wave-cond"><span class="math display">\[
+{\mathbf{d}} = {{\mathbf{e}}_3} \times {\mathbf{p}}
+\tag{5.16}\]</span></span></p>
+<p>However, in the case of <em>SH-waves</em> particles will move in the <span class="math inline">\(x_3\)</span> direction, i.e.,</p>
+<p><span id="eq-sh-wave-cond"><span class="math display">\[
+\mathbf{d} = \mathbf{e}_{3}
+\tag{5.17}\]</span></span></p>
+<p>where <span class="math inline">\({{\mathbf{e}}_3} = {\left[ {0,0,1} \right]^T}\)</span>.</p>
+<p>Finally, a complete classification of plane waves can be found in <a href="#fig-plane-wave-types" class="quarto-xref">Figure&nbsp;<span>5.1</span></a>. For clarity the plane wave propagation in unbounded elastic domain and the corresponding particle motions are depicted in <a href="#fig-plane-wave-motion" class="quarto-xref">Figure&nbsp;<span>5.2</span></a>.</p>
+<div id="fig-plane-wave-types" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-plane-wave-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/plane-wave-1.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plane-wave-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: Classification of plane waves in unbounded elastic media
+</figcaption>
+</figure>
+</div>
+<div id="fig-plane-wave-motion" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-plane-wave-motion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="./figures/plane-wave-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;5.2: Schematic diagram of longitudinal and transverse wave motion in unbounded elastic media"><img src="./figures/plane-wave-2.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plane-wave-motion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: Schematic diagram of longitudinal and transverse wave motion in unbounded elastic media
+</figcaption>
+</figure>
+</div>
+<p>A special case of plane waves is plane harmonic waves; material points on the plane of constant phase performs harmonic motion. The studies on plane harmonic waves in a linearly elastic medium are of interest by the virtue of the applicability of linear superimposition. By the use of Fourier series, harmonic waves can be used to describe the propagation of periodic disturbances. For plane harmonic waves <a href="#eq-plane-wave-1" class="quarto-xref">Equation&nbsp;<span>5.12</span></a> becomes</p>
+<p><span id="eq-plane-harmonic-1"><span class="math display">\[
+{\mathbf{u}} = A{\mathbf{d}}\exp \left[ {ik\left( {{\mathbf{x}} \cdot {\mathbf{p}} - ct} \right)} \right]
+\tag{5.18}\]</span></span></p>
+<p>where <span class="math inline">\(A \in \mathbb{R}\)</span> is the amplitude of the particle motion, <span class="math inline">\(i = \sqrt{-1}\)</span>, <span class="math inline">\(k=\omega c \in \mathbb{R}\)</span> is called the wave number, <span class="math inline">\(c \in \mathbb{R}\)</span> is the phase velocity, <span class="math inline">\(\omega \in \mathbb{R}\)</span> is the circular frequency of the harmonic motion of the material points, <span class="math inline">\(\mathbf{d} \in \mathbb{R}^{n_{sd}}\)</span> is the direction of motion of particle and <span class="math inline">\(\mathbf{p}\)</span> is direction of propagation of wavefront. Since the phase velocity does not depend upon the wave number (or the wavelength), the plane harmonic waves in unbounded homogeneous, isotropic, linearly elastic media are not dispersive.</p>
+<p>Noting <a href="#eq-longi-wave-cond" class="quarto-xref">Equation&nbsp;<span>5.14</span></a> and <a href="#eq-plane-harmonic-1" class="quarto-xref">Equation&nbsp;<span>5.18</span></a> the longitudinal plane harmonic wave traveling in <span class="math inline">\(\left( x_{1}, x_{2}\right)\)</span> plane in the direction <span class="math inline">\(\mathbf{p}=\left[ \sin\theta, \cos\theta,0 \right]\)</span> can be described as follows</p>
+<p><span id="eq-longi-plane-harmonic"><span class="math display">\[
+{\mathbf{u}} = A\left[ {\begin{array}{cc}
+  {\sin \theta } \\
+  {\cos \theta } \\
+  0
+\end{array}} \right]\exp \left[ {ik\left( {{x_1}\sin {\theta_1} + {x_2}\cos {\theta_2} - {c_L}t} \right)} \right]
+\tag{5.19}\]</span></span></p>
+<p>Similarly, using <a href="#eq-sv-wave-cond" class="quarto-xref">Equation&nbsp;<span>5.16</span></a> in <a href="#eq-plane-harmonic-1" class="quarto-xref">Equation&nbsp;<span>5.18</span></a> the <em>SV-wave</em> traveling in <span class="math inline">\(\left( x_{1}, x_{2}\right)\)</span> plane and in the direction <span class="math inline">\(\mathbf{p}=\left[ \sin\theta, \cos\theta,0 \right]\)</span> is given by</p>
+<p><span id="eq-SV-plane-harmonic"><span class="math display">\[
+{\mathbf{u}} = A\left[ {\begin{array}{cc}
+  { - \cos \theta } \\
+  {\sin \theta } \\
+  0
+\end{array}} \right]\exp \left[ {ik\left( {{x_1}\sin \theta  + {x_2}\cos \theta  - {c_T}t} \right)} \right]
+\tag{5.20}\]</span></span></p>
+<p>The equation of SH-wave propagating in the direction <span class="math inline">\(\mathbf{p}=\left[ \sin\theta, \cos\theta,0 \right]\)</span> can be obtained by using <a href="#eq-sh-wave-cond" class="quarto-xref">Equation&nbsp;<span>5.17</span></a></p>
+<p><span id="eq-SH-plane-harmonic"><span class="math display">\[
+{u_3} = A\exp \left[ {ik\left( {{x_1}\sin \theta  + {x_2}\cos \theta  - {c_T}t} \right)} \right]
+\tag{5.21}\]</span></span></p>
+<p>For the displacement given by <a href="#eq-plane-harmonic-1" class="quarto-xref">Equation&nbsp;<span>5.18</span></a> the stresses generated in the elastic body are computed using the Hooke’s law (see Eq. <a href="#eq-hooke" class="quarto-xref">Equation&nbsp;<span>5.2</span></a> – <a href="#eq-strain-disp" class="quarto-xref">Equation&nbsp;<span>5.3</span></a>)</p>
+<p><span id="eq-plane-harmonic-stress"><span class="math display">\[
+\sigma  = ikA\left[ {\lambda {\mathbf{d}} \cdot {\mathbf{p}} + \mu \left( {{\mathbf{d}} \otimes {\mathbf{p}} + {\mathbf{p}} \otimes {\mathbf{d}}} \right)} \right]\exp \left[ {ik\left( {{\mathbf{x}} \cdot {\mathbf{p}} - ct} \right)} \right]
+\tag{5.22}\]</span></span></p>
+</section>
+<section id="reflection-and-refraction-of-plane-waves" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="reflection-and-refraction-of-plane-waves"><span class="header-section-number">5.4</span> Reflection and refraction of plane waves</h2>
+<p>The presence of different materials significantly affects the systems of waves propagating through that medium. When waves reach the interface between two medium with different material properties, part of the wave is reflected and the part is transmitted through the interface <span class="citation" data-cites="Achenbach1973a">(<a href="references.html#ref-Achenbach1973a" role="doc-biblioref">Achenbach 2012</a>)</span>. The ratio of the mechanical impedances of two media completely determines the nature of the reflection and the transmission at the interface.</p>
+<p>In such system of material discontinuity, system of plane waves — reflected and refracted waves at the interface — can be superposed to represent an incident wave. For a given incident wave, the amplitude <span class="math inline">\(A\)</span>, the unit propagation vectors <span class="math inline">\(\mathbf{p}\)</span> and the wave numbers <span class="math inline">\(k\)</span> of the reflected and refracted waves are computed by satisfying the continuity conditions on the displacements and stress at the interface between two media.</p>
+<p>Consider two joined elastic half-spaces in <span class="math inline">\(\left( x_1, x_2 \right)\)</span> plane. Let <span class="math inline">\(x_2 = 0\)</span> be the interface plane between these two media. The material properties of the medium carrying the incident and reflected waves (i.e.&nbsp;<span class="math inline">\(x_2&lt;0\)</span>) are the Lame elastic constants <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\mu\)</span>, velocity of longitudinal wave <span class="math inline">\(c_L\)</span>, velocity of transverse wave <span class="math inline">\(c_T\)</span> and the mass density <span class="math inline">\(\rho\)</span>. Similarly, the material constants of the medium into which refraction takes place are <span class="math inline">\(\lambda^{B}, \mu^{B}, c^{B}_{L}, c^{B}_{T}, \rho^{B}\)</span>. The superscript with a number <span class="math inline">\(n=1,2,3,4\)</span> enclosed in parenthesis is used for denoting the reflected and refracted waves. The number 0 is used for denoting the incidental wave.</p>
+<section id="reflection-and-refraction-of-sh-wave" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="reflection-and-refraction-of-sh-wave"><span class="header-section-number">5.4.1</span> Reflection and refraction of SH-wave:</h3>
+<p>Consider the following incidental <em>SH-wave</em> traveling in the direction <span class="math inline">\(\mathbf{p}=\left[ \sin\theta, \cos\theta,0 \right]\)</span> (see <a href="#fig-sh-wave-reflection" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>).</p>
+<p><span id="eq-sh-wave-in"><span class="math display">\[
+u_3^{\left( 0 \right)} = {A_0}\exp \left[ {i{k_0}\left( {{x_1}\sin {\theta _0} + {x_2}\cos {\theta _0} - {c_T}t} \right)} \right]
+\tag{5.23}\]</span></span></p>
+<div id="fig-sh-wave-reflection" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sh-wave-reflection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/sh-wave-reflection.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sh-wave-reflection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: Reflection of SH-wave at the boundary
+</figcaption>
+</figure>
+</div>
+<p>The reflection and refraction of <em>SH-wave</em> at the interface generates the <em>SH-wave</em>. The system of waves should satisfy the continuity of the displacement and stress at the interface; displacement (stress) due to the incidental and reflected wave should be equal to the displacement(stress) due to the refracted wave. Accordingly, the equations of reflected and refracted wave are given by</p>
+<p><span id="eq-sh-wave-reflected"><span class="math display">\[
+u_3^{\left( 2 \right)} =  {A_2}\exp \left[ {i{k_0}\left( {{x_1}\sin {\theta_0} + {x_2}\cos {\theta_0} - {c_T}t} \right)} \right]
+\tag{5.24}\]</span></span></p>
+<p><span id="eq-sh-wave-refracted"><span class="math display">\[
+u_3^{\left( 4 \right)} =  {A_4}\exp \left[ {i{k_4}\left( {{x_1}\sin {\theta_4} + {x_2}\cos {\theta_4} - {c_{T}^{B}}t} \right)} \right]
+\tag{5.25}\]</span></span></p>
+<p>where <span class="math inline">\(A_2, A_4, \theta_4, k_4\)</span> are given by following relations</p>
+<p><span id="eq-ch4-28"><span class="math display">\[
+\frac{{{A_2}}}{{{A_0}}} = \frac{{\mu \cos {\theta _0} - {\mu ^B}\left( {{c_T}/c_T^B} \right)\cos {\theta_4}}}{{\mu \cos {\theta _0} + {\mu ^B}\left( {{c_T}/c_T^B} \right)\cos {\theta_4}}}
+\tag{5.26}\]</span></span></p>
+<p><span class="math display">\[
+\frac{{{A_4}}}{{{A_0}}} = \frac{{2\mu \cos {\theta _0}}}{{\mu \cos {\theta_0} + {\mu ^B}\left( {{c_T}/c_T^B} \right)\cos {\theta _4}}}
+\]</span></p>
+<p><span class="math display">\[
+{k_4} = \frac{{{c_T}}}{{c_T^B}}{k_0}
+\]</span></p>
+<p><span id="eq-ch4-31"><span class="math display">\[
+\sin {\theta _4} = \frac{{c_T^B}}{{{c_T}}}\sin {\theta_0}
+\tag{5.27}\]</span></span></p>
+<p>The inspection of <a href="tdg-first-order-ode.html#eq-ch3-25" class="quarto-xref">Equation&nbsp;<span>2.24</span></a> – <a href="tdg-first-order-ode.html#eq-ch3-31" class="quarto-xref">Equation&nbsp;<span>2.30</span></a> leads to several observations:</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The reflected wave is in phase with the incident wave and the wave-number and phase-velocity of incident and reflected wave are the same.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Refracted wave separates from the incident wave while moving away from the normal if <span class="math inline">\(c_{T}^{B}&gt;c_{T}\)</span>, and it moves towards the normal in case <span class="math inline">\(c_{T}^{B}&lt;c_{T}\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The wave is completely transmitted (i.e.&nbsp;<span class="math inline">\(A_2=0\)</span>) if</p>
+<p><span class="math display">\[
+\mu \cos {\theta _0} - {\mu ^B}\left( {{c_T}/c_T^B} \right)\cos {\theta_4} = 0
+\]</span></p>
+<p>which leads to</p>
+<p><span class="math display">\[
+\cos {\theta _0} = \sqrt {\frac{{1 - {{\left( {{c_T}/c_T^B} \right)}^2}}}{{1 - {{\left( {\mu /{\mu ^B}} \right)}^2}}}}
+\]</span></p>
+<p>Therefore, a combination of angle of incidence and material properties is possible for which no <em>SH-wave</em> is reflected.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>If the half-space <span class="math inline">\(x_{2}&gt;0\)</span> is vacuum (i.e., the interface is boundary of elastic half-space) then there will be no reflected waves. Further, if the boundary condition condition at <span class="math inline">\(x_2=0\)</span> is such that total displacement vanishes then the reflected wave will have <span class="math inline">\(180\,^{\circ}\)</span> phase difference with the incident wave. Furthermore, if the total stress at the boundary vanishes then the reflected wave is in phase with the incident wave.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="reflection-and-refraction-of-longitudinal-wave" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="reflection-and-refraction-of-longitudinal-wave"><span class="header-section-number">5.4.2</span> Reflection and refraction of longitudinal wave</h3>
+<p>As mentioned earlier, in case of longitudinal wave (or <em>P-wave</em>) material points move in the direction of wave propagation (see <a href="#eq-plane-wave-longi" class="quarto-xref">Equation&nbsp;<span>5.15</span></a>). The equation of incidental longitudinal wave traveling in the direction <span class="math inline">\(\mathbf{p}=\left[ \sin\theta, \cos\theta,0 \right]\)</span> is given by</p>
+<p><span id="eq-p-wave-in"><span class="math display">\[
+{{\mathbf{u}}^{\left( 0 \right)}} = \left[ {\begin{array}{cc}
+  {\sin {\theta _0}} \\
+  {\cos {\theta_0}} \\
+  0
+\end{array}} \right]{A_0}\exp \left[ {i{k_0}\left( {{x_1}\sin {\theta_0} + {x_2}\cos {\theta_0} - {c_L}t} \right)} \right]
+\tag{5.28}\]</span></span></p>
+<div id="fig-p-wave-reflection" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-p-wave-reflection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/p-wave-reflection.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-p-wave-reflection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.4: Reflection of P-wave at the boundary
+</figcaption>
+</figure>
+</div>
+<p>When a <em>P-wave</em> encounters a material interface two reflected (a <em>P-wave</em> and a <em>SV-wave</em>) and two refracted waves (a <em>P-wave</em> and a <em>SV-wave</em>) are possible. The motion of system of waves is depicted in <a href="#fig-p-wave-reflection" class="quarto-xref">Figure&nbsp;<span>5.4</span></a>. The equation of reflected <em>P-wave</em> and <em>SV-wave</em> is given by <a href="#eq-p-wave-reflected" class="quarto-xref">Equation&nbsp;<span>5.29</span></a> and <a href="#eq-sv-wave-reflected" class="quarto-xref">Equation&nbsp;<span>5.30</span></a>, respectively.</p>
+<p><span id="eq-p-wave-reflected"><span class="math display">\[
+{{\mathbf{u}}^{\left( 1 \right)}} = \left[ {\begin{array}{cc}
+  {\sin {\theta _1}} \\
+  { - \cos {\theta_1}} \\
+  0
+\end{array}} \right]{A_1}\exp \left[ {i{k_1}\left( {{x_1}\sin {\theta_1} - {x_2}\cos {\theta_1} - {c_L}t} \right)} \right]
+\tag{5.29}\]</span></span></p>
+<p><span id="eq-sv-wave-reflected"><span class="math display">\[
+{{\mathbf{u}}^{\left( 2 \right)}} = \left[ {\begin{array}{cc}
+  {\cos {\theta _2}} \\
+  {\sin {\theta_2}} \\
+  {0}
+\end{array}} \right]{A_2}\exp \left[ {i{k_2}\left( {{x_1}\sin {\theta_2} - {x_2}\cos {\theta_2} - {c_T}t} \right)} \right]
+\tag{5.30}\]</span></span></p>
+<p>The equation of refracted <em>P-wave</em> and <em>SV-wave</em> is given by <a href="#eq-p-wave-refracted" class="quarto-xref">Equation&nbsp;<span>5.31</span></a> and <a href="#eq-sv-wave-refracted" class="quarto-xref">Equation&nbsp;<span>5.32</span></a>, respectively.</p>
+<p><span id="eq-p-wave-refracted"><span class="math display">\[
+{{\mathbf{u}}^{\left( 3 \right)}} = \left[ {\begin{array}{cc}
+  {\sin {\theta _3}} \\
+  {\cos {\theta_3}} \\
+  0
+\end{array}} \right]{A_3}\exp \left[ {i{k_3}\left( {{x_1}\sin {\theta_3} + {x_2}\cos {\theta_3} - c_L^Bt} \right)} \right]
+\tag{5.31}\]</span></span></p>
+<p><span id="eq-sv-wave-refracted"><span class="math display">\[
+{{\mathbf{u}}^{\left( 4 \right)}} = \left[ {\begin{array}{cc}
+  { - \cos {\theta _4}} \\
+  {\sin {\theta_4}} \\
+  0
+\end{array}} \right]{A_4}\exp \left[ {i{k_4}\left( {{x_1}\sin {\theta_4} + {x_2}\cos {\theta_4} - c_T^Bt} \right)} \right]
+\tag{5.32}\]</span></span></p>
+<p>This system of waves should satisfy four continuity equations at the interface; one for each <span class="math inline">\(u_{1}, u_{2}, \sigma_{12}, \sigma_{22}\)</span>. In other words, total displacement (total stress) due to system of incident and reflected waves must be equal to the total displacement (total stress) due to the system of refracted waves. Accordingly, one can obtain following results for the wave-numbers and direction of wave propagation.</p>
+<p><span class="math display">\[{k_1} = {k_0};\quad \,{\theta _1} = {\theta _0}\]</span></p>
+<p><span class="math display">\[{k_2} = {k_0}\frac{{{c_L}}}{{{c_T}}};\quad \,\sin {\theta _2} = \frac{{{c_T}}}{{{c_L}}}\sin {\theta _0}\]</span></p>
+<p><span class="math display">\[{k_3} = {k_0}\frac{{{c_L}}}{{c_L^B}};\quad \,\sin {\theta _3} = \frac{{c_L^B}}{{{c_L}}}\sin {\theta _0}\]</span></p>
+<p><span class="math display">\[{k_4} = {k_0}\frac{{{c_L}}}{{c_T^B}};\quad \,\sin {\theta _4} = \frac{{c_T^B}}{{{c_L}}}\sin {\theta _0}\]</span></p>
+<p>Subsequently, the aforementioned four continuity equations results in four linear equations for the amplitudes <span class="math inline">\(A_{1}, A_{2}, A_{3}\)</span> and <span class="math inline">\(A_{4}\)</span>. In matrix form the system can be represented by</p>
+<p><span class="math display">\[\mathbf{T}\mathbf{A}=\mathbf{A}_{0}\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+{\mathbf{T}} = \left[ {\begin{array}{cc}
+  { - \sin {\theta _1}}&amp;{ - \cos {\theta_2}}&amp;{\sin {\theta _3}}&amp;{ - \cos {\theta_4}} \\
+  {\cos {\theta _1}}&amp;{ - \sin {\theta_2}}&amp;{\cos {\theta _3}}&amp;{\sin {\theta_4}} \\
+  {\sin 2{\theta _1}}&amp;{\frac{{{c_L}}}{{{c_T}}}\cos 2{\theta_2}}&amp;{\frac{{{\mu ^B}}}{\mu }\frac{{{c_L}}}{{c_L^B}}\sin 2{\theta _3}}&amp;{ - \frac{{{\mu ^B}}}{\mu }\frac{{{c_L}}}{{c_T^B}}\cos 2{\theta_4}} \\
+  { - {{\left( {\frac{{{c_L}}}{{{c_T}}}} \right)}^2}\cos 2{\theta _2}}&amp;{\frac{{{c_L}}}{{{c_T}}}\sin 2{\theta_2}}&amp;{\frac{{{\mu ^B}}}{\mu }\frac{{{c_L}{c^B}_L}}{{{{\left( {c_T^B} \right)}^2}}}\cos 2{\theta_4}}&amp;{\frac{{{\mu ^B}}}{\mu }\frac{{{c_L}}}{{c_T^B}}\sin 2{\theta _4}}
+\end{array}} \right]
+\]</span></p>
+<p><span class="math display">\[
+{\mathbf{A}} = {\left[ {\begin{array}{cc}
+  {{A_1}}&amp;{{A_2}}&amp;{{A_3}}&amp;{{A_4}}
+\end{array}} \right]^T}
+\]</span></p>
+<p><span class="math display">\[
+{{\mathbf{A}}_0} = {A_0}\left[ {\begin{array}{cc}
+  {\sin {\theta _0}}&amp;{\cos {\theta_0}}&amp;{\sin 2{\theta _0}}&amp;{{{\left( {\frac{{{c_L}}}{{{c_T}}}} \right)}^2}\cos 2{\theta_2}}
+\end{array}} \right]^{T}
+\]</span></p>
+<p>In case of normal incident of <em>P-wave</em> (i.e., <span class="math inline">\(\theta_{0}=0\)</span>) the reflected and refracted waves contains only a <em>P-wave</em>, i.e.</p>
+<p><span class="math display">\[A_{2}=A_{4}=0\]</span></p>
+<p>and</p>
+<p><span id="eq-ch4-44"><span class="math display">\[
+\frac{{{A_1}}}{{{A_0}}} = \frac{{{\rho ^B}c_L^B - \rho {c_L}}}{{{\rho ^B}c_L^B + \rho {c_L}}}
+\tag{5.33}\]</span></span></p>
+<p><span id="eq-ch4-45"><span class="math display">\[
+\frac{{{A_3}}}{{{A_0}}} = \frac{{2\rho {c_L}}}{{{\rho ^B}c_L^B + \rho {c_L}}}
+\tag{5.34}\]</span></span></p>
+<p>From <a href="#eq-ch4-44" class="quarto-xref">Equation&nbsp;<span>5.33</span></a> and <a href="#eq-ch4-45" class="quarto-xref">Equation&nbsp;<span>5.34</span></a> it is clear that in case of normal incidence of <em>P-wave</em> the amplitude of reflected and refracted <em>P-wave</em> depends entirely on the mechanical impedance, the product of mass density and phase speed, of the two media. If both media have the same mechanical impedance then there will be no reflected wave. Further, if upper half-space has more impedance then lower half-space then the reflected <em>P-wave</em> will be out of phase with the incident wave.</p>
+<p>In case upper half-space is vacuum – the interface becomes the boundary of elastic half-space – then there will be no refracted waves and system of reflected wave will consist a P-wave and a SV-wave. The nature of reflected waves then depends upon the boundary conditions. If the total displacement at the boundary vanishes then the reflected P-wave and SV-wave are given by <a href="#eq-p-wave-reflected" class="quarto-xref">Equation&nbsp;<span>5.29</span></a> and <a href="#eq-sv-wave-reflected" class="quarto-xref">Equation&nbsp;<span>5.30</span></a>, respectively, with amplitudes,</p>
+<p><span id="eq-p-wave-clamp-a1"><span class="math display">\[
+\frac{{{A_1}}}{{{A_0}}} = \frac{{\cos \left( {{\theta _0} + {\theta_2}} \right)}}{{\cos \left( {{\theta _0} - {\theta_2}} \right)}}
+\tag{5.35}\]</span></span></p>
+<p><span id="eq-p-wave-clamp-a2"><span class="math display">\[
+\frac{{{A_2}}}{{{A_0}}} = \frac{{\sin 2{\theta _0}}}{{\cos \left( {{\theta_0} - {\theta _2}} \right)}}
+\tag{5.36}\]</span></span></p>
+<p>If the total stress at the boundary vanishes (i.e., stress free surface) then the amplitude ratio becomes</p>
+<p><span id="eq-p-wave-free-a1"><span class="math display">\[
+\frac{{{A_1}}}{{{A_0}}} = \frac{{\sin 2{\theta _0}\sin 2{\theta_2} - {\kappa ^2}{{\cos }^2}{\theta _2}}}{{\sin 2{\theta_0}\sin 2{\theta _2} + {\kappa ^2}{{\cos }^2}2{\theta_2}}}
+\tag{5.37}\]</span></span></p>
+<p><span id="eq-p-wave-free-a2"><span class="math display">\[
+\frac{{{A_2}}}{{{A_0}}} = \frac{{2\kappa \sin 2{\theta _0}\cos 2{\theta_2}}}{{\sin 2{\theta _0}\sin 2{\theta_2} + {\kappa ^2}{{\cos }^2}2{\theta _2}}}
+\tag{5.38}\]</span></span></p>
+<p>From <a href="#eq-p-wave-free-a1" class="quarto-xref">Equation&nbsp;<span>5.37</span></a> – <a href="#eq-p-wave-free-a2" class="quarto-xref">Equation&nbsp;<span>5.38</span></a> it is observed that normal incident, <span class="math inline">\(\theta_{0}=0\)</span>, and grazing incident, <span class="math inline">\(\theta_{0}=\pi/2\)</span>, of <em>P-wave</em> generates only a reflected <em>P-wave</em> as <span class="math inline">\(A_2=0\)</span>. In former case the reflected <em>P-wave</em> is in the phase, and in later case reflected <em>P-wave</em> is out of phase with incident wave.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Achenbach1973a" class="csl-entry" role="listitem">
+Achenbach, Jan D. 2012. <em><a href="https://www.ncbi.nlm.nih.gov/pubmed/25246403"><span class="nocase">Wave propagation in elastic solids</span></a></em>. Vol. 16. Elsevier.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/poromechanics\.github\.io\/sdee");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./elastic-waves-introduction.html" class="pagination-link" aria-label="Elastic waves">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Elastic waves</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./elastic-waves-surface-waves-in-solids.html" class="pagination-link" aria-label="Surface waves in elastic solids">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Surface waves in elastic solids</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2025, Vikas Sharma</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/poromechanics/sdee/edit/main/elastic-waves-body-waves-in-solids.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/poromechanics/sdee/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vickysharma0812">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/vickysharma0812">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/vickysharma0812">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

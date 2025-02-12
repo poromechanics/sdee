@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>12&nbsp; Governing equation for Dam-Reservoir System – Soil Dynamics and Earthquake Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./dynamic-ssi-drs-vstfem.html" rel="next">
+<link href="./dynamic-ssi-drs-introduction.html" rel="prev">
+<link href="././figures/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-93074729595c0d1bb0917954c6b21507.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta name="twitter:title" content="12&nbsp; Governing equation for Dam-Reservoir System – Soil Dynamics and Earthquake Engineering">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://poromechanics.github.io/sdee/figures/ch6_fig1.png">
+<meta name="twitter:image-height" content="231">
+<meta name="twitter:image-width" content="567">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic-ssi-drs-equations.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Governing equation for Dam-Reservoir System</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Soil Dynamics and Earthquake Engineering</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/poromechanics/sdee/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Soil-Dynamics-and-Earthquake-Engineering.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Soil-Dynamics-and-Earthquake-Engineering.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tdg-first-order-ode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">TDG/FEM for the first order ODE</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tdg-second-order-ode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">TDG/FEM for the second order ODE</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Elastic waves</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-body-waves-in-solids.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Body waves in elastic solids</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-surface-waves-in-solids.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Surface waves in elastic solids</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastic-waves-radiation-boundary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Radiation boundary conditions for elastic waves</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastodynamics-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Elastodynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./elastodynamics-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">V-STFEM for Elastodynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">v-STFEM for Dynamic-soil-structure interaction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Dynamic SSI of Dam-Reservoir System</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-equations.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Governing equation for Dam-Reservoir System</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">VSTFEM for dynamic SSI in dam-reservoir system</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-nonlinear-problem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Nonlinear dynamic behavior of concrete gravity dams</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic-ssi-drs-nonlinear-vstfem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">V-STFEM for nonlinear dynamic analysis of concrete gravity dams</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#governing-equation-for-dam-reservoir-system" id="toc-governing-equation-for-dam-reservoir-system" class="nav-link active" data-scroll-target="#governing-equation-for-dam-reservoir-system"><span class="header-section-number">12.1</span> Governing equation for dam-reservoir system</a></li>
+  <li><a href="#sec:ch6_sec2-2" id="toc-sec:ch6_sec2-2" class="nav-link" data-scroll-target="#sec\:ch6_sec2-2"><span class="header-section-number">12.2</span> Governing equation for dam-reservoir-soil system</a></li>
+  <li><a href="#sec:ch6_sec3-1" id="toc-sec:ch6_sec3-1" class="nav-link" data-scroll-target="#sec\:ch6_sec3-1"><span class="header-section-number">12.3</span> Free-field response of dam-reservoir system</a></li>
+  <li><a href="#sec:ch6_sec3-2" id="toc-sec:ch6_sec3-2" class="nav-link" data-scroll-target="#sec\:ch6_sec3-2"><span class="header-section-number">12.4</span> Free field response of dam-reservoir-soil system</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/poromechanics/sdee/edit/main/dynamic-ssi-drs-equations.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/poromechanics/sdee/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Governing equation for Dam-Reservoir System</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="#fig-ch6-fig1" class="quarto-xref">Figure&nbsp;<span>12.1</span></a> illustrates a dam-reservoir-soil (DRS) system that consists of following components;</p>
+<ol type="1">
+<li><em>Structure</em>: the dam and irregular bounded soil domain with linear or nonlinear material behavior. In this chapter, however, for the sake of clarity of v-ST/FEM formulation the structure is assumed to behave linearly.</li>
+<li><em>Reservoir</em>: the semi-unbounded prismatic channel with linear, inviscid, irrotational, and compressible fluid. The term <em>fluid domain</em> and <em>reservoir</em> will be used interchangeably.</li>
+<li><em>Soil domain</em> : the regular unbounded soil domain which is assumed to be isotropic, homogeneous, linear elastic material. Besides, the term <em>soil</em> is used as a general expression for denoting the geological material underneath the structure and reservoir.</li>
+</ol>
+<div id="fig-ch6-fig1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch6-fig1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch6_fig1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch6-fig1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.1: Schematic diagram of dam-reservoir-soil system subjected to an earthquake motion
+</figcaption>
+</figure>
+</div>
+<p>In practice, sometimes, the structure is situated on a relatively very stiff soil. In such cases, the effect of interaction with the soil can be neglected. Subsequently, a DRS system can simply be represented by a dam-reservoir (DR) system (see <a href="#fig-ch6-fig2" class="quarto-xref">Figure&nbsp;<span>12.2</span></a>) where the dynamic interaction between structure (dam) and reservoir plays a major role. It is natural, therefore, to start with the governing equations of a DR system, and subsequently extending them to include the effect of dynamic soil-structure interaction.</p>
+<div id="fig-ch6-fig2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch6-fig2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch6_fig2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch6-fig2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.2: Illustration of different components of a dam-reservoir (DR) system on a perfectly rigid-foundation; (A) dam and a semi-infinite reservoir with impounded water subjected to ground motion, (B) auxiliary state of dam-reservoir system, (C) finite computation domain of the DR system obtained by placing an artificial boundary at the upstream end of the reservoir, (D) computation domain for fluid (reservoir), (E) computation domain for solid (dam)
+</figcaption>
+</figure>
+</div>
+<section id="governing-equation-for-dam-reservoir-system" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="governing-equation-for-dam-reservoir-system"><span class="header-section-number">12.1</span> Governing equation for dam-reservoir system</h2>
+<p><a href="#fig-ch6-fig2" class="quarto-xref">Figure&nbsp;<span>12.2</span></a> depicts the dam-reservoir system situated on a relatively rigid ground which is subjected to the transient ground motion. The horizontal and vertical component of ground motion are denoted by <span class="math inline">\(a_{1}^{g}(t)\)</span> and <span class="math inline">\(a_{2}^{g}(t)\)</span>, respectively. Note that the ground motion is assumed to be spatially-uniform. Henceforth, the superscript <span class="math inline">\({(\cdot)}^{s}\)</span> and <span class="math inline">\({(\cdot)}^{f}\)</span> will be used for denoting the quantities related to the solid (dam) and fluid domain, respectively. Let <span class="math inline">\(\Omega^{f}\)</span> be the computation domain for fluid (i.e.&nbsp;reservoir) with free surface denoted by <span class="math inline">\(\Gamma_{f}^{f}\)</span> and upstream artificial boundary denoted by <span class="math inline">\(\Gamma_{\infty}^{f}\)</span>. The fluid-soil interface (of fluid domain <span class="math inline">\(\Omega^{f}\)</span>) – the bottom boundary of fluid domain which is in contact with the ground – is denoted by <span class="math inline">\(\Gamma^{f}_{fs}\)</span>. The fluid-dam interface of the fluid domain is represented by <span class="math inline">\(\Gamma_{fd}^{f}\)</span>. Let <span class="math inline">\(\Omega^{s}\)</span> denote the finite computation domain for solid which, in the present case, is occupied by the dam body. The fluid-dam interface of solid domain is represented by <span class="math inline">\(\Gamma_{fd}^{s}\)</span>. The outward unit normal vectors to the fluid and solid boundary are denoted by <span class="math inline">\(\mathbf{n}^{s}\)</span> and <span class="math inline">\(\mathbf{n}^{f}\)</span>, respectively.</p>
+<p>Neglecting the internal viscosity, and assuming the water to be linearly compressible with a small amplitudes for the displacements and velocity, the hydrodynamic pressure distribution in the reservoir is governed by the pressure wave equation <span class="citation" data-cites="Zienkiewicz2005">(<a href="references.html#ref-Zienkiewicz2005" role="doc-biblioref">Zienkiewicz and Taylor 2005</a>)</span>,</p>
+<p><span id="eq-ch6-1"><span class="math display">\[
+\frac{1}{{{c^2}}}\frac{{{\partial ^2}p}}{{\partial {t^2}}} - \frac{{{\partial ^2}p}}{{\partial x_i^2}} = 0
+\tag{12.1}\]</span></span></p>
+<p>where <span class="math inline">\(p(\vec{x},t)\)</span> is the hydrodynamic pressure in the water (in excess of hydrostatic pressure), and <span class="math inline">\(c\)</span> is the speed of sound in water. Further, it is assumed that the water in the reservoir is initially at rest conditions,</p>
+<p><span id="eq-ch6-2"><span class="math display">\[
+\begin{aligned}
+p\left( {{\mathbf{x}},0} \right) &amp;= 0; &amp; \frac{{\partial p\left( {{\mathbf{x}},0} \right)}}{{\partial t}} = 0
+\end{aligned}
+\tag{12.2}\]</span></span></p>
+<p>The hydrodynamic pressure distribution within the reservoir domain is obtained by solving <a href="#eq-ch6-1" class="quarto-xref">Equation&nbsp;<span>12.1</span></a> with the following boundary conditions.</p>
+<ol type="1">
+<li><em>Boundary condition at <span class="math inline">\(\Gamma^{f}_{f}\)</span></em>: If the possibility of surface gravity waves at the free surface is neglected then the boundary condition on <span class="math inline">\(\Gamma^{f}_{f}\)</span> becomes</li>
+</ol>
+<p><span id="eq-ch6-3"><span class="math display">\[
+p(x,t) = 0 \quad \forall (\mathbf{x},t) \in \Gamma^{f}_{f} \times (0,T)
+\tag{12.3}\]</span></span></p>
+<p>If, however, one wishes to include the effect of surface-gravity waves while solving the dynamic DRI problem then the boundary condition is given by linearized surface wave condition <span class="citation" data-cites="Zienkiewicz2005">(<a href="references.html#ref-Zienkiewicz2005" role="doc-biblioref">Zienkiewicz and Taylor 2005</a>)</span></p>
+<p><span id="eq-ch6-4"><span class="math display">\[
+\frac{{\partial p}}{{\partial {x_2}}} =  - \frac{1}{g}\frac{{{\partial ^2}p}}{{\partial {t^2}}} \quad \forall (\mathbf{x},t) \in \Gamma^{f}_{f} \times (0,T)
+\tag{12.4}\]</span></span></p>
+<p>where <span class="math inline">\(g\)</span> is the acceleration due to gravity, <span class="math inline">\(x_{2}\)</span>-axis is in the vertical direction, and the free surface is parallel to the <span class="math inline">\(x_{1}\)</span>-axis.</p>
+<p>In this thesis the effect of surface-gravity wave is not considered, hence, the boundary condition <a href="#eq-ch6-3" class="quarto-xref">Equation&nbsp;<span>12.3</span></a> will be adopted.</p>
+<ol start="2" type="1">
+<li><em>Boundary condition at <span class="math inline">\(\Gamma^{f}_{\infty}\)</span></em>: The upstream artificial boundary is obtained by truncating the infinite reservoir domain. In case no excitation source is present exterior to <span class="math inline">\(\Gamma^{f}_{\infty}\)</span> the artificial boundary should be able to absorb the incoming waves. This is the case when vertical component of ground motion is absent. In case both horizontal and vertical component are present the vertical motion of the ground generates the free-field response which then enters the fluid domain <span class="math inline">\(\Omega^{f}\)</span> through the artificial boundary. Therefore, in later case the artificial boundary should only absorb the outgoing scattered pressure-waves. The absorbing boundary condition for the fluid domain is given by,</li>
+</ol>
+<p><span id="eq-ch6-5"><span class="math display">\[
+\nabla \left( {p - {p^f}} \right) \cdot {{\mathbf{n}}^f} =  - \frac{1}{c}\frac{{\partial \left( {p - {p^f}} \right)}}{{\partial t}} \quad \forall (\mathbf{x},t) \in \Gamma^{f}_{\infty} \times (0,T)
+\tag{12.5}\]</span></span></p>
+<p>where <span class="math inline">\(p^{f}\)</span> is the free-field response of reservoir, and <span class="math inline">\((p-p^{f})\)</span> denotes the scattered pressure wave. Eq. <a href="#eq-ch6-5" data-reference-type="eqref" data-reference="eq-ch6-5">[eq-ch6-5]</a> signifies that the outgoing scattered waves are traveling towards infinity and no spurious reflection of scattered waves will take place at the truncated boundary. After rearrangement of the terms in Eq. <a href="#eq-ch6-5" data-reference-type="eqref" data-reference="eq-ch6-5">[eq-ch6-5]</a>,</p>
+<p><span class="math display">\[
+\nabla p \cdot {{\mathbf{n}}^f} =  - \frac{1}{c}\frac{{\partial p}}{{\partial t}} + \nabla {p^f} \cdot {{\mathbf{n}}^f} + \frac{1}{c}\frac{{\partial {p^f}}}{{\partial t}} \quad \forall (\mathbf{x},t) \in \Gamma^{f}_{\infty} \times (0,T)
+\]</span></p>
+<p>In <a href="#eq-ch6-5" class="quarto-xref">Equation&nbsp;<span>12.5</span></a> the first term corresponds to an array of dashpots (with damping coefficient equal to <span class="math inline">\(1/c\)</span>) placed normal to the absorbing boundary <span class="math inline">\(\Gamma^{f}_{f}\)</span>, and last two terms corresponds to the free-field response of reservoir (see <a href="#fig-ch6-fig3" class="quarto-xref">Figure&nbsp;<span>12.3</span></a>). It will be shown in next section that the free-response of reservoir <span class="math inline">\(p^{f}\)</span> can effectively be given by <span class="math inline">\(p^{f}=p^{f}(x_{2},t)\)</span>. In addition, noting that the outward normal vector <span class="math inline">\(\mathbf{n}^{f}\)</span> at <span class="math inline">\(\Gamma^{f}_{\infty}\)</span> is <span class="math inline">\([-1,0]^{T}\)</span>, the second term in above equation vanishes and following traction boundary condition can be obtained</p>
+<p><span id="eq-ch6-6"><span class="math display">\[
+\nabla p \cdot {{\mathbf{n}}^f} =  - \frac{1}{c}\frac{{\partial p}}{{\partial t}}  + \frac{1}{c}\frac{{\partial {p^f}}}{{\partial t}} \quad \forall (\mathbf{x},t) \in \Gamma^{f}_{\infty} \times (0,T)
+\tag{12.6}\]</span></span></p>
+<ol start="3" type="1">
+<li><em>Boundary condition at <span class="math inline">\(\Gamma^{f}_{fd}\)</span></em>: The traction boundary condition at fluid-dam interface is describe by</li>
+</ol>
+<p><span id="eq-ch6-7"><span class="math display">\[
+\nabla p \cdot {{\mathbf{n}}^f} =  - {\rho ^f}\frac{{\partial {\mathbf{v}}}}{{\partial t}} \cdot {{\mathbf{n}}^f} \quad \forall (\mathbf{x},t) \in \Gamma^{f}_{fd} \times (0,T)
+\tag{12.7}\]</span></span></p>
+<p>where <span class="math inline">\(\rho^{f}\)</span> is the mass density of water, and <span class="math inline">\(\mathbf{v}\)</span> is the total velocity of the material points of dam that belong to the interface <span class="math inline">\(\Gamma^{f}_{fd}\)</span>.</p>
+<ol start="4" type="1">
+<li><em>Boundary condition at <span class="math inline">\(\Gamma^{f}_{fs}\)</span></em>: The traction boundary condition at fluid-soil interface is describe by</li>
+</ol>
+<p><span id="eq-ch6-8"><span class="math display">\[
+\nabla p \cdot {{\mathbf{n}}^f} =  - {\rho ^f}{{\mathbf{a}}^g} \cdot {{\mathbf{n}}^f} - {q_c}\frac{{\partial p}}{{\partial t}} \quad \forall (\mathbf{x},t) \in \Gamma^{f}_{fs} \times (0,T)
+\tag{12.8}\]</span></span></p>
+<p>where <span class="math inline">\(\mathbf{a}^{g}(t)\)</span> is the acceleration of ground, and <span class="math inline">\(q_{c}\)</span> is the damping coefficient which is the fundamental parameter characterizing the effect of reservoir bottom materials and it is given in <span class="citation" data-cites="Fenves1983">(<a href="references.html#ref-Fenves1983" role="doc-biblioref">Fenves and Chopra 1983</a>)</span> as,</p>
+<p><span id="eq-ch6-9"><span class="math display">\[
+{q_c} = \frac{{1 - {\alpha_b}}}{{c\left( {1 + {\alpha _b}} \right)}}
+\tag{12.9}\]</span></span></p>
+<p>in which <span class="math inline">\(\alpha_{b}\)</span> is the ratio of the amplitude of reflected hydrodynamic pressure wave to the amplitude of a vertically propagating pressure wave incident on the reservoir bottom. The wave reflection coefficient <span class="math inline">\(\alpha_{b}\)</span> is more physically meaningful description than <span class="math inline">\(q_{c}\)</span> of the behavior of hydrodynamic pressure waves at the reservoir bottom. The wave reflection coefficient <span class="math inline">\(\alpha_{b}\)</span> may range within the limiting values of <span class="math inline">\(1\)</span> and <span class="math inline">\(-1\)</span>. For <span class="math inline">\(\alpha_{b}=1\)</span> the reservoir-bottom acts as the perfect reflector for the pressure waves, and <span class="math inline">\(\alpha_{b}=-1\)</span> models a very soft reservoir bottom (or foundation).</p>
+<p>The second term in <a href="#eq-ch6-8" class="quarto-xref">Equation&nbsp;<span>12.8</span></a> represents the modification of the vertical free-field ground acceleration due to interaction between the impounded water and the foundation medium. Due to this term the reservoir bottom also produces a damping effect representing the energy radiated through refraction (or absorption) of hydrodynamic pressure waves into the foundation medium away from the dam-water system. Accordingly, this term signifies the dynamic interaction between the reservoir water and the ground which permits partial absorption of hydrodynamic pressure waves at the reservoir bottom.</p>
+<p>Lastly, computation domain of fluid, in the dam-reservoir system with a rigid foundation, and the aforementioned boundary conditions are illustrated in <a href="#fig-ch6-fig3" class="quarto-xref">Figure&nbsp;<span>12.3</span></a>.</p>
+<div id="fig-ch6-fig3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch6-fig3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch6_fig3.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch6-fig3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.3: Computation domain of the fluid in the dam-reservoir system on rigid foundation with appropriate boundary conditions (given by equation numbers); (A) the reservoir bottom is subjected to both both horizontal and vertical components of ground motion, (B) the reservoir bottom is subjected to only horizontal component of ground motion(here B.C. stands for boundary condition)
+</figcaption>
+</figure>
+</div>
+<p>Let us now discuss the governing equation for the solid domain (recall that in DR-system the solid domain is occupied by dam only) which is given by,</p>
+<p><span id="eq-ch6-10"><span class="math display">\[
+\rho^{s}\frac{{\partial v_i}}{{\partial t}} - \frac{{\partial {\sigma_{ij}}}}{{\partial {x_j}}} - {\rho ^s}{b_i} = 0 \quad \forall (\mathbf{x},t) \in \Omega^{s}\times (0,T)
+\tag{12.10}\]</span></span></p>
+<p>where <span class="math inline">\(\rho^{s}\)</span> is the mass density of the solid domain. Further, for an isotropic, homogeneous, linear elastic material stress-strain relationship is described by</p>
+<p><span id="eq-ch6-11"><span class="math display">\[
+{\sigma *{ij}} = \lambda {\epsilon*{kk}}{\delta *{ij}} + 2\mu {\epsilon*{ij}}
+\tag{12.11}\]</span></span></p>
+<p>where <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\mu\)</span> are the Lame parameters, and</p>
+<p><span id="eq-ch6-12"><span class="math display">\[
+{\epsilon _{ij}} = \frac{1}{2}\left( {\frac{{\partial {u_i}}}{{\partial {x_j}}} + \frac{{\partial {u_j}}}{{\partial {x_i}}}} \right)
+\tag{12.12}\]</span></span></p>
+<p>The initial conditions for the solid domain are</p>
+<p><span id="eq-ch6-13"><span class="math display">\[
+\begin{split}
+{u_i}\left( {{\mathbf{x}},0} \right) = u_i^0\left( {\mathbf{x}} \right)\quad \,\forall {\mathbf{x}} \in {\Omega ^s}
+\\
+{v_i}\left( {{\mathbf{x}},0} \right) = v_i^0\left( {\mathbf{x}} \right)\quad \,\forall {\mathbf{x}} \in {\Omega ^s}
+\end{split}
+\tag{12.13}\]</span></span></p>
+<p>and the Dirichlet boundary condition is described by</p>
+<p><span id="eq-ch6-14"><span class="math display">\[
+{u_i}\left( {{\mathbf{x}},t} \right) = {g_i}\left( {{\mathbf{x}},t} \right)\quad \,\forall \left( {{\mathbf{x}},t} \right) \in \Gamma _i^g \times \left( {0,T} \right)
+\tag{12.14}\]</span></span></p>
+<p>In case of DR-system, the traction boundary condition for solid domain can be decomposed into (i) traction boundary condition due to externally applied surface loads (see <a href="#eq-ch6-15" class="quarto-xref">Equation&nbsp;<span>12.15</span></a>), (ii) traction boundary condition due to total pressure (hydrostatic and hydrodynamic pressure) of impounded water acting on <span class="math inline">\(\Gamma^{s}_{fd}\)</span> (see <a href="#eq-ch6-16" class="quarto-xref">Equation&nbsp;<span>12.16</span></a>).</p>
+<p><span id="eq-ch6-15"><span class="math display">\[
+{\sigma *{ij}}n_j^s = {f^{s}*{i}}\quad \,\forall \left( {{\mathbf{x}},t} \right) \in \Gamma _{i,h}^s \times \left( {0,T} \right)
+\tag{12.15}\]</span></span></p>
+<p><span id="eq-ch6-16"><span class="math display">\[
+{\sigma _{ij}}n_j^s =  - \left\{ {{p_0}({\mathbf{x}}) + p({\mathbf{x}},t)} \right\}n_i^s\quad \forall \left( {{\mathbf{x}},t} \right) \in \Gamma _{fd}^s \times \left( {0,T} \right)
+\tag{12.16}\]</span></span></p>
+<p>where <span class="math inline">\(p_{0}(\mathbf{x})\)</span> and <span class="math inline">\(p(\mathbf{x},t)\)</span> denote the hydrostatic and hydrodynamic pressure due to impounded water in the reservoir, respectively, and <span class="math inline">\(\Gamma^{s}_{i,h}\)</span> denotes the portion of solid-boundary on which surface loads in <span class="math inline">\(x_{i}\)</span>-direction are prescribed.</p>
+<p>Lastly, the strong form of initial-boundary value problem of dynamic interaction between dam-reservoir system situated on a perfectly rigid ground is stated below. in <a href="#tip-box-1" class="quarto-xref">Tip&nbsp;<span>12.1</span></a>.</p>
+<div id="tip-box-1" class="callout callout-style-default callout-tip callout-titled" title="Strong form of initial-boundary value problem of dynamic interaction between a dam and a reservoir on a rigid foundation subjected to the ground motion">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;12.1: Strong form of initial-boundary value problem of dynamic interaction between a dam and a reservoir on a rigid foundation subjected to the ground motion
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Given the functions;</p>
+<p><span class="math display">\[
+\begin{align*}
+b_{i} &amp;:\Omega^{s}\times [0,T]\rightarrow\mathbb{R}
+&amp;
+g_{i} &amp;:\Gamma_{i}^{g}\times [0,T]\rightarrow\mathbb{R}
+&amp;
+h_{i} &amp;:\Gamma^{s}*{i,h}\times [0,T]\rightarrow\mathbb{R}
+\\
+u*{i}^{0} &amp;:\Omega^{s}\rightarrow\mathbb{R}
+&amp;
+v_{i}^{0} &amp;:\Omega^{s}\rightarrow\mathbb{R}
+&amp;
+\rho^{s} &amp;:\Omega\rightarrow \mathbb{R}
+&amp;
+\\
+a^{g}*{i} &amp;:[0,T]\rightarrow\mathbb{R}
+&amp;
+p^{f} &amp;: \Gamma^{f}*{\infty} \times [0,T] \rightarrow R
+\end{align*}
+\]</span></p>
+<p>and the constants <span class="math inline">\(\lambda\)</span>, <span class="math inline">\(\mu\)</span>, <span class="math inline">\(c\)</span>, <span class="math inline">\(q_{c}\)</span>, find <span class="math inline">\(u_{i}:\bar \Omega^{s} \times [0,T] \rightarrow \mathbb{R}\)</span>, <span class="math inline">\(v_{i}:\bar \Omega^{s} \times [0,T] \rightarrow \mathbb{R}\)</span>, and <span class="math inline">\(p:\bar \Omega^{f} \times [0,T]\)</span> such that</p>
+<p><span class="math display">\[
+\begin{equation*}
+\frac{1}{{{c^2}}}\frac{{{\partial ^2}p}}{{\partial {t^2}}} - \frac{{{\partial ^2}p}}{{\partial x_i^2}} = 0 \quad \forall (\mathbf{x},t) \in \Omega^{f}\times (0,T)
+\end{equation*}
+\]</span></p>
+<p><span class="math display">\[
+\begin{align*}
+p(x,t) &amp;=0\quad \forall (\mathbf{x},t)\in \Gamma^{f}*{f}\times (0,T)
+\\
+\nabla p \cdot {{\mathbf{n}}^f} &amp;=  - \frac{1}{c}\frac{{\partial p}}{{\partial t}} + \frac{1}{c}\frac{{\partial {p^f}}}{{\partial t}}\quad \,\forall ({\mathbf{x}},t) \in \Gamma*\infty ^f \times (0,T)
+\\
+\nabla p \cdot {{\mathbf{n}}^f} &amp;=  - {\rho ^f}\frac{{\partial {\mathbf{v}}}}{{\partial t}} \cdot {{\mathbf{n}}^f} \quad \forall (\mathbf{x},t) \in \Gamma^{f}*{fd} \times (0,T)
+\\
+\nabla p \cdot {{\mathbf{n}}^f} &amp;=  - {\rho ^f}{{\mathbf{a}}^g} \cdot {{\mathbf{n}}^f} - {q_c}\frac{{\partial p}}{{\partial t}} \quad \forall (\mathbf{x},t) \in \Gamma^{f}*{fs} \times (0,T)
+\end{align*}
+\]</span></p>
+<p><span class="math display">\[
+\begin{equation*}
+\frac{{\partial v_i}}{{\partial t}} - \frac{{\partial {\sigma_{ij}}}}{{\partial {x_j}}} - {\rho ^s}{b_i} = 0 \quad \forall (\mathbf{x},t) \in \Omega^{s}\times (0,T)
+\end{equation*}
+\]</span></p>
+<p><span class="math display">\[
+\begin{align*}
+{\sigma_{ij}} &amp;= \lambda {\epsilon_{kk}}{\delta_{ij}} + 2\mu {\epsilon_{ij}}
+&amp;
+{\epsilon _{ij}} &amp;= \frac{1}{2}\left( {\frac{{\partial {u_i}}}{{\partial {x_j}}} + \frac{{\partial {u_j}}}{{\partial {x_i}}}} \right)
+\\
+{u_i}\left( {{\mathbf{x}},0} \right) &amp;= u_i^0\left( {\mathbf{x}} \right)\quad \,\forall {\mathbf{x}} \in {\Omega ^s}
+&amp;
+{v_i}\left( {{\mathbf{x}},0} \right) &amp;= v_i^0\left( {\mathbf{x}} \right)\quad \,\forall {\mathbf{x}} \in {\Omega ^s}
+\end{align*}
+\]</span></p>
+<p><span class="math display">\[
+\begin{align*}
+{u_i}\left( {{\mathbf{x}},t} \right) &amp;= {g_i}\left( {{\mathbf{x}},t} \right)\quad \,\forall \left( {{\mathbf{x}},t} \right) \in \Gamma_{i}^{g} \times \left( {0,T} \right)
+\\
+{\sigma_{ij}}n_j^s &amp;= {f^{s}*{i}}\quad \,\forall \left( {{\mathbf{x}},t} \right) \in \Gamma*{i,h}^s \times \left( {0,T} \right)
+\\
+{\sigma_{ij}}n_j^s &amp;=  - \left\{ {{p_0}({\mathbf{x}}) + p({\mathbf{x}},t)} \right\}n_i^s\quad \forall \left( {{\mathbf{x}},t} \right) \in \Gamma_{fd}^s \times \left( {0,T} \right)
+\end{align*}
+\]</span></p>
+</div>
+</div>
+</section>
+<section id="sec:ch6_sec2-2" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="sec:ch6_sec2-2"><span class="header-section-number">12.2</span> Governing equation for dam-reservoir-soil system</h2>
+<p>In case of dam-reservoir-soil system, solid domain <span class="math inline">\(\Omega^{s}\)</span> consists of dam and bounded soil domain, and in this chapter both are assumed to behave linearly. The governing equation for fluid domain, initially at rest, is described by the pressure-wave equation <a href="#eq-ch6-1" class="quarto-xref">Equation&nbsp;<span>12.1</span></a>. The boundary condition at the free surface <span class="math inline">\(\Gamma^{f}_{f}\)</span>, the upstream artificial boundary <span class="math inline">\(\Gamma^{f}_{\infty}\)</span>, and fluid-dam interface <span class="math inline">\(\Gamma^{f}_{fd}\)</span> is given by <a href="#eq-ch6-3" class="quarto-xref">Equation&nbsp;<span>12.3</span></a>, <a href="#eq-ch6-6" class="quarto-xref">Equation&nbsp;<span>12.6</span></a>, and <a href="#eq-ch6-7" class="quarto-xref">Equation&nbsp;<span>12.7</span></a>, respectively. At reservoir bottom (i.e.&nbsp;fluid-soil interface) the traction boundary condition becomes,</p>
+<p><span id="eq-ch6-17"><span class="math display">\[
+\nabla p \cdot {{\mathbf{n}}^f} =  - {\rho ^f}\frac{{\partial {{\mathbf{v}}}}}{{\partial t}} \cdot {{\mathbf{n}}^f} - {q_c}\frac{{\partial p}}{{\partial t}}\quad \,\forall ({\mathbf{x}},t) \in \Gamma_{fs}^f \times (0,T)
+\tag{12.17}\]</span></span></p>
+<p>where <span class="math inline">\(\mathbf{v}\)</span> is the velocity of material-points (of soil domain) that are positioned at the fluid-soil interface <span class="math inline">\(\Gamma^{s}_{fs}\)</span>, and <span class="math inline">\(q_{c}\)</span> is given by <a href="#eq-ch6-9" class="quarto-xref">Equation&nbsp;<span>12.9</span></a>.</p>
+<div id="fig-ch6-fig4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch6-fig4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/ch6_fig4.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch6-fig4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.4: Illustration of dynamic dam-reservoir-soil interaction problem as a wave scattering problem, (A) auxiliary state of dam-reservoir-soil system for computing the free-field response, (B) finite computation domain of dam-reservoir-soil system and the absorbing boundaries
+</figcaption>
+</figure>
+</div>
+<p>The motion of solid domain (both soil and dam) is governed by the classical elastodynamics equation presented in <a href="#eq-ch6-10" class="quarto-xref">Equation&nbsp;<span>12.10</span></a> – <a href="#eq-ch6-12" class="quarto-xref">Equation&nbsp;<span>12.12</span></a>. The initial conditions and the Dirichlet boundary condition are given by <a href="#eq-ch6-13" class="quarto-xref">Equation&nbsp;<span>12.13</span></a> and <a href="#eq-ch6-14" class="quarto-xref">Equation&nbsp;<span>12.14</span></a>, respectively. The traction boundary condition due to the external surface loading is given in <a href="#eq-ch6-15" class="quarto-xref">Equation&nbsp;<span>12.15</span></a>, and the traction boundary condition due to the hydrostatic pressure <span class="math inline">\(p_{0}(\mathbf{x})\)</span> and hydrodynamic pressure <span class="math inline">\(p(\mathbf{x},t)\)</span> of impounded water acting on the dam-fluid interface <span class="math inline">\(\Gamma^{s}_{fd}\)</span> and the fluid-soil interface <span class="math inline">\(\Gamma^{s}_{fs}\)</span> is given by <a href="#eq-ch6-18" class="quarto-xref">Equation&nbsp;<span>12.18</span></a>.</p>
+<p><span id="eq-ch6-18"><span class="math display">\[
+{\sigma _{ij}}n_j^s =  - \left\{ {{p_0}({\mathbf{x}}) + p({\mathbf{x}},t)} \right\}n_i^s\quad \,\forall ({\mathbf{x}},t) \in \Gamma *{fd}^s \cup \Gamma*{fs}^s \times (0,T)
+\tag{12.18}\]</span></span></p>
+<p>in which <span class="math inline">\(\mathbf{n}^{s}\)</span> is the outward normal vector to the boundary of solid domain <span class="math inline">\(\Omega^{s}\)</span>.&nbsp;Further, the traction boundary condition at the artificial boundary of truncated soil domain must be satisfied for correctly modeling the radiation-damping effect of unbounded soil domain. These boundary conditions are describe as follows.</p>
+<p><span id="eq-ch6-19"><span class="math display">\[
+{\sigma_{ij}}n_j^s =  - c_{ip}^v{v_p} + c_{ip}^vv_p^f + \sigma_{ip}^fn_p^s\quad \,\,\forall ({\mathbf{x}},t) \in \,\Gamma_\infty ^L \cup \Gamma_\infty ^R \times (0,T)
+\tag{12.19}\]</span></span></p>
+<p><span id="eq-ch6-20"><span class="math display">\[
+{\sigma_{ij}}n_j^s =  - c_{ip}^h{v_p} + 2c_{ip}^hv_p^{in}\quad \,\,\forall ({\mathbf{x}},t) \in \,\Gamma_\infty ^B \times (0,T)
+\tag{12.20}\]</span></span></p>
+<p>where <span class="math inline">\(\Gamma^{L}_{\infty}\)</span>, <span class="math inline">\(\Gamma^{R}_{\infty}\)</span>, and <span class="math inline">\(\Gamma^{B}_{\infty}\)</span> are the left, right and bottom artificial (absorbing) boundary of truncated soil domain, respectively (see <a href="#fig-ch6-fig4" class="quarto-xref">Figure&nbsp;<span>12.4</span></a>). <span class="math inline">\(\mathbf{v}^{f}\)</span> and <span class="math inline">\(\sigma^{f}\)</span> are the velocity and stress due to free-field response of unbounded soil domain. <span class="math inline">\(\mathbf{c}^{v}\)</span> and <span class="math inline">\(\mathbf{c}^{h}\)</span> are the damping coefficient matrix of dashpots which are arranged at the vertical and horizontal viscous boundaries, respectively. Furthermore, the free-field response of reservoir and soil domain is obtained by solving the auxiliary state problem for the DRS system (see <a href="#fig-ch6-fig4" class="quarto-xref">Figure&nbsp;<span>12.4</span></a> a).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Strong form of initial-boundary value problem of dynamic interaction between a dam, a reservoir, and soil subjected to the ground motion">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Strong form of initial-boundary value problem of dynamic interaction between a dam, a reservoir, and soil subjected to the ground motion
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Given the functions</p>
+<p><span class="math display">\[
+\begin{align*}
+b_{i} &amp;:\Omega^{s}\times [0,T]\rightarrow\mathbb{R}
+&amp;
+g_{i} &amp;:\Gamma_{i}^{g}\times [0,T]\rightarrow\mathbb{R}
+&amp;
+h_{i} &amp;:\Gamma^{s}_{i,h}\times [0,T]\rightarrow\mathbb{R}
+\\
+u_{i}^{0} &amp;:\Omega^{s}\rightarrow\mathbb{R}
+&amp;
+v_{i}^{0} &amp;:\Omega^{s}\rightarrow\mathbb{R}
+&amp;
+\rho^{s} &amp;:\Omega\rightarrow \mathbb{R}
+&amp;
+\\
+v^{in}_{i} &amp;:[0,T]\rightarrow\mathbb{R}
+&amp;
+p^{f} &amp;: \Gamma^{f}_{\infty} \times [0,T] \rightarrow R
+&amp;
+u_{i}^{f} &amp;: \Gamma^{L}_{\infty}\cup\Gamma^{R}_{\infty} \times [0,T] \rightarrow \mathbb{R}
+\end{align*}
+\]</span></p>
+<p>and the constants <span class="math inline">\(\lambda\)</span>, <span class="math inline">\(\mu\)</span>, <span class="math inline">\(c\)</span>, <span class="math inline">\(q_{c}\)</span>, <span class="math inline">\(\mathbf{c}^{v}\)</span>, <span class="math inline">\(\mathbf{c}^{h}\)</span> find <span class="math inline">\(u_{i}:\bar \Omega^{s} \times [0,T] \rightarrow \mathbb{R}\)</span>, <span class="math inline">\(v_{i}:\bar \Omega^{s} \times [0,T] \rightarrow \mathbb{R}\)</span>, and <span class="math inline">\(p:\bar \Omega^{f} \times [0,T]\)</span> such that</p>
+<p><span class="math display">\[
+\begin{align*}
+\frac{1}{{{c^2}}}\frac{{{\partial ^2}p}}{{\partial {t^2}}} - \frac{{{\partial ^2}p}}{{\partial x_i^2}} &amp;= 0 \quad \forall (\mathbf{x},t) \in \Omega^{f}\times (0,T)
+\\
+p(x,t) &amp;=0\quad \forall (\mathbf{x},t)\in \Gamma^{f}_{f}\times (0,T)
+\\
+\nabla p \cdot {{\mathbf{n}}^f} &amp;=  - \frac{1}{c}\frac{{\partial p}}{{\partial t}} + \nabla {p^f} \cdot {{\mathbf{n}}^f} + \frac{1}{c}\frac{{\partial {p^f}}}{{\partial t}}\quad \,\forall ({\mathbf{x}},t) \in \Gamma_{\infty}^{f} \times (0,T)
+\\
+\nabla p \cdot {{\mathbf{n}}^f} &amp;=  - {\rho ^f}\frac{{\partial {\mathbf{v}}}}{{\partial t}} \cdot {{\mathbf{n}}^f} \quad \forall (\mathbf{x},t) \in \Gamma^{f}_{fd} \times (0,T)
+\\
+\nabla p \cdot {{\mathbf{n}}^f} &amp;=  - {\rho ^f}\frac{{\partial {{\mathbf{v}}}}}{{\partial t}} \cdot {{\mathbf{n}}^f} - {q_c}\frac{{\partial p}}{{\partial t}}\quad \,\forall ({\mathbf{x}},t) \in \Gamma_{fs}^f \times (0,T)
+\end{align*}
+\]</span></p>
+<p><span class="math display">\[
+\begin{equation*}
+\frac{{\partial v_i}}{{\partial t}} - \frac{{\partial {\sigma_{ij}}}}{{\partial {x_j}}} - {\rho ^s}{b_i} = 0 \quad \forall (\mathbf{x},t) \in \Omega^{s}\times (0,T)
+\end{equation*}
+\]</span></p>
+<p><span class="math display">\[
+\begin{align*}
+{\sigma_{ij}} &amp;= \lambda {\epsilon_{kk}}{\delta_{ij}} + 2\mu {\epsilon_{ij}}
+&amp;
+{\epsilon _{ij}} &amp;= \frac{1}{2}\left( {\frac{{\partial {u_i}}}{{\partial {x_j}}} + \frac{{\partial {u_j}}}{{\partial {x_i}}}} \right)
+\\
+{u_i}\left( {{\mathbf{x}},0} \right) &amp;= u_i^0\left( {\mathbf{x}} \right)\quad \,\forall {\mathbf{x}} \in {\Omega ^s}
+&amp;
+{v_i}\left( {{\mathbf{x}},0} \right) &amp;= v_i^0\left( {\mathbf{x}} \right)\quad \,\forall {\mathbf{x}} \in {\Omega ^s}
+\end{align*}
+\]</span></p>
+<p><span class="math display">\[
+\begin{align*}
+{u_i}\left( {{\mathbf{x}},t} \right) &amp;= {g_i}\left( {{\mathbf{x}},t} \right)\quad \,\forall \left( {{\mathbf{x}},t} \right) \in \Gamma_{i}^{g} \times \left( {0,T} \right)
+\\
+{\sigma_{ij}}n_j^s &amp;= {f^{s}_{i}}\quad \,\forall \left( {{\mathbf{x}},t} \right) \in \Gamma_{i,h}^s \times \left( {0,T} \right)
+\\
+{\sigma_{ij}}n_j^s &amp;=   - \left\{ {{p_0}({\mathbf{x}}) + p({\mathbf{x}},t)} \right\}n_i^s\quad \,\forall \left( {{\mathbf{x}},t} \right) \in \Gamma_{fd}^s \times \left( {0,T} \right)
+\\
+{\sigma_{ij}}n_j^s &amp;=  - c_{ip}^v{v_p} + c_{ip}^vv_p^f + \sigma_{ip}^fn_p^s\quad \,\,\forall ({\mathbf{x}},t) \in \,\Gamma_\infty ^L \cup \Gamma_\infty ^R \times (0,T)
+\\
+{\sigma_{ij}}n_j^s &amp;=  - c_{ip}^h{v_p} + 2c_{ip}^hv_p^{in}\quad \,\,\forall ({\mathbf{x}},t) \in \,\Gamma_\infty ^B \times (0,T)
+\end{align*}
+\]</span></p>
+</div>
+</div>
+</section>
+<section id="sec:ch6_sec3-1" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="sec:ch6_sec3-1"><span class="header-section-number">12.3</span> Free-field response of dam-reservoir system</h2>
+<p>In order to obtain the dynamic response of dam-reservoir or dam-reservoir-soil system the free field response must be obtained by analysis of the corresponding auxiliary system.</p>
+<p>Fig. <a href="#fig:ch6_fig2" data-reference-type="ref" data-reference="fig:ch6_fig2">2</a>b illustrates the auxiliary state of a dam-reservoir system. Let <span class="math inline">\(\Omega^{f}_{+}\)</span> be the two-dimensional spatial domain occupied by the auxiliary-state. The free field response is obtained by solving pressure wave equation for the auxiliary state. Recall that the reservoir bottom is horizontal and only vertical motion of ground (reservoir-bottom) need to be considered in the analysis. In this situation the hydrodynamic pressure <span class="math inline">\(p^{f}\)</span> depends upon <span class="math inline">\(x_{2}\)</span> coordinate only and satisfied the following one-dimensional wave equation,</p>
+<p><span id="eq-ch6-21"><span class="math display">\[
+\frac{1}{{{c^2}}}\frac{{{\partial ^2}p^{f}}}{{\partial {t^2}}} - \frac{{{\partial ^2}p^{f}}}{{\partial x_2^2}} = 0
+\tag{12.21}\]</span></span></p>
+<p>In this way the auxiliary state can be represented by a fluid-column placed adjacent to the upstream truncated boundary of reservoir (i.e.&nbsp;<span class="math inline">\(\Gamma^{f}_{\infty}\)</span>). The fluid-column is considered at the rest at <span class="math inline">\(t=0\)</span>. At the top surface of the fluid-column <span class="math inline">\(p^{f}=0\)</span>, and at the bottom surface following traction boundary condition should be imposed</p>
+<p><span id="eq-ch6-22"><span class="math display">\[
+\frac{{\partial {p^f}}}{{\partial {x_2}}} = {\rho ^f}a_2^g\left( t \right) + {q_c}\frac{{\partial {p^f}}}{{\partial t}}
+\tag{12.22}\]</span></span></p>
+<p>where <span class="math inline">\(a_{2}^{g}(t)\)</span> is the <span class="math inline">\(x_{2}\)</span>-component of ground acceleration, and <span class="math inline">\(q_{c}\)</span> is given by <a href="#eq-ch6-9" class="quarto-xref">Equation&nbsp;<span>12.9</span></a>.</p>
+</section>
+<section id="sec:ch6_sec3-2" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="sec:ch6_sec3-2"><span class="header-section-number">12.4</span> Free field response of dam-reservoir-soil system</h2>
+<p><a href="#fig-ch6-fig4" class="quarto-xref">Figure&nbsp;<span>12.4</span></a> a depicts the auxiliary state for dam-reservoir-soil system. The auxiliary state contains both the infinite reservoir and the soil domain, and the spatial-domain occupied by the auxiliary state is given by <span class="math inline">\(\Omega\cup\Omega_{+}\cup\Omega_{+}^{f}\)</span>. Accordingly, the free-field hydrodynamic pressure (<span class="math inline">\(p^{f}\)</span>) and the free-field displacement (<span class="math inline">\(u^{f}\)</span>) of soil domain are the primary unknowns.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Theoretically speaking, the free-field response (<span class="math inline">\(u^{f},p^{f}\)</span>) is obtained by analysis of auxiliary dam-reservoir-soil system while considering the effects of reservoir-soil interaction in spatial domain <span class="math inline">\(\Omega^{f}_{+}\cup \Omega_{+}\)</span>. This strategy, however, will require huge computational cost. This expensive analysis may be simplified by ignoring the coupling between the reservoir and soil in spatial domain <span class="math inline">\(\Omega^{f}_{+}\cup \Omega_{+}\)</span>. Under this assumption, the bottom surface of reservoir domain <span class="math inline">\(\Omega^{f}_{+}\)</span> can be treated as a rigid-surface thus ignoring the effects of foundation flexibility. Subsequently, <span class="math inline">\(p^{f}\)</span> can be computed by solving a fluid-column problem as discussed in the previous subsection. Further, <span class="math inline">\(u_{f}\)</span> will be computed by solving the soil-column problem as discussed in previous Chapter. In this way, by ignoring the effects of secondary reservoir-soil interaction in spatial domain <span class="math inline">\(\Omega^{f}_{+}\cup \Omega_{+}\)</span>, it is now possible to compute <span class="math inline">\(u^{f}\)</span> and <span class="math inline">\(p^{f}\)</span> from the the corresponding simple column problems at very low computational cost.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Fenves1983" class="csl-entry" role="listitem">
+Fenves, G., and A. K. Chopra. 1983. <span>“Effects of Reservoir Bottom Absorption on Earthquake Response of Concrete Gravity Dams.”</span> <em>Earthquake Engineering &amp; Structural Dynamics</em> 11 (6): 809–29.
+</div>
+<div id="ref-Zienkiewicz2005" class="csl-entry" role="listitem">
+Zienkiewicz, O. C., and R. L. Taylor. 2005. <em>The Finite Element Method for Solid and Structural Mechanics</em>. Elsevier.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>However, in order to compute the total response of the DRS system we only need the information of free-field solutions at the truncated boundaries.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/poromechanics\.github\.io\/sdee");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./dynamic-ssi-drs-introduction.html" class="pagination-link" aria-label="Dynamic SSI of Dam-Reservoir System">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Dynamic SSI of Dam-Reservoir System</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./dynamic-ssi-drs-vstfem.html" class="pagination-link" aria-label="VSTFEM for dynamic SSI in dam-reservoir system">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">VSTFEM for dynamic SSI in dam-reservoir system</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2025, Vikas Sharma</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/poromechanics/sdee/edit/main/dynamic-ssi-drs-equations.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/poromechanics/sdee/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vickysharma0812">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/vickysharma0812">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/vickysharma0812">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
