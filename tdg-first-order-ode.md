@@ -450,7 +450,9 @@ equations we can get
 
 $$
 u_{n + 1}^ -  = Au_n^{-}
-$$ where,
+$$ {#eq-ch3-35}
+
+where,
 
 $$
 A = \frac{{6- 2\Omega }}{{{\Omega ^2} + 4\Omega  + 6}}
@@ -520,7 +522,7 @@ using the homogeneous form of model equation to eliminate the time derivatives i
 
 $$
 u\left( {{t_{n + 1}}} \right) = \left( {1 - \Omega  + \frac{{{\Omega ^2}}}{2} - \frac{{{\Omega ^3}}}{6}} \right)u\left( {{t_n}} \right) + O\left( {\Delta {t^2}} \right)
-$${eq-ch3-42}
+$${#eq-ch3-42}
 
 From @eq-ch3-36, @eq-ch3-40 and @eq-ch3-42, it follows that,
 

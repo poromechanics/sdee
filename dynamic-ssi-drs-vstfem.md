@@ -103,7 +103,7 @@ $$ {#eq-ch6-36}
 
 ## v-ST/FEM weak form for dam-reservoir-soil system
 
-The v-ST/FEM weak-form of strong-form presented in @sec-dynamic-ssi-drs-equations can be stated as; Find $\mathbf{v}\in S^{h}_{v}$ and $q\in S^{h}_{p}$ such that for all $\delta \mathbf{v}\in V^{h}$, $\delta q \in \mathscr{Q}^{h}$, and for all $n=1,\cdots , N-1$, @eq-ch6-37 and @eq-ch6-38 hold true.
+The v-ST/FEM weak-form of strong-form presented earlier can be stated as; Find $\mathbf{v}\in S^{h}_{v}$ and $q\in S^{h}_{p}$ such that for all $\delta \mathbf{v}\in V^{h}$, $\delta q \in \mathscr{Q}^{h}$, and for all $n=1,\cdots , N-1$, @eq-ch6-37 and @eq-ch6-38 hold true.
 
 $$
 \begin{split}
@@ -489,9 +489,8 @@ The finite element model of the present problem uses four-node quadrilateral ele
 The analytical solution for hydrodynamic pressures on a rigid dam with a vertical upstream face due to rectangular reservoir under general horizontal ground acceleration is given by [@Tsai1990], 
 
 $$
-\label{eq:ch6-eq-73}
 p\left( {{x_1},{x_2},t} \right) = \frac{{ - 2{\rho ^w}c}}{H}\left\{ {\sum\limits_{k = 1}^\infty  {\frac{{{{\left( { - 1} \right)}^k}\cos \left( {{\lambda _k}{x_2}} \right)}}{{{\lambda _k}}}\int\limits_0^t {{a_1}\left( \tau  \right){J_0}\left[ {{\lambda _k}c\left( {t - \tau } \right)} \right]d\tau } } } \right\}
-$$
+$$ {#eq-ch6-73}
 
 where $\lambda_{k}=(2k-1)\pi/2H$ is the $k^{th}$ wavelength, $H$ is the height of the fluid and $J_{0}(\cdot)$ is the Bessel function of first kind. $a_{1}(t)$ is the horizontal ground acceleration (see @fig-ch6-8), $c$ is the speed of sound in water, $\rho^{w}$ is the mass density of water. $x_{1}$ and $x_{2}$ are the spatial coordinates along horizontal and vertical direction; $x_{1}=0$ corresponds to the vertical face the dam, and $x_{2}=0$ correspond to the base of dam and reservoir.
 
@@ -512,7 +511,7 @@ The hydrodynamic pressure at the base of the rigid dam obtained by employing v-S
 
 @fig-ch6-12 and @fig-ch6-13 compare the hydrodynamic pressures computed by v-ST/FEM approach at the base of the rigid dam for $L/H=3$ and $L/H=7$ with both the analytical solution given by @eq-ch6-73 and the finite element solution obtained by [@Pelecanos2013]. It can be observed that results obtained from present approach are nearly identical to the finite element results of [@Pelecanos2013], which implies that the discrepancy between the analytical solutions and the computed results is mainly due to the viscous boundary condition given by @eq-ch6-6.
 
-[Hydrodynamic pressure field in the reservoir of length $L=3H$, $L=5H$, and $L=7H$, computed by using v-ST/FEM at time $t=0.19$ seconds due to ramp acceleration](./figures/ch6_fig-p1-8.png){#fig-ch6-14}
+![Hydrodynamic pressure field in the reservoir of length $L=3H$, $L=5H$, and $L=7H$, computed by using v-ST/FEM at time $t=0.19$ seconds due to ramp acceleration](./figures/ch6_fig-p1-8.png){#fig-ch6-14}
 
 ![Hydrodynamic pressure field in the reservoir of length $L=3H$, $L=5H$, and $L=7H$, computed by using v-ST/FEM at time $t=1.60$ seconds due to ramp acceleration](./figures/ch6_fig-p1-9.png){#fig-ch6-15}
 

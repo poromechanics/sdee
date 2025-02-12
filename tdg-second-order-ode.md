@@ -35,9 +35,7 @@ $${#eq-ch3-46}
 
 $$
 \frac{{du}}{{dt}}-v=0\quad\forall t\in[0,T]
-$$
-
-{#eq-ch3-47}
+$$ {#eq-ch3-47}
 
 $$
 u(0)={u_{0}},\quad v(0)={v_{0}}
@@ -151,9 +149,7 @@ $${#eq-ch3-59}
 
 $$
 \left\{ {{\mathbf{J}}_{0}^{u}}\right\} :={\left\{ {J_{0}^{u}}\right\} ^{a}}={\delta_{1a}}u_{n}^{-}
-$$
-
-{#eq-ch3-60}
+$$ {#eq-ch3-60}
 
 :::{#rem-6}
 In any time-slab $I_{n}$, there are $p+1$ unknowns for the
@@ -382,9 +378,9 @@ Similar to the previous sections, discretization of the v-TDG/FEM weak-form can 
 
 $$
 \begin{aligned}
-{v^{h}} & =\sum\limits_{a=1}^{p+1}{T_{a}^{(p)}v_{a}^{(n)}} & \delta{v^{h}} & =\sum\limits_{a=1}^{p+1}{T_{a}^{(p)}\delta v_{a}^{(n)}}\label{eq-ch3-79}
+{v^{h}} & =\sum\limits_{a=1}^{p+1}{T_{a}^{(p)}v_{a}^{(n)}} & \delta{v^{h}} & =\sum\limits_{a=1}^{p+1}{T_{a}^{(p)}\delta v_{a}^{(n)}}
 \end{aligned}
-$$
+$${#eq-ch3-79}
 
 Where $T_{a}^{(p)}$ are the $p$-order Lagrange polynomials (see @eq-ch3-16). In addition, $v_{1}^{(n)}=v_{n}^{+}$, $v_{2}^{(n)}=v_{n+1}^{-}$.
 
@@ -620,11 +616,11 @@ $$
 To assess the energy dissipation characteristics of the time-discontinuous Galerkin schemes, the spring-mass problem (see @eq-ch3-93) is solved by using the TDG/FEMs with $\omega_{n}=2\pi$, $u_{0}=0$, and $v_{0}=1.0m/s$. The undamped time period $T_{0}$ of the sinusoidal motion is $1.0$ second, and the total time duration is taken as $T=50$ seconds. @fig-ch3-6 plots the time history graphs of the normalized total energy computed by using the TDG schemes with different time-step sizes. As anticipated, the energy dissipation in the case of uv-TDG/FEM is relatively higher than the other two schemes. In addition, the energy decay characteristics of the u-TDG/FEM and v-TDG/FEM are identical to each other. Furthermore, the dissipation of energy decreases as the time-step size decreases (see also @fig-ch3-7) which indicates that the jump discontinuity in time decreases with time-step size. In fact, the subsequent sections will demonstrate that the jump discontinuity in time decreases with time-step size.
 
 ![Spring-mass system -- Time history of the normalized total energy
-obtained by using the v-TDG/FEM.](figures/ch3-fig-7.svg){#fig-ch3-7}
+obtained by using the v-TDG/FEM.](figures/ch3-fig-7.png){#fig-ch3-7}
 
 ![Spring-mass system -- Time history graphs of the normalized total
 energy obtained by using different TDG
-schemes.](figures/ch3-fig-6.svg){#fig-ch3-6}
+schemes.](figures/ch3-fig-6.png){#fig-ch3-6}
 
 The effect of energy-dissipation can be visualized from the displacement-velocity phase diagram. For the present problem, the displacement-velocity relationship can be obtained by using the fact that the total energy of the spring-mass system is conserved.
 
@@ -634,14 +630,13 @@ $$
 
 In the $u-v$ coordinate plane this equation represents an ellipse. The presence of energy dissipation in the numerical algorithm, however, decreases the total energy which in the turn decreases the radii of the ellipse. The phase diagrams for uv-TDG/FEM, u-TDG/FEM, and v-TDG/FEM are given in @fig-ch3-8 @fig-ch3-9, and @fig-ch3-10, respectively.
 
-![Spring-mass system -- Phase diagram obtained by using the uv-TDG/FEM
-with different time-step size.](figures/ch3-fig-8.svg){#fig-ch3-fig-8 width="80%"}
+![Spring-mass system -- Phase diagram obtained by using the uv-TDG/FEM with different time-step size.](figures/ch3-fig-8.png){#fig-ch3-8}
 
 ![Spring-mass system -- Phase diagram obtained by using the u-TDG/FEM
-with different time-step size.](figures/ch3-fig-9.svg){#fig-ch3-9 width="80%"}
+with different time-step size.](figures/ch3-fig-9.png){#fig-ch3-9 width="80%"}
 
 ![Spring-mass system -- Phase diagram obtained by using the v-TDG/FEM
-with different time-step size.](figures/ch3-fig-10.svg){#fig-ch3-10 width="80%"}
+with different time-step size.](figures/ch3-fig-10.png){#fig-ch3-10 width="80%"}
 
 ## Stability of TDG/FEM
 
@@ -854,7 +849,7 @@ $$
 -1<{a_{1}}<1,\qquad{a_{2}}=1
 $${#eq-ch3-110}
 
-@fig-ch3-11a and @fig-ch3-11b depict the stability region corresponding to Eq. @eq-ch3-109 and Eq. @eq-ch3-110, respectively.
+@fig-ch3-11  and @fig-ch3-11 b depict the stability region corresponding to Eq. @eq-ch3-109 and Eq. @eq-ch3-110, respectively.
 
 ![Spectral stability region for a $2\times2$ amplification matrix.](figures/ch3-fig-11.svg){#fig-ch3-11 width="100%"}
 
@@ -864,9 +859,9 @@ Lastly, the $a_{1}$, $a_{2}$ trajectories for the uv-TDG/FEM and v-TDG/FEM are p
 
 ## High-frequency response of TDG/FEM
 
-Spectral radius plots are useful to observe the dissipative properties of an algorithm over the entire frequency domain [@Hulbert1992]. Moreover, High-frequency response of the spectral radius $\rho(\mathbf{A})$ provides the informations regarding the numerical stability and numerical dissipation of the spurious high-frequency components @Hughes1983 [@Hughes2012]. @fig-ch3-13a depicts the frequency responses of the spectral radius for the uv-TDG/FEM and v-TDG/FEM. Furthermore, in @fig-ch3-13b spectral radius of TDG schemes are plotted along with the semi-discrete algorithms. Once again it can be observed that v-TDG/FEM and uv-TDG/FEM are unconditionally stable algorithms as $\rho\le1$.
+Spectral radius plots are useful to observe the dissipative properties of an algorithm over the entire frequency domain [@Hulbert1992]. Moreover, High-frequency response of the spectral radius $\rho(\mathbf{A})$ provides the informations regarding the numerical stability and numerical dissipation of the spurious high-frequency components @Hughes1983 [@Hughes2012]. @fig-ch3-13 a depicts the frequency responses of the spectral radius for the uv-TDG/FEM and v-TDG/FEM. Furthermore, in @fig-ch3-13 b spectral radius of TDG schemes are plotted along with the semi-discrete algorithms. Once again it can be observed that v-TDG/FEM and uv-TDG/FEM are unconditionally stable algorithms as $\rho\le1$.
 
-For uv-TDG/FEM, spectral radius in the high-frequency regime (i.e., ${\rho_{\infty}}:=\mathop{\lim}\limits_{\Omega\to\infty}\rho$), reaches to zero, consequently, the algorithm can dissipate the spurious high-frequency response. The v-TDG/FEM, however, cannot attenuate such spurious high-frequency contents since $\rho_{\infty}=1$ (see @fig-ch3-13). The spectral radius for the v-TDG/FEM is lower than that of uv-TDG/FEM, therefore, the former has lower numerical dissipation than the latter. Furthermore, in lower frequency regime the spectral radius for both TDG schemes is close to one implying negligible attenuation of the small frequency content. Lastly, the points $\Omega\approx\pi$ and $\Omega\approx3.4\pi$, at which spectral radius for the v-TDG/FEM attains its minimum value, mark the bifurcation of complex conjugate eigenvalues into distinct real eigenvalues (see @fig-ch3-13a)
+For uv-TDG/FEM, spectral radius in the high-frequency regime (i.e., ${\rho_{\infty}}:=\mathop{\lim}\limits_{\Omega\to\infty}\rho$), reaches to zero, consequently, the algorithm can dissipate the spurious high-frequency response. The v-TDG/FEM, however, cannot attenuate such spurious high-frequency contents since $\rho_{\infty}=1$ (see @fig-ch3-13). The spectral radius for the v-TDG/FEM is lower than that of uv-TDG/FEM, therefore, the former has lower numerical dissipation than the latter. Furthermore, in lower frequency regime the spectral radius for both TDG schemes is close to one implying negligible attenuation of the small frequency content. Lastly, the points $\Omega\approx\pi$ and $\Omega\approx3.4\pi$, at which spectral radius for the v-TDG/FEM attains its minimum value, mark the bifurcation of complex conjugate eigenvalues into distinct real eigenvalues (see @fig-ch3-13 a)
 
 ![Frequency response of spectral radius $\rho$: (a) uv-TDG/FEM and v-TDG/FEM, and (b) comparison of spectral radii for TDG schemes with the semi-discrete algorithms.](figures/ch3-fig-13.svg){#fig-ch3-13 .lightbox}
 
@@ -876,8 +871,11 @@ It can be shown that @eq-ch3-99 and @eq-ch3-104 satisfy the finite difference st
 
 $$
 \begin{aligned}
-u_{n+1}^{-}-2{a_{1}}u_{n}^{-}+{a_{2}}{u_{n-1}^{-}} & =0, & v_{n+1}^{-}-2{a_{1}}v_{n}^{-}+{a_{2}}{v_{n-1}^{-}} & =0\label{eq-ch3-111}
-\end{aligned}$$ $$\begin{aligned}
+u_{n+1}^{-}-2{a_{1}}u_{n}^{-}+{a_{2}}{u_{n-1}^{-}} & =0, & v_{n+1}^{-}-2{a_{1}}v_{n}^{-}+{a_{2}}{v_{n-1}^{-}} & =0
+\end{aligned}
+$${#eq-ch3-111}
+
+$$\begin{aligned}
 u_{n+1}-2{a_{1}}u_{n}+{a_{2}}{u_{n-1}} & =0, & v_{n+1}^{-}-2{a_{1}}v_{n}^{-}+{a_{2}}{v_{n-1}^{-}} & =0
 \end{aligned}
 $${#eq-ch3-112}

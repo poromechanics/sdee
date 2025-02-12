@@ -41,7 +41,6 @@ book:
     - elastic-waves-radiation-boundary.md
     - elastodynamics-introduction.md
     - elastodynamics-vstfem.md
-    - elastodynamics-numerical-examples.md
     - dynamic-ssi-vstfem.md
     - dynamic-ssi-drs-introduction.md
     - dynamic-ssi-drs-equations.md

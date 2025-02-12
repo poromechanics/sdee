@@ -6,11 +6,11 @@
 2. *Reservoir*: the semi-unbounded prismatic channel with linear, inviscid, irrotational, and compressible fluid. The term *fluid domain* and *reservoir* will be used interchangeably.
 3. *Soil domain* : the regular unbounded soil domain which is assumed to be isotropic, homogeneous, linear elastic material. Besides, the term *soil* is used as a general expression for denoting the geological material underneath the structure and reservoir.
 
-![Schematic diagram of dam-reservoir-soil system subjected to an earthquake motion](./figures/ch6_fig1.svg){#fig-ch6-fig1}
+![Schematic diagram of dam-reservoir-soil system subjected to an earthquake motion](./figures/ch6_fig1.png){#fig-ch6-fig1}
 
 In practice, sometimes, the structure is situated on a relatively very stiff soil. In such cases, the effect of interaction with the soil can be neglected. Subsequently, a DRS system can simply be represented by a dam-reservoir (DR) system (see @fig-ch6-fig2) where the dynamic interaction between structure (dam) and reservoir plays a major role. It is natural, therefore, to start with the governing equations of a DR system, and subsequently extending them to include the effect of dynamic soil-structure interaction.
 
-![Illustration of different components of a dam-reservoir (DR) system on a perfectly rigid-foundation; (A) dam and a semi-infinite reservoir with impounded water subjected to ground motion, (B) auxiliary state of dam-reservoir system, (C) finite computation domain of the DR system obtained by placing an artificial boundary at the upstream end of the reservoir, (D) computation domain for fluid (reservoir), (E) computation domain for solid (dam)](./figures/ch6_fig2.svg){#fig-ch6-fig2}
+![Illustration of different components of a dam-reservoir (DR) system on a perfectly rigid-foundation; (A) dam and a semi-infinite reservoir with impounded water subjected to ground motion, (B) auxiliary state of dam-reservoir system, (C) finite computation domain of the DR system obtained by placing an artificial boundary at the upstream end of the reservoir, (D) computation domain for fluid (reservoir), (E) computation domain for solid (dam)](./figures/ch6_fig2.png){#fig-ch6-fig2}
 
 ## Governing equation for dam-reservoir system
 
@@ -92,7 +92,7 @@ The second term in @eq-ch6-8 represents the modification of the vertical free-fi
 
 Lastly, computation domain of fluid, in the dam-reservoir system with a rigid foundation, and the aforementioned boundary conditions are illustrated in @fig-ch6-fig3.
 
-![Computation domain of the fluid in the dam-reservoir system on rigid foundation with appropriate boundary conditions (given by equation numbers); (A) the reservoir bottom is subjected to both both horizontal and vertical components of ground motion, (B) the reservoir bottom is subjected to only horizontal component of ground motion(here B.C. stands for boundary condition)](./figures/ch6_fig3.svg){#fig-ch6-fig3}
+![Computation domain of the fluid in the dam-reservoir system on rigid foundation with appropriate boundary conditions (given by equation numbers); (A) the reservoir bottom is subjected to both both horizontal and vertical components of ground motion, (B) the reservoir bottom is subjected to only horizontal component of ground motion(here B.C. stands for boundary condition)](./figures/ch6_fig3.png){#fig-ch6-fig3}
 
 Let us now discuss the governing equation for the solid domain (recall that in DR-system the solid domain is occupied by dam only) which is given by,
 
@@ -140,9 +140,9 @@ $$ {#eq-ch6-16}
 
 where $p_{0}(\mathbf{x})$ and $p(\mathbf{x},t)$ denote the hydrostatic and hydrodynamic pressure due to impounded water in the reservoir, respectively, and $\Gamma^{s}_{i,h}$ denotes the portion of solid-boundary on which surface loads in $x_{i}$-direction are prescribed.
 
-Lastly, the strong form of initial-boundary value problem of dynamic interaction between dam-reservoir system situated on a perfectly rigid ground is stated in @fig-ch6-box-1.
+Lastly, the strong form of initial-boundary value problem of dynamic interaction between dam-reservoir system situated on a perfectly rigid ground is stated below. in @tip-box-1.
 
-:::{.callout-note title="Strong form of initial-boundary value problem of dynamic interaction between a dam and a reservoir on a rigid foundation subjected to the ground motion"}
+:::{#tip-box-1 .callout-tip title="Strong form of initial-boundary value problem of dynamic interaction between a dam and a reservoir on a rigid foundation subjected to the ground motion"}
 
 Given the functions;
 
@@ -227,7 +227,7 @@ $$ {#eq-ch6-17}
 
 where $\mathbf{v}$ is the velocity of material-points (of soil domain) that are positioned at the fluid-soil interface $\Gamma^{s}_{fs}$, and $q_{c}$ is given by @eq-ch6-9.
 
-![Illustration of dynamic dam-reservoir-soil interaction problem as a wave scattering problem, (A) auxiliary state of dam-reservoir-soil system for computing the free-field response, (B) finite computation domain of dam-reservoir-soil system and the absorbing boundaries](./figures/ch6_fig4.svg){#fig-ch6-fig4}
+![Illustration of dynamic dam-reservoir-soil interaction problem as a wave scattering problem, (A) auxiliary state of dam-reservoir-soil system for computing the free-field response, (B) finite computation domain of dam-reservoir-soil system and the absorbing boundaries](./figures/ch6_fig4.png){#fig-ch6-fig4}
 
 The motion of solid domain (both soil and dam) is governed by the classical elastodynamics equation presented in @eq-ch6-10 -- @eq-ch6-12. The initial conditions and the Dirichlet boundary condition are given by @eq-ch6-13 and @eq-ch6-14, respectively. The traction boundary condition due to the external surface loading is given in @eq-ch6-15, and the traction boundary condition due to the hydrostatic pressure $p_{0}(\mathbf{x})$ and hydrodynamic pressure $p(\mathbf{x},t)$ of impounded water acting on the dam-fluid interface $\Gamma^{s}_{fd}$ and the fluid-soil interface $\Gamma^{s}_{fs}$ is given by @eq-ch6-18.
 
